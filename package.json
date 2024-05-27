@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "firebase": "^10.12.1",
+    "lodash.debounce": "^4.0.8",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",

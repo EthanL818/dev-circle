@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-  --color-bg: #eef0f1;
-  --color-text: #08090a;
+  --color-bg: #121212;
+  --color-text: #FFFFFF;
   --color-blue: #3b49df;
   --color-red: #df3b3b;
   --color-green: #3bdf72;
-  --color-gray: #b5bdc4;
+  --color-gray: #404040;
 }
 html,
 body {
@@ -64,13 +64,12 @@ code {
 .navbar {
   height: 70px;
   width: 100%;
-  background: white;
+  background: #181818;
   color: var(--colors-text);
   position: fixed;
   top: 0;
   padding: 0 10vw;
   font-weight: bold;
-  border-bottom: 1px solid var(--color-gray);
   z-index: 99;
 }
 
@@ -160,7 +159,7 @@ button.btn-google {
 
 button.btn-logo {
   background-color: var(--color-text);
-  color: white;
+  color: black;
   font-size: 1.5rem;
   padding: 0.5rem 1rem;
 }
@@ -203,7 +202,7 @@ button.btn-logo {
     content: "";
     position: absolute;
     border-radius: 50px;
-    box-shadow: 0 0 0 3px inset #000;
+    box-shadow: 0 0 0 3px inset white;
     animation: l5 2.5s infinite;
   }
   .loader:after {
