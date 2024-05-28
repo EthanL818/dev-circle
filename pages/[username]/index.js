@@ -15,6 +15,12 @@ export async function getServerSideProps({ query: contextQuery }) {
   const { username } = contextQuery; // Extract the username from the query parameters
   const userDoc = await getUserWithUsername(username); // Get the user document with the specified username
 
+  if (!userDoc) {
+    return {
+      notFound: true,
+    };
+  }
+
   // Initialize user to null and posts to an empty array
   let user = null;
   let posts = [];
