@@ -72,10 +72,14 @@ function PostManager() {
 // Interface that the user can directly interact with to update their posts
 function PostForm({ defaultValues, postRef, preview }) {
   // Populating React form with default values from Firestore
-  const { register, handleSubmit, reset, watch } = useForm({
+  const { register, handleSubmit, reset, watch, formState } = useForm({
     defaultValues,
     mode: "onChange",
   }); // Anytime input values are changed, re-render and re-validate form
+
+  // from the formState, we can pull the isValid and isDirty booleans.
+  // isValid is true if the form doesn't have any errors, and isDirty is true when the user modifies the form
+  const { isValid, isDirty, errors } = formState;
 
   // Callback function that handles updating the Firestore database once form is submitted
   const updatePost = async ({ content, published }) => {
@@ -90,28 +94,44 @@ function PostForm({ defaultValues, postRef, preview }) {
     toast.success("Post updated successfully!");
   };
 
+  // Only watch for content if the form is initialized
+  const content = watch("content", defaultValues.content);
+
   return (
     <form onSubmit={handleSubmit(updatePost)}>
       {preview && (
         <div className="card">
-          <ReactMarkdown>{watch("content")}</ReactMarkdown>
+          <ReactMarkdown>{content}</ReactMarkdown>
         </div>
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
-        <textarea name="content" {...register("content")}></textarea>
+        <textarea
+          {...register("content", {
+            maxLength: { value: 20000, message: "content is too long" },
+            minLength: { value: 10, message: "content is too short" },
+            required: { value: true, message: "content is required" },
+          })}
+        ></textarea>
+
+        {errors.content && (
+          <p className="text-danger">{errors.content.message}</p>
+        )}
 
         <fieldset>
           <input
             className={styles.checkbox}
-            name="published"
             type="checkbox"
             {...register("published")}
           />
           <label>Published</label>
         </fieldset>
 
-        <button type="submit" className="btn-green">
+        <button
+          type="submit"
+          className="btn-green"
+          disabled={!isDirty || !isValid}
+        >
           Save Changes
         </button>
       </div>
