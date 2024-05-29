@@ -74,12 +74,10 @@ function CreateNewPost() {
   // Create a new post in Firestore
   const createPost = async (e) => {
     e.preventDefault();
+    const uid = auth.currentUser.uid;
 
     // Reference to the new post document
-    const ref = doc(
-      collection(firestore, "users", auth.currentUser.uid, "posts"),
-      slug
-    );
+    const ref = doc(collection(firestore, "users", uid, "posts"), slug);
 
     // Data to be set in the new post
     const data = {
