@@ -19,7 +19,7 @@ import { useState } from "react";
 const firestore = getFirestore();
 
 // Max post to query per page
-const LIMIT = 1;
+const LIMIT = 10;
 
 export async function getServerSideProps(context) {
   // Query the first batch of posts

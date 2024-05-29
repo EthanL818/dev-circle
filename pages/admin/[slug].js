@@ -12,7 +12,7 @@ import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
-import { getFirestore, collection, doc, updateDoc } from "firebase/firestore";
+import { collection, doc, updateDoc } from "firebase/firestore";
 
 export default function AdminPostEdit(props) {
   return (

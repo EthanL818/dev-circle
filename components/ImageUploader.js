@@ -1,6 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
-import { auth, storage } from "../lib/firebase"; // Ensure these are correctly initialized
+import { auth, storage, STATE_CHANGED } from "../lib/firebase"; // Ensure these are correctly initialized
 import Loader from "./Loader";
 
 export default function ImageUploader({}) {
@@ -33,7 +33,7 @@ export default function ImageUploader({}) {
 
       // Listen to updates to upload task
       task.on(
-        "state_changed",
+        STATE_CHANGED,
         (snapshot) => {
           const pct = (
             (snapshot.bytesTransferred / snapshot.totalBytes) *

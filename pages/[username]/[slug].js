@@ -1,5 +1,8 @@
 import styles from "../../styles/Post.module.css";
 import PostContent from "../../components/PostContent";
+import LikeButton from "../../components/LikeButton";
+import AuthCheck from "../../components/AuthCheck";
+import Link from "next/link";
 import {
   doc,
   getDoc,
@@ -74,8 +77,17 @@ export default function Post(props) {
 
       <aside className="card">
         <p>
-          <strong>{post.heartCount || 0} 🤍</strong>
+          <strong>{post.likeCount || 0} 👍</strong>
         </p>
+        <AuthCheck
+          fallback={
+            <Link href="/enter">
+              <button>👍 Sign Up</button>
+            </Link>
+          }
+        >
+          <LikeButton postRef={postRef} />
+        </AuthCheck>
       </aside>
     </main>
   );
