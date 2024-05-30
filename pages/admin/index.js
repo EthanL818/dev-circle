@@ -25,8 +25,11 @@ export default function AdminPostsPage(props) {
   return (
     <main>
       <AuthCheck>
-        <PostList />
-        <CreateNewPost />
+        <div style={{ flexDirection: "column", width: "100%" }}>
+          <h1>Manage your Posts</h1>
+          <CreateNewPost />
+          <PostList />
+        </div>
       </AuthCheck>
     </main>
   );
@@ -48,7 +51,6 @@ function PostList() {
 
   return (
     <>
-      <h1>Manage your Posts</h1>
       <PostFeed posts={posts} admin />
     </>
   );

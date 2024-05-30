@@ -1,9 +1,9 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { writeBatch, doc, getDoc } from "firebase/firestore";
 import { useEffect, useState, useCallback, useContext } from "react";
 import { UserContext } from "../lib/context";
 import debounce from "lodash.debounce";
-import { auth, firestore } from "../lib/firebase";
+import { auth, firestore, googleAuthProvider } from "../lib/firebase";
 
 export default function EnterPage(props) {
   const { user, username } = useContext(UserContext);

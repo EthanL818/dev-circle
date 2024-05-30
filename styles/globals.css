@@ -1,3 +1,5 @@
+/* Global styles for your project */
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
@@ -8,6 +10,7 @@
   --color-green: #3bdf72;
   --color-gray: #404040;
 }
+
 html,
 body {
   padding: 0;
@@ -15,18 +18,18 @@ body {
   font-family: 'Noto Sans', sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
-  margin-top: 50px;
+  margin-top: 30px;
 }
-
-
 
 main {
   padding: 1rem 10vw;
+  display: flex; /* Add flex to main for proper layout */
 }
 
+/* Typography */
 h1 { font-size: 2rem; }
 h2 { font-size: 1.5rem; }
-h2 { font-size: 1.25rem; }
+h3 { font-size: 1.25rem; }
 
 a {
   color: inherit;
@@ -38,9 +41,11 @@ a {
   box-sizing: border-box;
 }
 
-img {max-width: 100%;}
+img {
+  max-width: 100%;
+}
 
-input { 
+input {
   display: inline-block; 
   outline: none;
   border: none;
@@ -59,13 +64,12 @@ code {
   overflow-x: scroll;
 }
 
-/* Navbar */
-
+/* Navbar styles */
 .navbar {
-  height: 70px;
+  height: 55px;
   width: 100%;
   background: #181818;
-  color: var(--colors-text);
+  color: var(--color-text);
   position: fixed;
   top: 0;
   padding: 0 10vw;
@@ -85,23 +89,39 @@ code {
 
 .navbar img {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   cursor: pointer;
 }
 
 .navbar li {
   border-radius: 50%;
-  
 }
 
-/* Buttons */
+.filter-bar {
+  font-weight: bold;
+}
 
+.filter-bar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.filter-bar li {
+  border-radius: 50%;
+}
+
+/* Button styles */
 .btn, button {
   background-color: var(--color-gray);
   border: none;
   color: var(--color-text);
-  padding: 1rem 2rem;
+  padding: 0.75rem 1.75rem;
   display: flex;
   align-items: center;
   text-align: center;
@@ -121,20 +141,34 @@ code {
   }
 }
 
-
 button:hover {
   filter: brightness(90%);
 }
 
 button:disabled,
-button[disabled]{
+button[disabled] {
   filter: brightness(80%);
-  cursor: not-allowed;
 }
 
 button.btn-blue {
   background-color: var(--color-blue);
   color: white;
+}
+
+button.filter-btn {
+  background-color: var(--color-bg);
+  font-weight: normal;
+  color: #BFBFBF;
+  margin: 0;
+  padding: 0;
+  padding-right: 2rem;
+  padding-left: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.filter-btn.active {
+  color: white; /* Color for active button */
+  font-weight: bold; /* Bold the active button */
 }
 
 button.btn-red {
@@ -148,7 +182,7 @@ button.btn-green {
 }
 
 button.btn-google {
-  background-color: white;
+  background-color: #212121;
   color: var(--color-text);
 }
 
@@ -160,12 +194,11 @@ button.btn-google {
 button.btn-logo {
   background-color: var(--color-text);
   color: black;
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 0.5rem 1rem;
 }
 
-/* Cards */
-
+/* Card styles */
 .card {
   padding: 2rem;
   margin: 1rem 0;
@@ -174,14 +207,48 @@ button.btn-logo {
   border-radius: 8px;
 }
 
+.card-side {
+  padding: 1rem;
+  background-color: #282828;
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  position: sticky; 
+  top: 20px;
+  flex: 0 0 250px; /* Set fixed width */
+}
+
+.card-text {
+  line-height: 1.5;
+  text-justify: inter-word;
+}
+
+/* Adjust layout for smaller screens */
+@media (max-width: 768px) {
+  .card-side {
+    position: static; /* Make the side card scroll with the content */
+    width: 100%; /* Full width */
+    margin-bottom: 1rem; /* Add space below */
+    height: auto; /* Adjust height */
+  }
+
+  main {
+    display: block; /* Stack elements vertically */
+    margin-left: 0; /* Reset margin */
+  }
+
+}
+
 .card footer {
   display: flex;
 }
 
 .card-img-center {
-  width:20%;
-  display:block;
-  margin:auto;
+  width: 20%;
+  display: block;
+  margin: auto;
   border-radius: 50%;
   max-width: 150px;
 }
@@ -191,51 +258,53 @@ button.btn-logo {
   background: var(--color-blue);
 }
 
-/* Loader */
+/* Loader styles */
 .loader {
-    width: 65px;
-    aspect-ratio: 1;
-    position: relative;
-  }
-  .loader:before,
-  .loader:after {
-    content: "";
-    position: absolute;
-    border-radius: 50px;
-    box-shadow: 0 0 0 3px inset white;
-    animation: l5 2.5s infinite;
-  }
-  .loader:after {
-    animation-delay: -1.25s;
-    border-radius: 0;
-  }
-  @keyframes l5{
-    0%    {inset:0    35px 35px 0   }
-    12.5% {inset:0    35px 0    0   }
-    25%   {inset:35px 35px 0    0   }
-    37.5% {inset:35px 0    0    0   }
-    50%   {inset:35px 0    0    35px}
-    62.5% {inset:0    0    0    35px}
-    75%   {inset:0    0    35px 35px}
-    87.5% {inset:0    0    35px 0   }
-    100%  {inset:0    35px 35px 0   }
-  }
-      
-/* File uploads */
+  width: 65px;
+  aspect-ratio: 1;
+  position: relative;
+}
 
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  border-radius: 50px;
+  box-shadow: 0 0 0 3px inset white;
+  animation: l5 2.5s infinite;
+}
+
+.loader:after {
+  animation-delay: -1.25s;
+  border-radius: 0;
+}
+
+@keyframes l5 {
+  0% { inset: 0 35px 35px 0; }
+  12.5% { inset: 0 35px 0 0; }
+  25% { inset: 35px 35px 0 0; }
+  37.5% { inset: 35px 0 0 0; }
+  50% { inset: 35px 0 0 35px; }
+  62.5% { inset: 0 0 0 35px; }
+  75% { inset: 0 0 35px 35px; }
+  87.5% { inset: 0 0 35px 0; }
+  100% { inset: 0 35px 35px 0; }
+}
+
+/* File upload styles */
 input[type="file"] {
   display: none;
 }
 
 .upload-snippet {
   width: 75%;
-    margin-left: auto;
-    background: #404040;
-    padding: 5px;
-    margin: 5px 0;
+  margin-left: auto;
+  background: #404040;
+  padding: 5px;
+  margin: 5px 0;
 }
-/* Utilities */
 
+/* Utility styles */
 .push-left {
   margin-left: auto;
 }
@@ -271,4 +340,6 @@ input[type="file"] {
   text-align: center;
 }
 
-.hidden { display:  none; }
+.hidden {
+  display: none;
+}

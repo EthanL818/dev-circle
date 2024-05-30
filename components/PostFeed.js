@@ -1,11 +1,17 @@
 import Link from "next/link";
+import FilterBar from "../components/FilterBar";
 
 export default function PostFeed({ posts, admin }) {
-  return posts
-    ? posts.map((post) => (
-        <PostItem post={post} key={post.slug} admin={admin} />
-      ))
-    : null;
+  return (
+    <div>
+      {!admin && <FilterBar />}
+      {posts
+        ? posts.map((post) => (
+            <PostItem post={post} key={post.slug} admin={admin} />
+          ))
+        : null}
+    </div>
+  );
 }
 
 function PostItem({ post, admin = false }) {
