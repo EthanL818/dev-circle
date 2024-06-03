@@ -3,7 +3,7 @@ import { useState } from "react";
 import { auth, storage, STATE_CHANGED } from "../lib/firebase"; // Ensure these are correctly initialized
 import Loader from "./Loader";
 
-export default function ImageUploader({}) {
+export default function ImageUploader({ onUpload }) {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [downloadURL, setDownloadURL] = useState(null);
@@ -51,6 +51,9 @@ export default function ImageUploader({}) {
             const url = await getDownloadURL(fileRef);
             console.log("File available at:", url);
             setDownloadURL(url);
+            if (onUpload) {
+              onUpload(url);
+            }
           } catch (error) {
             console.error("Failed to get download URL:", error);
           }
@@ -70,14 +73,20 @@ export default function ImageUploader({}) {
 
       {!uploading && (
         <>
-          <label className="btn">
-            📸 Upload Img
-            <input type="file" onChange={uploadFile} />
-          </label>
+          {onUpload ? (
+            <label className="imageUploader">
+              🖼️ Upload Cover Image
+              <input type="file" onChange={uploadFile} accept="image/*" />
+            </label>
+          ) : (
+            <label className="btn">
+              📸 Upload Image
+              <input type="file" onChange={uploadFile} accept="image/*" />
+            </label>
+          )}
         </>
       )}
-
-      {downloadURL && (
+      {downloadURL && !onUpload && (
         <code className="upload-snippet">{`![alt](${downloadURL})`}</code>
       )}
     </div>

@@ -82,7 +82,7 @@ export default function Home(props) {
   return (
     <main>
       <SideCard />
-      <div style={{ marginLeft: "20px", flex: 1 }}>
+      <div className="card-div">
         <PostFeed posts={posts} />
         {!loading && !postsEnd && (
           <button onClick={getMorePosts}>Load more</button>

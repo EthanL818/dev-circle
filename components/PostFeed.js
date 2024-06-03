@@ -21,35 +21,41 @@ function PostItem({ post, admin = false }) {
 
   return (
     <div className="card">
-      <Link href={`/${post.username}`}>
-        <strong>By @{post.username}</strong>
-      </Link>
-
-      <Link href={`/${post.username}/${post.slug}`}>
-        <h2>{post.title}</h2>
-      </Link>
-
-      <footer>
-        <span>
-          {wordCount} words. {minutesToRead} min read
-        </span>
-        <span className="push-left">👍 {post.likeCount || 0} Likes</span>
-      </footer>
-
-      {/* If admin view, show extra controls for user */}
-      {admin && (
-        <>
-          <Link href={`/admin/${post.slug}`}>
-            <button className="btn-blue">Edit</button>
-          </Link>
-
-          {post.published ? (
-            <p className="text-success">Live</p>
-          ) : (
-            <p className="text-danger">Unpublished</p>
-          )}
-        </>
+      {post.coverImage && (
+        <img src={post.coverImage} className="card-img-top" />
       )}
+
+      <div className="card-content">
+        <Link href={`/${post.username}`}>
+          <strong>By @{post.username}</strong>
+        </Link>
+
+        <Link href={`/${post.username}/${post.slug}`}>
+          <h2>{post.title}</h2>
+        </Link>
+
+        <footer>
+          <span>
+            {wordCount} words. {minutesToRead} min read
+          </span>
+          <span className="push-left">👍 {post.likeCount || 0} Likes</span>
+        </footer>
+
+        {/* If admin view, show extra controls for user */}
+        {admin && (
+          <>
+            <Link href={`/admin/${post.slug}`}>
+              <button className="btn-blue">Edit</button>
+            </Link>
+
+            {post.published ? (
+              <p className="text-success">Live</p>
+            ) : (
+              <p className="text-danger">Unpublished</p>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

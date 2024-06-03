@@ -76,18 +76,20 @@ export default function Post(props) {
       </section>
 
       <aside className="card">
-        <p>
-          <strong>{post.likeCount || 0} 👍</strong>
-        </p>
-        <AuthCheck
-          fallback={
-            <Link href="/enter">
-              <button>👍 Sign Up</button>
-            </Link>
-          }
-        >
-          <LikeButton postRef={postRef} />
-        </AuthCheck>
+        <div className="card-content">
+          <p>
+            <strong>{post.likeCount || 0} 👍</strong>
+          </p>
+          <AuthCheck
+            fallback={
+              <Link href="/enter">
+                <button>👍 Sign Up</button>
+              </Link>
+            }
+          >
+            <LikeButton postRef={postRef} />
+          </AuthCheck>
+        </div>
       </aside>
     </main>
   );

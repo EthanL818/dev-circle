@@ -37,6 +37,14 @@ function PostManager() {
     slug
   );
 
+  const updateCoverImage = async (url) => {
+    await updateDoc(postRef, {
+      coverImage: url,
+      updatedAt: serverTimestamp(),
+    });
+    console.log("Cover image updated successfully!");
+  };
+
   // useDocumentData hook is used to listen to any changes to the document data in realtime
   const [post] = useDocumentData(postRef);
 
@@ -55,14 +63,24 @@ function PostManager() {
             />
           </section>
 
-          <aside>
-            <h3>Tools</h3>
-            <button onClick={() => setPreview(!preview)}>
-              {preview ? "Edit" : "Preview"}
-            </button>
-            <Link href={`/${post.username}/${post.slug}`}>
-              <button className="btn-blue">Live view</button>
-            </Link>
+          <aside className="card">
+            <div className="card-content card-center">
+              <h3>Tools</h3>
+              <ImageUploader onUpload={updateCoverImage} />
+              <button
+                style={{ marginTop: "2rem" }}
+                className="btn-full-width"
+                onClick={() => setPreview(!preview)}
+              >
+                {preview ? "Edit" : "Preview"}
+              </button>
+              <Link
+                style={{ width: "100%" }}
+                href={`/${post.username}/${post.slug}`}
+              >
+                <button className="btn-blue btn-full-width">Live view</button>
+              </Link>
+            </div>
           </aside>
         </>
       )}
@@ -102,13 +120,14 @@ function PostForm({ defaultValues, postRef, preview }) {
     <form onSubmit={handleSubmit(updatePost)}>
       {preview && (
         <div className="card">
-          <ReactMarkdown>{content}</ReactMarkdown>
+          <div className="card-content">
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </div>
         </div>
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
         <ImageUploader />
-
         <textarea
           {...register("content", {
             maxLength: { value: 20000, message: "content is too long" },

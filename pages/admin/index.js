@@ -25,10 +25,24 @@ export default function AdminPostsPage(props) {
   return (
     <main>
       <AuthCheck>
-        <div style={{ flexDirection: "column", width: "100%" }}>
+        <div
+          style={{
+            flexDirection: "column",
+            width: "100%",
+          }}
+        >
           <h1>Manage your Posts</h1>
           <CreateNewPost />
-          <PostList />
+          <div
+            style={{
+              display: "flex", // Add this line
+              justifyContent: "center", // Add this line
+              alignItems: "center", // Add this line
+              marginTop: "3rem", // Add this line
+            }}
+          >
+            <PostList />
+          </div>
         </div>
       </AuthCheck>
     </main>
