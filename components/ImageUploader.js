@@ -2,6 +2,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
 import { auth, storage, STATE_CHANGED } from "../lib/firebase"; // Ensure these are correctly initialized
 import Loader from "./Loader";
+import toast from "react-hot-toast";
 
 export default function ImageUploader({ onUpload }) {
   const [uploading, setUploading] = useState(false);
@@ -14,6 +15,20 @@ export default function ImageUploader({ onUpload }) {
       const file = Array.from(e.target.files)[0];
       if (!file) {
         console.error("No file selected");
+        return;
+      }
+
+      // Check file size, limit to 2MB
+      const fileSize = file.size / 1024 / 1024; // size in MB
+      if (fileSize > 2) {
+        toast.error("File size exceeds 2MB");
+        return;
+      }
+
+      // Check file type, ensure it's an image
+      const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+      if (!validImageTypes.includes(file.type)) {
+        toast.error("Invalid file type. Only images are allowed!");
         return;
       }
 

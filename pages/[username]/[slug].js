@@ -1,6 +1,7 @@
 import styles from "../../styles/Post.module.css";
 import PostContent from "../../components/PostContent";
 import LikeButton from "../../components/LikeButton";
+import SuggestionBar from "../../components/SuggestionBar";
 import AuthCheck from "../../components/AuthCheck";
 import Link from "next/link";
 import {
@@ -73,6 +74,25 @@ export default function Post(props) {
     <main className={styles.container}>
       <section>
         <PostContent post={post} />
+        <AuthCheck
+          fallback={
+            <p
+              style={{
+                color: "#B3B3B3",
+                fontSize: "16px",
+                lineHeight: "1.5",
+                margin: "10px 0 20px",
+              }}
+            >
+              Sign in to leave a suggestion for the author.{" "}
+              <Link href="/enter">
+                <button className="btn-blue">Log in</button>
+              </Link>
+            </p>
+          }
+        >
+          <SuggestionBar postRef={postRef} />
+        </AuthCheck>
       </section>
 
       <aside className="card">

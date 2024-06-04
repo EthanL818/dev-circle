@@ -12,7 +12,7 @@ export default function Heart({ postRef }) {
 
   const [likeDoc] = useDocument(likeRef);
 
-  // Create a user-to-post relationship (adds like to both user and post)
+  // Create a user-to-post relationship (stores likeCount to post and uid under likes document)
   const addLike = async () => {
     const uid = auth.currentUser.uid;
     const batch = writeBatch(firestore);

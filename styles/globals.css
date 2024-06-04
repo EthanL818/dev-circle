@@ -209,6 +209,10 @@ button.btn-logo {
   padding: 0.5rem 1rem;
 }
 
+.icon {
+  margin-right: 10px;
+}
+
 /* Card styles */
 .card {
   margin: 1rem 0;
@@ -262,7 +266,6 @@ button.btn-logo {
 
 /* Adjust layout for smaller screens */
 @media (max-width: 768px) {
-
   form {
     width: 100%; /* Full width */
     margin-left: auto;
@@ -428,3 +431,60 @@ input[type="file"] {
 .hidden {
   display: none;
 }
+
+/* Suggestion Bar */
+
+.messageBox {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2d2d2d;
+  border-radius: 10px;
+  border: 1px solid rgb(63, 63, 63);
+}
+.messageBox:focus-within {
+  border: 1px solid rgb(110, 110, 110);
+}
+
+#messageInput {
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: white;
+}
+
+#messageInput:focus ~ #sendButton svg path,
+#messageInput:valid ~ #sendButton svg path {
+  fill: #3c3c3c;
+  stroke: white;
+}
+
+#sendButton {
+  width: fit-content;
+  height: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+#sendButton svg {
+  height: 18px;
+  transition: all 0.3s;
+}
+#sendButton svg path {
+  transition: all 0.3s;
+}
+#sendButton:hover svg path {
+  fill: #3c3c3c;
+  stroke: white;
+}
+

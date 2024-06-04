@@ -12,13 +12,11 @@ import kebabCase from "lodash.kebabcase";
 import toast from "react-hot-toast";
 
 import {
-  getFirestore,
   collection,
   doc,
   query as firestoreQuery,
   orderBy,
   setDoc,
-  Timestamp,
 } from "firebase/firestore";
 
 export default function AdminPostsPage(props) {
@@ -35,10 +33,10 @@ export default function AdminPostsPage(props) {
           <CreateNewPost />
           <div
             style={{
-              display: "flex", // Add this line
-              justifyContent: "center", // Add this line
-              alignItems: "center", // Add this line
-              marginTop: "3rem", // Add this line
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "3rem",
             }}
           >
             <PostList />
