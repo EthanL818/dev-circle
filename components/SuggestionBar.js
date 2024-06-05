@@ -1,31 +1,37 @@
-import { useState } from "react";
 import { doc, writeBatch, serverTimestamp } from "firebase/firestore";
-import { firestore, auth } from "../lib/firebase";
+import { useState, useContext } from "react";
 import toast from "react-hot-toast";
 
-export default function SuggestionBar({ postRef }) {
-  // Create a reference to suggestions document
-  const suggestionRef = doc(
-    firestore,
-    `${postRef.path}/suggestions/${auth.currentUser.uid}`
-  );
+import { firestore, auth } from "../lib/firebase";
+import { UserContext } from "../lib/context";
 
-  const addSuggestion = async (suggestion) => {
+export default function SuggestionBar({ postRef }) {
+  // Grab user's username from global context
+  const { username } = useContext(UserContext);
+
+  const addSuggestion = async (content) => {
     const uid = auth.currentUser.uid;
     const batch = writeBatch(firestore);
 
     // Add the suggestion to the post
     const suggestionRef = doc(firestore, `${postRef.path}/suggestions/${uid}`);
-    batch.set(suggestionRef, { uid, suggestion, createdAt: new Date() });
+    batch.set(suggestionRef, {
+      uid,
+      content,
+      username,
+      createdAt: serverTimestamp(),
+    });
 
     // Add the suggestion to a new collection under the user
     const userSuggestionRef = doc(
       firestore,
       `users/${uid}/suggestions/${postRef.id}`
     );
+
     batch.set(userSuggestionRef, {
       postRef,
-      suggestion,
+      content,
+      username,
       createdAt: serverTimestamp(),
     });
 

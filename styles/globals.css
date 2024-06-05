@@ -390,6 +390,13 @@ input[type="file"] {
   margin-left: auto;
 }
 
+.list-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+
 .text-sm {
   font-size: 0.85rem;
 }
@@ -480,4 +487,3 @@ input[type="file"] {
   fill: #3c3c3c;
   stroke: white;
 }
-
