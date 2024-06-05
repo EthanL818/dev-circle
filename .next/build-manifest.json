@@ -17,15 +17,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
-    "/404": [
+    "/[username]/[slug]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/404.js"
-    ],
-    "/[username]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/[username].js"
+      "static/chunks/pages/[username]/[slug].js"
     ],
     "/_app": [
       "static/chunks/webpack.js",
@@ -36,6 +31,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
+    ],
+    "/admin/suggestions/[slug]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin/suggestions/[slug].js"
     ]
   },
   "ampFirstPages": []

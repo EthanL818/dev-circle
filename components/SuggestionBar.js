@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { doc, writeBatch } from "firebase/firestore";
+import { doc, writeBatch, serverTimestamp } from "firebase/firestore";
 import { firestore, auth } from "../lib/firebase";
 import toast from "react-hot-toast";
 
@@ -16,14 +16,18 @@ export default function SuggestionBar({ postRef }) {
 
     // Add the suggestion to the post
     const suggestionRef = doc(firestore, `${postRef.path}/suggestions/${uid}`);
-    batch.set(suggestionRef, { uid, suggestion });
+    batch.set(suggestionRef, { uid, suggestion, createdAt: new Date() });
 
     // Add the suggestion to a new collection under the user
     const userSuggestionRef = doc(
       firestore,
       `users/${uid}/suggestions/${postRef.id}`
     );
-    batch.set(userSuggestionRef, { postRef, suggestion });
+    batch.set(userSuggestionRef, {
+      postRef,
+      suggestion,
+      createdAt: serverTimestamp(),
+    });
 
     // Commit the batch
     await batch.commit();

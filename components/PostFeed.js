@@ -44,7 +44,7 @@ function PostItem({ post, admin = false }) {
         {/* If admin view, show extra controls for user */}
         {admin && (
           <>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", marginTop: "15px" }}>
               <Link href={`/admin/${post.slug}`}>
                 <button className="btn-blue">Edit</button>
               </Link>
