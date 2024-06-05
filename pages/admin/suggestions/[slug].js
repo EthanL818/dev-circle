@@ -1,6 +1,5 @@
 import { firestore, auth } from "../../../lib/firebase";
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
 import {
   collection,
   doc,

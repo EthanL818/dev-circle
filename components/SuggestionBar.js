@@ -1,5 +1,6 @@
 import { doc, writeBatch, serverTimestamp } from "firebase/firestore";
 import { useState, useContext } from "react";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
 import { firestore, auth } from "../lib/firebase";
@@ -11,11 +12,14 @@ export default function SuggestionBar({ postRef }) {
 
   const addSuggestion = async (content) => {
     const uid = auth.currentUser.uid;
+    const router = useRouter();
+    const { slug } = router.query;
     const batch = writeBatch(firestore);
 
     // Add the suggestion to the post
     const suggestionRef = doc(firestore, `${postRef.path}/suggestions/${uid}`);
     batch.set(suggestionRef, {
+      slug,
       uid,
       content,
       username,
