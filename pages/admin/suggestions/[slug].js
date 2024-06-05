@@ -1,5 +1,6 @@
 import { firestore, auth } from "../../../lib/firebase";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 import {
   collection,
   doc,
@@ -7,7 +8,6 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
-import toast from "react-hot-toast";
 
 import AuthCheck from "../../../components/AuthCheck";
 import SuggestionFeed from "../../../components/SuggestionFeed";

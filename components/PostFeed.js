@@ -22,7 +22,9 @@ function PostItem({ post, admin = false }) {
   return (
     <div className="card">
       {post.coverImage && (
-        <img src={post.coverImage} className="card-img-top" />
+        <Link href={`/${post.username}/${post.slug}`}>
+          <img src={post.coverImage} className="card-img-top" />
+        </Link>
       )}
 
       <div className="card-content">
