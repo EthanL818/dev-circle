@@ -44,9 +44,15 @@ function PostItem({ post, admin = false }) {
         {/* If admin view, show extra controls for user */}
         {admin && (
           <>
-            <Link href={`/admin/${post.slug}`}>
-              <button className="btn-blue">Edit</button>
-            </Link>
+            <div style={{ display: "flex" }}>
+              <Link href={`/admin/${post.slug}`}>
+                <button className="btn-blue">Edit</button>
+              </Link>
+
+              <Link href={`/admin/suggestions/${post.slug}`}>
+                <button className="btn-green">View Suggestions</button>
+              </Link>
+            </div>
 
             {post.published ? (
               <p className="text-success">Live</p>

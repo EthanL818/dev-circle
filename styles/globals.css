@@ -170,13 +170,6 @@ button.btn-full-width {
   width: 100%; /* Take up the full width of the parent element */
 }
 
-a > .btn-blue.btn-full-width {
-  margin: 0;
-  background-color: var(--color-blue);
-  color: white;
-  width: 100%; /* Take up the full width of the parent element */
-}
-
 .filter-btn.active {
   color: white; /* Color for active button */
   font-weight: bold; /* Bold the active button */
