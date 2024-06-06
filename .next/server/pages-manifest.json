@@ -2,7 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admin/suggestions/[slug]": "pages/admin/suggestions/[slug].js",
-  "/admin": "pages/admin.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/admin/[slug]": "pages/admin/[slug].js",
+  "/[username]/[slug]": "pages/[username]/[slug].js",
+  "/admin": "pages/admin.js"
 }

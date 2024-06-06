@@ -2,10 +2,11 @@ import styles from "../../styles/Admin.module.css";
 import AuthCheck from "../../components/AuthCheck";
 import { firestore, auth, serverTimestamp } from "../../lib/firebase";
 import ImageUploader from "../../components/ImageUploader";
+import TagDropdown from "../../components/TagDropdown";
+import { tagList } from "../../lib/tags";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useForm } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
@@ -26,6 +27,9 @@ export default function AdminPostEdit(props) {
 function PostManager() {
   // State for toggling the post preview
   const [preview, setPreview] = useState(false);
+
+  // State for selected tags
+  const [selectedTags, setSelectedTags] = useState([]);
 
   // Router to retrieve slug
   const router = useRouter();
@@ -60,6 +64,8 @@ function PostManager() {
               postRef={postRef}
               defaultValues={post}
               preview={preview}
+              selectedTags={selectedTags}
+              setSelectedTags={setSelectedTags}
             />
           </section>
 
@@ -89,22 +95,50 @@ function PostManager() {
 }
 
 // Interface that the user can directly interact with to update their posts
-function PostForm({ defaultValues, postRef, preview }) {
+function PostForm({
+  defaultValues,
+  postRef,
+  preview,
+  selectedTags,
+  setSelectedTags,
+}) {
   // Populating React form with default values from Firestore
   const { register, handleSubmit, reset, watch, formState } = useForm({
     defaultValues,
     mode: "onChange",
   }); // Anytime input values are changed, re-render and re-validate form
 
+  // Add a new state for tracking tag changes
+  const [tagsChanged, setTagsChanged] = useState(false);
+
   // from the formState, we can pull the isValid and isDirty booleans.
   // isValid is true if the form doesn't have any errors, and isDirty is true when the user modifies the form
   const { isValid, isDirty, errors } = formState;
+
+  //console.log(isDirty);
+
+  // Assuming useDocumentData is already being used to fetch post data
+  const [post] = useDocumentData(postRef);
+
+  // Effect hook to update selectedTags when post data changes
+  useEffect(() => {
+    if (post && post.tags) {
+      // Assuming post.tags is an array of tag values
+      const tagsToUpdate = post.tags.map((tagValue) => {
+        // Find the tag object in tagList by value
+        const tagObj = tagList.find((tag) => tag.name === tagValue);
+        return { value: tagObj.name, label: tagObj.name, color: tagObj.color };
+      });
+      setSelectedTags(tagsToUpdate);
+    }
+  }, [post, setSelectedTags]);
 
   // Callback function that handles updating the Firestore database once form is submitted
   const updatePost = async ({ content, published }) => {
     await updateDoc(postRef, {
       content,
       published,
+      tags: selectedTags.map((tag) => tag.value),
       updatedAt: serverTimestamp(),
     });
 
@@ -136,6 +170,12 @@ function PostForm({ defaultValues, postRef, preview }) {
           })}
         ></textarea>
 
+        <TagDropdown
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+          setTagsChanged={setTagsChanged}
+        />
+
         {errors.content && (
           <p className="text-danger">{errors.content.message}</p>
         )}
@@ -152,7 +192,7 @@ function PostForm({ defaultValues, postRef, preview }) {
         <button
           type="submit"
           className="btn-green"
-          disabled={!isDirty || !isValid}
+          disabled={(!isDirty && !tagsChanged) || !isValid}
         >
           Save Changes
         </button>

@@ -9,11 +9,11 @@ import { UserContext } from "../lib/context";
 export default function SuggestionBar({ postRef }) {
   // Grab user's username from global context
   const { username } = useContext(UserContext);
+  const router = useRouter();
+  const { slug } = router.query;
 
   const addSuggestion = async (content) => {
     const uid = auth.currentUser.uid;
-    const router = useRouter();
-    const { slug } = router.query;
     const batch = writeBatch(firestore);
 
     // Add the suggestion to the post
