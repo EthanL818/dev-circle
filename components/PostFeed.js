@@ -1,5 +1,6 @@
 import Link from "next/link";
 import FilterBar from "../components/FilterBar";
+import { tagList } from "../lib/tags";
 
 export default function PostFeed({ posts, admin }) {
   return (
@@ -19,6 +20,25 @@ function PostItem({ post, admin = false }) {
   const wordCount = post?.content.trim().split(/\s+/g).length;
   const minutesToRead = (wordCount / 100 + 1).toFixed(0);
 
+  // Check if post.tags is defined and is an array before mapping
+  const tagsToUpdate = Array.isArray(post.tags)
+    ? post.tags.map((tagValue) => {
+        // Find the tag object in tagList by value
+        const tagObj = tagList.find((tag) => tag.name === tagValue);
+        // Ensure tagObj is not undefined before accessing its properties
+        if (tagObj) {
+          return {
+            value: tagObj.name,
+            label: tagObj.name,
+            color: tagObj.color,
+          };
+        } else {
+          // Return a default or placeholder object if tagObj is undefined
+          return { value: tagValue, label: tagValue, color: "#333" }; // Example placeholder
+        }
+      })
+    : []; // If post.tags is not an array, default to an empty array
+
   return (
     <div className="card">
       {post.coverImage && (
@@ -35,6 +55,26 @@ function PostItem({ post, admin = false }) {
         <Link href={`/${post.username}/${post.slug}`}>
           <h2>{post.title}</h2>
         </Link>
+
+        {post.tags && post.tags.length > 0 && (
+          <div style={{ marginTop: "15px", marginBottom: "20px" }}>
+            {tagsToUpdate.map((tag) => (
+              <span
+                key={tag.value}
+                style={{
+                  backgroundColor: tag.color,
+                  color: "white",
+                  padding: "5px 10px",
+                  borderRadius: "5px",
+                  marginRight: "5px",
+                  display: "inline-block",
+                }}
+              >
+                {tag.label}
+              </span>
+            ))}
+          </div>
+        )}
 
         <footer>
           <span>
