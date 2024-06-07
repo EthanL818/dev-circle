@@ -210,11 +210,11 @@ button.btn-logo {
 /* Post Styles */
 
 .post-content {
-  margin: 0 auto; /* Center the content */
-  padding: 1rem; /* Adds space around the content */
+  margin: 0 auto; 
+  padding: 1rem; 
   line-height: 2;
   font-size: 20px;
-  max-width: 1000px; /* Limits the line length for better readability */
+  max-width: 1000px; 
 }
 
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {

@@ -154,7 +154,7 @@ function PostForm({
     <form onSubmit={handleSubmit(updatePost)}>
       {preview && (
         <div className="card">
-          <div className="card-content">
+          <div className="post-content">
             <ReactMarkdown>{content}</ReactMarkdown>
           </div>
         </div>
