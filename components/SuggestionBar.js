@@ -80,9 +80,7 @@ export default function SuggestionBar({ postRef }) {
         >
           Share your thoughts and ideas here, and the author will carefully
           consider your feedback to{" "}
-          <span style={{ fontWeight: "bold" }}>help improve the project</span>
-          .
-          <br />
+          <span style={{ fontWeight: "bold" }}>help improve the project</span>.
           <br />
           Suggestions will be sent directly to the author of the post, so don't
           be shy!

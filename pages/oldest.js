@@ -1,4 +1,4 @@
-import Head from "next/head";
+import PopularTagsCard from "../components/PopularTagsCard";
 import SideCard from "../components/SideCard";
 import PostFeed from "../components/PostFeed";
 import Loader from "../components/Loader";
@@ -92,6 +92,7 @@ export default function Home(props) {
         <Loader show={loading} />
         {postsEnd && "You have reached the end!"}
       </div>
+      <PopularTagsCard />
     </main>
   );
 }

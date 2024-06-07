@@ -1,6 +1,6 @@
 /* Global styles for your project */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 :root {
   --color-bg: #121212;
@@ -23,7 +23,7 @@ body {
 
 main {
   padding: 1rem 10vw;
-  display: flex; /* Add flex to main for proper layout */
+  display: flex; 
 }
 
 /* Typography */
@@ -66,7 +66,7 @@ code {
 
 /* Navbar styles */
 .navbar {
-  height: 55px;
+  height: 60px;
   width: 100%;
   background: #181818;
   color: var(--color-text);
@@ -100,6 +100,7 @@ code {
 
 .filter-bar {
   font-weight: bold;
+  margin-bottom: 1.5rem;
 }
 
 .filter-bar ul {
@@ -206,14 +207,20 @@ button.btn-logo {
   margin-right: 10px;
 }
 
+/* Post Styles */
+
+.post-content {
+  line-height: 1.5;
+}
+
 /* Card styles */
 .card {
   margin: 1rem 0;
-  margin-right: 3rem;
+  margin-right: 1rem;
   background-color: #282828;
   border: 1px solid var(--color-gray);
   border-radius: 8px;
-  width: 80rem;
+  width: auto;
 }
 
 .card-content {
@@ -223,7 +230,7 @@ button.btn-logo {
 .card-center {
   justify-content: center;
   text-align: center;
-  display: flex; /* Add this line */
+  display: flex;
   flex-direction: column;
 }
 
@@ -242,9 +249,61 @@ button.btn-logo {
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  height: 500px;
+  height: 470px;
   top: 20px;
-  flex: 0 0 250px; /* Set fixed width */
+  flex: 0 0 250px;
+}
+
+.card-tags {
+  padding: 1rem;
+  background-color: #282828;
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 530px;
+  top: 20px;
+  flex: 0 0 300px;
+}
+
+.card-tags ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tag-button {
+  background: #282828;
+  margin: 0.5rem 0;
+  font-size: 16px;
+  width: 100%;
+  text-align: left !important; /* Align text to the left */
+  padding-left: 0px; 
+  padding-bottom: 0px;
+  border: none; 
+  color: white; /* Ensure text color contrasts with background */
+  align-items:  left;
+  text-align: left;
+  justify-content: left;
+}
+
+.frequency {
+  color: #B3B3B3;
+  font-style: italic;
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.card-tags h2 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-tags p {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  color: #B3B3B3;
 }
 
 .card-text {
@@ -266,11 +325,15 @@ button.btn-logo {
     text-align: center;
   }
 
+  .card-tags {
+    display: none;
+  }
+
   .card-side {
-    position: static; /* Make the side card scroll with the content */
-    width: 100%; /* Full width */
-    margin-bottom: 1rem; /* Add space below */
-    height: auto; /* Adjust height */
+    position: static;
+    width: 100%; 
+    margin-bottom: 1rem; 
+    height: auto; 
     border-radius: 0;
   }
 
@@ -486,4 +549,16 @@ input[type="file"] {
 #sendButton:hover svg path {
   fill: #3c3c3c;
   stroke: white;
+}
+
+/* Tag Styles */
+.tag {
+  color: white;
+  border: 2px solid black;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 5px;
+  display: inline-block;
+  border-radius: 8px;
 }

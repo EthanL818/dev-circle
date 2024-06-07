@@ -61,13 +61,9 @@ function PostItem({ post, admin = false }) {
             {tagsToUpdate.map((tag) => (
               <span
                 key={tag.value}
+                className="tag"
                 style={{
-                  backgroundColor: tag.color,
-                  color: "white",
-                  padding: "5px 10px",
-                  borderRadius: "5px",
-                  marginRight: "5px",
-                  display: "inline-block",
+                  borderColor: tag.color,
                 }}
               >
                 {tag.label}

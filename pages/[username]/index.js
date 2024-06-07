@@ -38,7 +38,7 @@ export async function getServerSideProps({ query: contextQuery }) {
       limit(5)
     );
 
-    // Executre the query and map the posts to JSON format
+    // Execute the query and map the posts to JSON format
     const postsSnapshot = await getDocs(postsQuery);
     posts = postsSnapshot.docs.map(postToJSON);
   }
