@@ -210,7 +210,46 @@ button.btn-logo {
 /* Post Styles */
 
 .post-content {
+  margin: 0 auto; /* Center the content */
+  padding: 1rem; /* Adds space around the content */
+  line-height: 2;
+  font-size: 20px;
+  max-width: 1000px; /* Limits the line length for better readability */
+}
+
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
   line-height: 1.5;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.post-content p {
+  margin-bottom: 1.5em; 
+}
+
+.post-content a {
+  color: #016fff;
+  text-decoration: none; 
+}
+
+.post-content a:hover {
+  text-decoration: underline;
+}
+
+.post-content ul, .post-content ol {
+  margin: 1.5em 0;
+  padding-left: 2rem; 
+}
+
+.post-content ul li, .post-content ol li {
+  margin-bottom: 0.5em;
+}
+
+.post-content img {
+  max-width: 100%; 
+  height: auto; 
+  display: block;
+  margin: 1.5em auto;
 }
 
 /* Card styles */

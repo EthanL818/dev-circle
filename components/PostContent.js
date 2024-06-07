@@ -33,8 +33,10 @@ export default function PostContent({ post }) {
       {post.coverImage && (
         <img src={post.coverImage} className="card-img-top" />
       )}
-      <div className="card-content">
-        <h1 style={{ marginTop: 0, marginBottom: "20px" }}>{post?.title}</h1>
+      <div className="post-content">
+        <h1 style={{ marginTop: 0, marginBottom: "20px", fontSize: "45px" }}>
+          {post?.title}
+        </h1>
 
         {post.tags && post.tags.length > 0 && (
           <div style={{ marginBottom: "20px" }}>
@@ -60,7 +62,7 @@ export default function PostContent({ post }) {
           on {createdAt.toString()}
         </span>
 
-        <ReactMarkdown className="post-content">{post?.content}</ReactMarkdown>
+        <ReactMarkdown>{post?.content}</ReactMarkdown>
       </div>
     </div>
   );

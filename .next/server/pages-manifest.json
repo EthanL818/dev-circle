@@ -4,5 +4,5 @@
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
   "/[username]/[slug]": "pages/[username]/[slug].js",
-  "/popular": "pages/popular.js"
+  "/oldest": "pages/oldest.js"
 }
