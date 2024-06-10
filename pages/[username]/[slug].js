@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { getUserWithUsername, postToJSON, firestore } from "../../lib/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
+import { useEffect, useState } from "react";
 
 export async function getStaticProps({ params }) {
   // Grab the username and slug from the URL parameters
@@ -64,6 +65,34 @@ export async function getStaticPaths() {
   };
 }
 
+function UserCard({ username }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userDoc = await getUserWithUsername(username);
+      setUser(userDoc?.data());
+    };
+
+    fetchUser();
+  }, [username]);
+
+  return (
+    <div className="user-card">
+      <div className="user-card-content">
+        <img className="user-card-img-center" src={user?.photoURL} />
+        <h1>{user?.displayName}</h1>
+        <p className="user-card-username">
+          <i>
+            <a href={`/${user?.username}`}>@{user?.username}</a>
+          </i>
+        </p>
+        <p className="user-card-description">{user?.description}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function Post(props) {
   const postRef = doc(firestore, props.path);
   const [realtimePost] = useDocumentData(postRef);
@@ -95,22 +124,25 @@ export default function Post(props) {
         </AuthCheck>
       </section>
 
-      <aside className="card">
-        <div className="card-content">
-          <p>
-            <strong>{post.likeCount || 0} 👍</strong>
-          </p>
-          <AuthCheck
-            fallback={
-              <Link href="/enter">
-                <button>👍 Sign Up</button>
-              </Link>
-            }
-          >
-            <LikeButton postRef={postRef} />
-          </AuthCheck>
-        </div>
-      </aside>
+      <div className="card-container">
+        <UserCard username={post.username} />
+        <aside className="user-card">
+          <div className="card-content">
+            <p>
+              <strong>{post.likeCount || 0} 👍</strong>
+            </p>
+            <AuthCheck
+              fallback={
+                <Link href="/enter">
+                  <button>👍 Sign Up</button>
+                </Link>
+              }
+            >
+              <LikeButton postRef={postRef} />
+            </AuthCheck>
+          </div>
+        </aside>
+      </div>
     </main>
   );
 }

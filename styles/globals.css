@@ -424,10 +424,32 @@ button.btn-edit {
   border-radius: 50%;
   width: 150px;
   height: 150px;
+  border: 1px solid var(--color-gray);
 }
 
 .card-img-center:hover {
-  filter: brightness(50%);
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.card-img-center:active {
+  opacity: 0.9;
+}
+
+.card-img-center:before {
+  content: "Click to upload new picture";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 16px;
+  display: none;
+  text-align: center;
+}
+
+.card-img-center:hover:before {
+  display: block;
 }
 
 .card-info {
@@ -505,6 +527,12 @@ input[type="file"] {
   margin-left: auto;
 }
 
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* optional, to center the items */
+}
+
 .list-content {
   display: flex;
   justify-content: center;
@@ -559,6 +587,7 @@ input[type="file"] {
   align-items: center;
   justify-content: center;
   background-color: #2d2d2d;
+  color: white;
   border-radius: 10px;
   border: 1px solid rgb(63, 63, 63);
 }
@@ -636,10 +665,62 @@ input[type="file"] {
 }
 
 .name-input {
+  font-size: medium;
   width: 40%;
 }
 
 .description-input {
   width: 100%;
+  font-size: medium;
   margin-bottom: 1.5rem;
+}
+
+/* UserCard styles */
+
+.user-card {
+  margin: 1rem 0;
+  background-color: #282828;
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+  height: auto;
+  width: 400px;
+  display: flex;
+  flex-direction: column; /* Flexbox for the content */
+
+}
+
+.user-card h1 {
+  margin: 0.5rem 0 0 0.0;
+  font-size: 1.7rem;
+}
+
+.user-card-username {
+  margin-top: 0.3rem;
+  font-weight: bold;
+  color: var(--color-blue);
+  cursor: pointer;
+}
+
+.user-card-description {
+  margin-bottom: 1rem;
+  text-justify: inter-word;
+}
+
+.user-card-content {
+  padding: 2rem;
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-card-img-center {
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+  border: 1px solid var(--color-gray);
 }

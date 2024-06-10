@@ -48,7 +48,7 @@ export default function UserProfile({ user, setUser, admin }) {
               <input
                 className="messageBox name-input"
                 type="text"
-                style={{ color: "white" }}
+                maxlength="10"
                 value={firstName || ""}
                 onChange={(e) => setFirstName(e.target.value)}
               ></input>
@@ -56,7 +56,7 @@ export default function UserProfile({ user, setUser, admin }) {
               <input
                 className="messageBox name-input"
                 type="text"
-                style={{ color: "white" }}
+                maxlength="10"
                 value={lastName || ""}
                 onChange={(e) => setLastName(e.target.value)}
               ></input>
@@ -65,8 +65,8 @@ export default function UserProfile({ user, setUser, admin }) {
             <h2>Edit User Description</h2>
             <input
               className="messageBox description-input"
-              style={{ color: "white" }}
               type="text"
+              maxlength="250"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />

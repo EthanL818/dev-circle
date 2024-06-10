@@ -14,8 +14,7 @@ export default function SideCard() {
           <p className="card-text">
             Welcome to <span style={{ fontWeight: "bold" }}>devCircle</span>, a
             platform where likeminded students can share what they've been
-            working on, find inspiration, and collectively advance their
-            careers.
+            working on, find inspiration, and collectively improve themselves.
             <br />
             <br />
             Join our community and grow with us today!
@@ -32,8 +31,8 @@ export default function SideCard() {
             <span style={{ fontWeight: "bold" }}>devCircle</span>!
             <br />
             <br />
-            We're excited to have you back. Dive into the latest discussions,
-            share your insights, and see what your peers have been up to.
+            We're excited to have you back. Dive into the latest projects, share
+            your insights, and see what your peers have been up to.
             <br />
             <br />
             Ready to contribute? Start by writing a post.
