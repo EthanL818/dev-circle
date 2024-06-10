@@ -88,7 +88,7 @@ export default function SuggestionBar({ postRef }) {
 
         <form onSubmit={handleSubmit} autocomplete="off">
           <div className="messageBox">
-            <input
+            <textarea
               required=""
               placeholder="Send a suggestion..."
               value={suggestion}

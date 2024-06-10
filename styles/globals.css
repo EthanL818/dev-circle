@@ -11,6 +11,11 @@
   --color-gray: #404040;
 }
 
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 html,
 body {
   padding: 0;
@@ -582,7 +587,8 @@ input[type="file"] {
 
 .messageBox {
   width: 100%;
-  height: 40px;
+  height: fit-content;
+  text-wrap: wrap;
   display: flex;
   align-items: center;
   justify-content: center;
