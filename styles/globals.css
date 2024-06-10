@@ -162,7 +162,7 @@ button.filter-btn {
   color: #BFBFBF;
   margin: 0;
   padding: 0;
-  padding-right: 2rem;
+  padding-right: 15px;
   padding-left: 0.5rem;
   font-size: 1.2rem;
 }
@@ -218,7 +218,8 @@ button.btn-logo {
 }
 
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
-  line-height: 1.5;
+  line-height: 1.25;
+  font-weight: bolder;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
 }
@@ -410,11 +411,12 @@ button.btn-logo {
 }
 
 .card-img-center {
-  width: 20%;
   display: block;
   margin: auto;
   border-radius: 50%;
-  max-width: 150px;
+  width: 150px;
+  height: 150px;
+  margin-top: 20px;
 }
 
 .card-info {

@@ -2,10 +2,10 @@ import Link from "next/link";
 import FilterBar from "../components/FilterBar";
 import { tagList } from "../lib/tags";
 
-export default function PostFeed({ posts, admin }) {
+export default function PostFeed({ posts, admin, filterBar = true }) {
   return (
     <div>
-      {!admin && <FilterBar />}
+      {!admin && filterBar && <FilterBar />}
       {posts
         ? posts.map((post) => (
             <PostItem post={post} key={post.slug} admin={admin} />

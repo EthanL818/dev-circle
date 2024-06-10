@@ -59,7 +59,7 @@ export default function PostContent({ post }) {
           <Link href={`/${post.username}`} className="text-info">
             @{post.username}
           </Link>{" "}
-          on {createdAt.toString()}
+          on {createdAt.toISOString()}
         </span>
 
         <ReactMarkdown>{post?.content}</ReactMarkdown>

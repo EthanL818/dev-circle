@@ -115,8 +115,6 @@ function PostForm({
   // isValid is true if the form doesn't have any errors, and isDirty is true when the user modifies the form
   const { isValid, isDirty, errors } = formState;
 
-  //console.log(isDirty);
-
   // Assuming useDocumentData is already being used to fetch post data
   const [post] = useDocumentData(postRef);
 
@@ -165,7 +163,7 @@ function PostForm({
         <textarea
           {...register("content", {
             maxLength: { value: 20000, message: "content is too long" },
-            minLength: { value: 10, message: "content is too short" },
+            minLength: { value: 200, message: "content is too short" },
             required: { value: true, message: "content is required" },
           })}
         ></textarea>
