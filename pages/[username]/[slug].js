@@ -126,7 +126,7 @@ export default function Post(props) {
 
       <div className="card-container">
         <UserCard username={post.username} />
-        <aside className="user-card">
+        <aside className="user-card" style={{ width: "100%" }}>
           <div className="card-content">
             <p>
               <strong>{post.likeCount || 0} 👍</strong>

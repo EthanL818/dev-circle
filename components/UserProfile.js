@@ -70,7 +70,7 @@ export default function UserProfile({ user, setUser, admin }) {
 
               <h2>Edit User Description</h2>
               <textarea
-                className="messageBox description-input"
+                className="messageBox description description-input"
                 type="text"
                 maxlength="250"
                 value={description}

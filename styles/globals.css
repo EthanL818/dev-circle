@@ -14,6 +14,7 @@
 textarea {
   font-family: inherit;
   font-size: inherit;
+  resize: none;
 }
 
 html,
@@ -538,6 +539,12 @@ input[type="file"] {
   align-items: center; /* optional, to center the items */
 }
 
+.comment {
+  line-height: 1.5rem;
+  justify-content: center;
+  color: gray;
+}
+
 .list-content {
   display: flex;
   justify-content: center;
@@ -587,7 +594,8 @@ input[type="file"] {
 
 .messageBox {
   width: 100%;
-  height: fit-content;
+  min-height: fit-content;
+  height: 2rem;
   text-wrap: wrap;
   display: flex;
   align-items: center;
@@ -597,6 +605,15 @@ input[type="file"] {
   border-radius: 10px;
   border: 1px solid rgb(63, 63, 63);
 }
+
+.messageBox.suggestion {
+  height: 5rem;
+}
+
+.messageBox.description {
+  height: 5rem;
+}
+
 .messageBox:focus-within {
   border: 1px solid rgb(110, 110, 110);
 }
@@ -692,7 +709,6 @@ input[type="file"] {
   width: 400px;
   display: flex;
   flex-direction: column; /* Flexbox for the content */
-
 }
 
 .user-card h1 {
