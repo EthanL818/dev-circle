@@ -9,6 +9,11 @@ export default function PostContent({ post }) {
       ? new Date(post.createdAt)
       : post.createdAt.toDate();
 
+  const updatedAt =
+    typeof post?.updatedAt === "number"
+      ? new Date(post.updatedAt)
+      : post.updatedAt.toDate();
+
   // Check if post.tags is defined and is an array before mapping
   const tagsToUpdate = Array.isArray(post.tags)
     ? post.tags.map((tagValue) => {
@@ -54,14 +59,21 @@ export default function PostContent({ post }) {
           </div>
         )}
 
-        <span className="text-sm">
-          Written by{" "}
-          <Link href={`/${post.username}`} className="text-info">
-            @{post.username}
-          </Link>{" "}
-          on {createdAt.toISOString()}
-        </span>
-
+        <div
+          className="date-container"
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <span className="text-sm">
+            Written by{" "}
+            <Link href={`/${post.username}`} className="text-info">
+              @{post.username}
+            </Link>{" "}
+            on {createdAt.toISOString()}
+            {updatedAt != createdAt && (
+              <span>, Last updated on {updatedAt.toISOString()} </span>
+            )}
+          </span>
+        </div>
         <ReactMarkdown>{post?.content}</ReactMarkdown>
       </div>
     </div>

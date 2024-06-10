@@ -6,14 +6,16 @@ import { updateDoc, doc } from "firebase/firestore";
 export default function UserProfile({ user, setUser, admin }) {
   // Initialize new states to handle editing user fields
   const [isEditing, setIsEditing] = useState(false);
-  const [description, setDescription] = useState(user.description);
+  const [description, setDescription] = useState(user?.description);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
   useEffect(() => {
     // Update states when user prop changes
-    setDescription(user.description);
-    const displayName = user.displayName.split(" ");
+    setDescription(user?.description);
+    const displayName = user?.displayName.split(" ");
+
+    if (!displayName) return;
     setFirstName(displayName[0]);
     setLastName(displayName[1]);
   }, [user]);
@@ -37,8 +39,8 @@ export default function UserProfile({ user, setUser, admin }) {
   };
 
   return (
-    <div className="box-center card" style={{ marginTop: "20px" }}>
-      <img src={user.photoURL || "/avatar.jpg"} className="card-img-center" />
+    <div className="box-center" style={{ marginTop: "20px" }}>
+      <img src={user?.photoURL || "/avatar.jpg"} className="card-img-center" />
 
       {admin ? (
         isEditing ? (
@@ -80,12 +82,12 @@ export default function UserProfile({ user, setUser, admin }) {
         ) : (
           <>
             <h1 className="profile-header">
-              {user.displayName || "Anonymous User"}
+              {user?.displayName || "Anonymous User"}
             </h1>
             <p className="profile-username">
-              <i>@{user.username}</i>
+              <i>@{user?.username}</i>
             </p>
-            <p>{user.description}</p>
+            <p>{user?.description}</p>
             <div className="box-center">
               <button className="btn-edit" onClick={() => setIsEditing(true)}>
                 <svg
@@ -111,12 +113,12 @@ export default function UserProfile({ user, setUser, admin }) {
       ) : (
         <>
           <h1 className="profile-header">
-            {user.displayName || "Anonymous User"}
+            {user?.displayName || "Anonymous User"}
           </h1>
           <p className="profile-username">
-            <i>@{user.username}</i>
+            <i>@{user?.username}</i>
           </p>
-          {user.description && <p>{user.description}</p>}
+          {user?.description && <p>{user?.description}</p>}
         </>
       )}
     </div>

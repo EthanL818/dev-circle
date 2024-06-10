@@ -48,11 +48,8 @@ export default function UserProfilePage({ initialUser, posts }) {
   // Check if the current user is the same as the user being viewed
   useEffect(() => {
     setUser(initialUser);
-    setAdmin(initialUser.username === username);
+    setAdmin(initialUser?.username === username);
   }, [initialUser, username]);
-
-  console.log(initialUser.username);
-  console.log(username);
 
   return (
     <div
