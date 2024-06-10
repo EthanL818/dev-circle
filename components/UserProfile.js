@@ -1,50 +1,123 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { firestore, auth } from "../lib/firebase";
 import { updateDoc, doc } from "firebase/firestore";
 
 // UI component for user profile
-export default function UserProfile({ user, setUser, admin = true }) {
-  // Initialize two new states to handle editing user description
+export default function UserProfile({ user, setUser, admin }) {
+  // Initialize new states to handle editing user fields
   const [isEditing, setIsEditing] = useState(false);
-  const [newDescription, setNewDescription] = useState("");
+  const [description, setDescription] = useState(user.description);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
-  const editDescription = async () => {
-    // create a referemce to the user document
+  useEffect(() => {
+    // Update states when user prop changes
+    setDescription(user.description);
+    const displayName = user.displayName.split(" ");
+    setFirstName(displayName[0]);
+    setLastName(displayName[1]);
+  }, [user]);
+
+  // async function to edit user information
+  const editInfo = async () => {
+    // create a reference to the user document
     const userRef = doc(firestore, "users", auth.currentUser.uid);
     if (admin) {
       await updateDoc(userRef, {
-        description: newDescription,
+        description: description,
+        displayName: `${firstName} ${lastName}`,
       });
       setIsEditing(false);
-      setUser({ ...user, description: newDescription });
+      setUser({
+        ...user,
+        description: description,
+        displayName: `${firstName} ${lastName}`,
+      });
     }
   };
 
   return (
     <div className="box-center card" style={{ marginTop: "20px" }}>
       <img src={user.photoURL || "/avatar.jpg"} className="card-img-center" />
-      <h1>{user.displayName || "Anonymous User"}</h1>
-      <p>
-        <i>@{user.username}</i>
-      </p>
+
       {admin ? (
         isEditing ? (
           <>
+            <h2>Edit Display Name</h2>
+            <div className="name-inputs">
+              <input
+                className="messageBox name-input"
+                type="text"
+                style={{ color: "white" }}
+                value={firstName || ""}
+                onChange={(e) => setFirstName(e.target.value)}
+              ></input>
+
+              <input
+                className="messageBox name-input"
+                type="text"
+                style={{ color: "white" }}
+                value={lastName || ""}
+                onChange={(e) => setLastName(e.target.value)}
+              ></input>
+            </div>
+
+            <h2>Edit User Description</h2>
             <input
-              value={newDescription}
-              onChange={(e) => setNewDescription(e.target.value)}
+              className="messageBox description-input"
+              style={{ color: "white" }}
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
-            <button onClick={editDescription}>Submit</button>
-            <button onClick={() => setIsEditing(false)}>Cancel</button>
+            <button className="btn-green" onClick={editInfo}>
+              Save Changes
+            </button>
+            <button className="btn-red" onClick={() => setIsEditing(false)}>
+              Cancel
+            </button>
           </>
         ) : (
           <>
+            <h1 className="profile-header">
+              {user.displayName || "Anonymous User"}
+            </h1>
+            <p className="profile-username">
+              <i>@{user.username}</i>
+            </p>
             <p>{user.description}</p>
-            <button onClick={() => setIsEditing(true)}>Edit Description</button>
+            <div className="box-center">
+              <button className="btn-edit" onClick={() => setIsEditing(true)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pencil-square"
+                  viewBox="0 0 16 16"
+                  style={{ marginRight: "5px" }}
+                >
+                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                  />
+                </svg>{" "}
+                Edit Info
+              </button>
+            </div>
           </>
         )
       ) : (
-        user.description && <p>{user.description}</p>
+        <>
+          <h1 className="profile-header">
+            {user.displayName || "Anonymous User"}
+          </h1>
+          <p className="profile-username">
+            <i>@{user.username}</i>
+          </p>
+          {user.description && <p>{user.description}</p>}
+        </>
       )}
     </div>
   );

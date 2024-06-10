@@ -3,7 +3,7 @@ import PostFeed from "../../components/PostFeed";
 import { getUserWithUsername, postToJSON } from "../../lib/firebase";
 import { collection, where, orderBy, getDocs, query } from "firebase/firestore";
 import { UserContext } from "../../lib/context";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 
 // Server-side rendering function to fetch data based on the username query
 export async function getServerSideProps({ query: contextQuery }) {
@@ -40,14 +40,19 @@ export async function getServerSideProps({ query: contextQuery }) {
   };
 }
 
-export default function UserProfilePage({ initialUser, posts, admin = false }) {
+export default function UserProfilePage({ initialUser, posts }) {
   const { username } = useContext(UserContext);
   const [user, setUser] = useState(initialUser);
+  const [admin, setAdmin] = useState(false);
 
   // Check if the current user is the same as the user being viewed
-  if (initialUser.username == username) {
-    admin = true;
-  }
+  useEffect(() => {
+    setUser(initialUser);
+    setAdmin(initialUser.username === username);
+  }, [initialUser, username]);
+
+  console.log(initialUser.username);
+  console.log(username);
 
   return (
     <div
