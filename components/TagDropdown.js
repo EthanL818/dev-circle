@@ -1,6 +1,7 @@
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { tagList } from "../lib/tags";
+import { techList } from "../lib/tech";
 
 const animatedComponents = makeAnimated();
 
@@ -8,6 +9,7 @@ export default function TagDropdown({
   selectedTags,
   setSelectedTags,
   setTagsChanged,
+  tech,
 }) {
   const handleChange = (selectedOptions) => {
     setSelectedTags(selectedOptions);
@@ -17,20 +19,20 @@ export default function TagDropdown({
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: "#B3B3B3",
+      backgroundColor: "#1a1a1a",
     }),
     menu: (provided) => ({
       ...provided,
-      backgroundColor: "#B3B3B3",
+      backgroundColor: "#1a1a1a",
     }),
     menuList: (provided) => ({
       ...provided,
-      backgroundColor: "#B3B3B3",
+      backgroundColor: "#1a1a1a",
     }),
     option: (provided, state) => ({
       ...provided,
       color: state.isSelected ? "white" : state.data.color,
-      backgroundColor: state.isSelected ? state.data.color : "#B3B3B3",
+      backgroundColor: state.isSelected ? state.data.color : "#1a1a1a",
       ":active": {
         backgroundColor: state.data.color,
       },
@@ -58,15 +60,24 @@ export default function TagDropdown({
     }),
   };
 
-  const options = tagList.map((tag) => ({
-    value: tag.name,
-    label: tag.name,
-    color: tag.color,
-  }));
+  let options;
+  if (!tech) {
+    options = tagList.map((tag) => ({
+      value: tag.name,
+      label: tag.name,
+      color: tag.color,
+    }));
+  } else {
+    options = techList.map((tech) => ({
+      value: tech.name,
+      label: tech.name,
+      color: tech.color,
+    }));
+  }
 
   return (
     <div>
-      <h1>Tags</h1>
+      {tech ? <h1>Tech Stack</h1> : <h1>Tags</h1>}
       <Select
         closeMenuOnSelect={false}
         value={selectedTags}
@@ -77,17 +88,18 @@ export default function TagDropdown({
         onChange={handleChange}
       />
       <div style={{ marginTop: "15px", marginBottom: "20px" }}>
-        {selectedTags.map((tag) => (
-          <span
-            key={tag.value}
-            className="tag"
-            style={{
-              borderColor: tag.color,
-            }}
-          >
-            {tag.label}
-          </span>
-        ))}
+        {selectedTags &&
+          selectedTags.map((tag) => (
+            <span
+              key={tag.value}
+              className="tag"
+              style={{
+                borderColor: tag.color,
+              }}
+            >
+              {tag.label}
+            </span>
+          ))}
       </div>
     </div>
   );

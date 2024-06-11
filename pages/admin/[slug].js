@@ -4,6 +4,7 @@ import { firestore, auth, serverTimestamp } from "../../lib/firebase";
 import ImageUploader from "../../components/ImageUploader";
 import TagDropdown from "../../components/TagDropdown";
 import { tagList } from "../../lib/tags";
+import { techList } from "../../lib/tech";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -30,6 +31,9 @@ function PostManager() {
 
   // State for selected tags
   const [selectedTags, setSelectedTags] = useState([]);
+
+  // State for selected tech
+  const [selectedTech, setSelectedTech] = useState([]);
 
   // Router to retrieve slug
   const router = useRouter();
@@ -66,6 +70,8 @@ function PostManager() {
               preview={preview}
               selectedTags={selectedTags}
               setSelectedTags={setSelectedTags}
+              selectedTech={selectedTech}
+              setSelectedTech={setSelectedTech}
             />
           </section>
 
@@ -101,6 +107,8 @@ function PostForm({
   preview,
   selectedTags,
   setSelectedTags,
+  selectedTech,
+  setSelectedTech,
 }) {
   // Populating React form with default values from Firestore
   const { register, handleSubmit, reset, watch, formState } = useForm({
@@ -131,12 +139,30 @@ function PostForm({
     }
   }, [post, setSelectedTags]);
 
+  // Effect hook to update selectedTech when post data changes
+  useEffect(() => {
+    if (post && post.tech) {
+      // Assuming post.tags is an array of tag values
+      const techToUpdate = post.tech.map((techValue) => {
+        // Find the tag object in tagList by value
+        const techObj = techList.find((tag) => tag.name === techValue);
+        return {
+          value: techObj.name,
+          label: techObj.name,
+          color: techObj.color,
+        };
+      });
+      setSelectedTech(techToUpdate);
+    }
+  }, [post, setSelectedTech]);
+
   // Callback function that handles updating the Firestore database once form is submitted
   const updatePost = async ({ content, published }) => {
     await updateDoc(postRef, {
       content,
       published,
       tags: selectedTags.map((tag) => tag.value),
+      tech: selectedTech.map((tag) => tag.value),
       updatedAt: serverTimestamp(),
     });
 
@@ -172,6 +198,13 @@ function PostForm({
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
           setTagsChanged={setTagsChanged}
+        />
+
+        <TagDropdown
+          selectedTags={selectedTech}
+          setSelectedTags={setSelectedTech}
+          setTagsChanged={setTagsChanged}
+          tech={true}
         />
 
         {errors.content && (

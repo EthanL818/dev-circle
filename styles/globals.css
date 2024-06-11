@@ -604,6 +604,7 @@ input[type="file"] {
   color: white;
   border-radius: 10px;
   border: 1px solid rgb(63, 63, 63);
+  padding: 0.5rem;
 }
 
 .messageBox.suggestion {
@@ -667,6 +668,18 @@ input[type="file"] {
   cursor: pointer;
   margin-right: 5px;
   display: inline-block;
+  border-radius: 8px;
+}
+
+.icon-tag {
+  border: 2px solid black;
+  width: 30px; /* Set a fixed width */
+  height: 30px; /* Set the same height */
+  display: inline-flex; /* Use inline-flex for better alignment */
+  align-items: center; /* Center the content vertically */
+  justify-content: center; /* Center the content horizontally */
+  cursor: pointer;
+  margin-right: 5px;
   border-radius: 8px;
 }
 

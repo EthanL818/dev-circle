@@ -1,6 +1,7 @@
 import Link from "next/link";
 import FilterBar from "../components/FilterBar";
 import { tagList } from "../lib/tags";
+import { techList } from "../lib/tech";
 
 export default function PostFeed({ posts, admin, filterBar = true }) {
   return (
@@ -39,6 +40,31 @@ function PostItem({ post, admin = false }) {
       })
     : []; // If post.tags is not an array, default to an empty array
 
+  // Check if post.tech is defined and is an array before mapping
+  const techToUpdate = Array.isArray(post.tech)
+    ? post.tech.map((techValue) => {
+        // Find the tech object in tagList by value
+        const techObj = techList.find((tech) => tech.name === techValue);
+        // Ensure techObj is not undefined before accessing its properties
+        if (techObj) {
+          return {
+            value: techObj.name,
+            label: techObj.name,
+            color: techObj.color,
+            icon: techObj.icon,
+          };
+        } else {
+          // Return a default or placeholder object if techObj is undefined
+          return {
+            value: tagValue,
+            label: tagValue,
+            color: "#333",
+            icon: null,
+          }; // Example placeholder
+        }
+      })
+    : []; // If post.tech is not an array, default to an empty array
+
   return (
     <div className="card">
       {post.coverImage && (
@@ -72,6 +98,22 @@ function PostItem({ post, admin = false }) {
           </div>
         )}
 
+        {post.tech && post.tech.length > 0 && (
+          <div style={{ marginTop: "15px", marginBottom: "20px" }}>
+            {techToUpdate.map((tech) => (
+              <span
+                key={tech.value}
+                className="icon-tag"
+                style={{
+                  borderColor: tech.color,
+                }}
+              >
+                {tech.icon}
+              </span>
+            ))}
+          </div>
+        )}
+
         <footer>
           <span>
             {wordCount} words. {minutesToRead} min read
@@ -90,12 +132,14 @@ function PostItem({ post, admin = false }) {
               <Link href={`/admin/suggestions/${post.slug}`}>
                 <button className="btn-green">View Suggestions</button>
               </Link>
+
+              <button className="btn-red">Delete</button>
             </div>
 
             {post.published ? (
-              <p className="text-success">Live</p>
+              <p className="text-success">• Live</p>
             ) : (
-              <p className="text-danger">Unpublished</p>
+              <p className="text-danger">• Unpublished</p>
             )}
           </>
         )}

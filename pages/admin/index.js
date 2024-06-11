@@ -31,16 +31,7 @@ export default function AdminPostsPage(props) {
         >
           <h1>Manage your Posts</h1>
           <CreateNewPost />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "3rem",
-            }}
-          >
-            <PostList />
-          </div>
+          <PostList />
         </div>
       </AuthCheck>
     </main>

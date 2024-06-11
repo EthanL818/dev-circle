@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { firestore, auth } from "../lib/firebase";
 import { updateDoc, doc } from "firebase/firestore";
+import toast from "react-hot-toast";
 
 // UI component for user profile
 export default function UserProfile({ user, setUser, admin }) {
@@ -35,6 +36,7 @@ export default function UserProfile({ user, setUser, admin }) {
         description: description,
         displayName: `${firstName} ${lastName}`,
       });
+      toast.success("User information updated successfully!");
     }
   };
 
