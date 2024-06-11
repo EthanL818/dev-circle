@@ -27,7 +27,7 @@ export default function SideCard() {
   }
 
   return (
-    <div className="card-container" style={{ width: "250px" }}>
+    <div className="card-container left-side">
       <div className="card-side">
         {!username ? (
           <>
