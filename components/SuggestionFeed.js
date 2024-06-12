@@ -87,13 +87,23 @@ function SuggestionItem({ suggestion, removeSuggestion }) {
             alignItems: "center",
           }}
         >
-          <p style={{ textAlign: "center" }}>{suggestion.content}</p>
-          <button className="btn-red" onClick={deleteSuggestion}>
+          <p>{suggestion.content}</p>
+          <button
+            className="btn-red"
+            onClick={() => {
+              if (
+                window.confirm(
+                  "Are you sure you wish to delete this suggestion? This action cannot be undone."
+                )
+              )
+                deleteSuggestion;
+            }}
+          >
             Delete
           </button>
         </div>
 
-        <footer>
+        <footer style={{ marginTop: "1rem" }}>
           <span>Created at {createdAt.toString()}</span>
         </footer>
       </div>

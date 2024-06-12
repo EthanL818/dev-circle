@@ -47,6 +47,21 @@ export default function SuggestionBar({ postRef }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check if the suggestion is roughly a sentence long (at least 5 words)
+    if (suggestion.split(" ").length < 5) {
+      toast.error("Suggestion is too short. Please write at least 5 words.");
+      return;
+    }
+
+    // Check if the suggestion is shorter than an essay (less than 500 words)
+    if (suggestion.split(" ").length > 500) {
+      toast.error(
+        "Suggestion is too long. Please keep it shorter than 500 words."
+      );
+      return;
+    }
+
     await addSuggestion(suggestion);
     setSuggestion("");
     toast.success("Suggestion has been sent!");

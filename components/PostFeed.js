@@ -165,7 +165,7 @@ function PostItem({ post, admin = false, deletePost }) {
                 onClick={() => {
                   if (
                     window.confirm(
-                      "Are you sure you wish to delete this post? This action cannot be reversed."
+                      "Are you sure you wish to delete this post? This action cannot be undone."
                     )
                   )
                     deletePost(post);
