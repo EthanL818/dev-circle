@@ -37,10 +37,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/suggestions/[slug]": [
+    "/admin": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/suggestions/[slug].js"
+      "static/chunks/pages/admin.js"
+    ],
+    "/popular": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/popular.js"
     ]
   },
   "ampFirstPages": []

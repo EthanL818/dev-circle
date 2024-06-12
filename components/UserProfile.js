@@ -33,7 +33,7 @@ export default function UserProfile({ user, setUser, admin }) {
     if (admin) {
       // Validate email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email) && email !== "") {
+      if (!emailRegex.test(email) && email !== "" && email !== undefined) {
         toast.error("Invalid email address.");
         return;
       }
@@ -41,7 +41,7 @@ export default function UserProfile({ user, setUser, admin }) {
       // Validate GitHub link
       const githubRegex =
         /^https:\/\/github\.com\/[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/;
-      if (!githubRegex.test(github) && github !== "") {
+      if (!githubRegex.test(github) && github !== "" && github !== undefined) {
         toast.error("Invalid GitHub link.");
         return;
       }
@@ -49,7 +49,11 @@ export default function UserProfile({ user, setUser, admin }) {
       // Validate LinkedIn link
       const linkedinRegex =
         /^https:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]{1,100}\/?$/;
-      if (!linkedinRegex.test(linkedin) && linkedin !== "") {
+      if (
+        !linkedinRegex.test(linkedin) &&
+        linkedin !== "" &&
+        linkedin !== undefined
+      ) {
         toast.error("Invalid LinkedIn link.");
         return;
       }
