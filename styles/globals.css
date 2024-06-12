@@ -690,7 +690,11 @@ input[type="file"] {
 }
 
 .profile-username {
-  margin: 0.5rem 0 1.5rem 0;
+  margin: 0.5rem 0 0 0;
+}
+
+.profile-description {
+  margin: 2rem 0 2rem 0;
 }
 
 .name-inputs {
@@ -745,6 +749,7 @@ input[type="file"] {
 
 .user-card-description {
   text-justify: inter-word;
+  margin: 1.5rem 0 1.5rem 0;
 }
 
 .user-card-content {

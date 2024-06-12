@@ -76,7 +76,7 @@ export default function UserProfile({ user, setUser, admin }) {
 
   return (
     <div className="box-center" style={{ marginTop: "20px" }}>
-      <div className="card-content card">
+      <div className="card-content card" style={{ width: "80%" }}>
         <img
           src={user?.photoURL || "/avatar.jpg"}
           className="card-img-center"
@@ -152,7 +152,7 @@ export default function UserProfile({ user, setUser, admin }) {
               <p className="profile-username">
                 <i>@{user?.username}</i>
               </p>
-              <p>{user?.description}</p>
+              <p className="profile-description">{user?.description}</p>
               <ContactInfo user={user} />
 
               <div className="box-center">
@@ -185,7 +185,10 @@ export default function UserProfile({ user, setUser, admin }) {
             <p className="profile-username">
               <i>@{user?.username}</i>
             </p>
-            {user?.description && <p>{user?.description}</p>}
+            {user?.description && (
+              <p className="profile-description">{user?.description}</p>
+            )}
+            <ContactInfo user={user} />
           </>
         )}
       </div>
