@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { firestore } from "../lib/firebase";
+import kebabCase from "lodash.kebabcase";
+
 import {
   getDocs,
   query,
@@ -45,7 +47,11 @@ export default function PopularTagsCard() {
       const popularTags = Object.entries(tagCounts)
         .sort(([, countA], [, countB]) => countB - countA)
         .slice(0, 5)
-        .map(([tag, count]) => ({ name: tag, link: `/tags/${tag}`, count }));
+        .map(([tag, count]) => ({
+          name: tag,
+          link: `/tags/${encodeURI(kebabCase(tag))}`,
+          count,
+        }));
 
       setPopularTags(popularTags);
     };

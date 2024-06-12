@@ -4,6 +4,7 @@ import LikeButton from "../../components/LikeButton";
 import SuggestionBar from "../../components/SuggestionBar";
 import AuthCheck from "../../components/AuthCheck";
 import { techList } from "../../lib/tech";
+import { ContactInfo } from "../../components/UserProfile";
 
 import Link from "next/link";
 import {
@@ -89,6 +90,7 @@ function UserCard({ username }) {
             <a href={`/${user?.username}`}>@{user?.username}</a>
           </i>
         </p>
+        <ContactInfo user={user} />
         <p className="user-card-description">{user?.description}</p>
       </div>
     </div>
