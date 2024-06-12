@@ -2,21 +2,48 @@ import Link from "next/link";
 import FilterBar from "../components/FilterBar";
 import { tagList } from "../lib/tags";
 import { techList } from "../lib/tech";
+import React, { useState, useEffect } from "react";
+import { firestore, auth } from "../lib/firebase";
+import { deleteDoc, doc } from "firebase/firestore";
+import toast from "react-hot-toast";
 
 export default function PostFeed({ posts, admin, filterBar = true }) {
+  const [activePosts, setActivePosts] = useState(posts);
+
+  async function deletePost(postToDelete) {
+    const postRef = doc(
+      firestore,
+      "users",
+      auth.currentUser.uid,
+      "posts",
+      postToDelete.slug
+    );
+    await deleteDoc(postRef);
+    toast.success("Post has been successfully deleted!");
+
+    // Remove the deleted post from the state variable
+    const newPosts = posts.filter((post) => post.slug !== postToDelete.slug);
+    setActivePosts(newPosts);
+  }
+
   return (
     <div>
       {!admin && filterBar && <FilterBar />}
       {posts
         ? posts.map((post) => (
-            <PostItem post={post} key={post.slug} admin={admin} />
+            <PostItem
+              post={post}
+              key={post.slug}
+              admin={admin}
+              deletePost={deletePost}
+            />
           ))
         : null}
     </div>
   );
 }
 
-function PostItem({ post, admin = false }) {
+function PostItem({ post, admin = false, deletePost }) {
   // Naive method to calc word count and read time
   const wordCount = post?.content.trim().split(/\s+/g).length;
   const minutesToRead = (wordCount / 100 + 1).toFixed(0);
@@ -133,7 +160,19 @@ function PostItem({ post, admin = false }) {
                 <button className="btn-green">View Suggestions</button>
               </Link>
 
-              <button className="btn-red">Delete</button>
+              <button
+                className="btn-red"
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "Are you sure you wish to delete this post? This action cannot be reversed."
+                    )
+                  )
+                    deletePost(post);
+                }}
+              >
+                Delete
+              </button>
             </div>
 
             {post.published ? (

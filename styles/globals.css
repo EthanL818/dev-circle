@@ -618,6 +618,18 @@ input[type="file"] {
   border-radius: 8px;
 }
 
+.tag-container {
+  gap: 5px; 
+  padding: 0.5rem 2rem 0rem 2rem;
+  height: auto;
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; 
+}
+
 .icon-tag {
   border: 2px solid black;
   width: 30px; /* Set a fixed width */
@@ -628,6 +640,17 @@ input[type="file"] {
   cursor: pointer;
   margin-right: 5px;
   border-radius: 8px;
+}
+
+.full-tag {
+  border: 2px solid black;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0;  
+  padding-right: 15px;
+  cursor: pointer;
 }
 
 

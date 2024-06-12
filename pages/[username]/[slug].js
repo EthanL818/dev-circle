@@ -3,6 +3,8 @@ import PostContent from "../../components/PostContent";
 import LikeButton from "../../components/LikeButton";
 import SuggestionBar from "../../components/SuggestionBar";
 import AuthCheck from "../../components/AuthCheck";
+import { techList } from "../../lib/tech";
+
 import Link from "next/link";
 import {
   doc,
@@ -93,6 +95,64 @@ function UserCard({ username }) {
   );
 }
 
+function TechStack({ post }) {
+  // Check if post.tech is defined and is an array before mapping
+  const techToUpdate = Array.isArray(post.tech)
+    ? post.tech.map((techValue) => {
+        // Find the tech object in tagList by value
+        const techObj = techList.find((tech) => tech.name === techValue);
+        // Ensure techObj is not undefined before accessing its properties
+        if (techObj) {
+          return {
+            value: techObj.name,
+            label: techObj.name,
+            color: techObj.color,
+            icon: techObj.icon,
+          };
+        } else {
+          // Return a default or placeholder object if techObj is undefined
+          return {
+            value: tagValue,
+            label: tagValue,
+            color: "#333",
+            icon: null,
+          }; // Example placeholder
+        }
+      })
+    : []; // If post.tech is not an array, default to an empty array
+
+  return (
+    <div className="user-card">
+      <div className="user-card-content">
+        <h1>Tech Stack</h1>
+        <div
+          className="tag-container"
+          style={{ marginTop: "15px", marginBottom: "20px" }}
+        >
+          {techToUpdate.map((tech) => (
+            <span
+              key={tech.value}
+              className="full-tag"
+              style={{
+                borderColor: tech.color,
+              }}
+            >
+              <span
+                className="icon-tag"
+                style={{ marginRight: "5px", border: "none" }}
+              >
+                {" "}
+                {tech.icon}
+              </span>
+              {tech.label}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Post(props) {
   const postRef = doc(firestore, props.path);
   const [realtimePost] = useDocumentData(postRef);
@@ -126,6 +186,7 @@ export default function Post(props) {
 
       <div className="card-container">
         <UserCard username={post.username} />
+        {post.tech && post.tech.length > 0 && <TechStack post={post} />}
         <aside className="user-card" style={{ width: "100%" }}>
           <div className="card-content">
             <p>
