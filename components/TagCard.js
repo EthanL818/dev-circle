@@ -1,3 +1,6 @@
+import Link from "next/link";
+import kebabCase from "lodash.kebabcase";
+
 export default function TagCard({ tag }) {
   return (
     <div
@@ -9,12 +12,15 @@ export default function TagCard({ tag }) {
       <div className="tag-card-content">
         <h2>{tag.name}</h2>
         <p className="card-text">{tag.description}</p>
-        <button
-          className="tag-card-button"
-          style={{ backgroundColor: `${tag.color}` }}
-        >
-          View More
-        </button>
+
+        <Link href={`/tags/${encodeURI(kebabCase(tag.name))}`}>
+          <button
+            className="tag-card-button"
+            style={{ backgroundColor: `${tag.color}` }}
+          >
+            View More
+          </button>
+        </Link>
       </div>
     </div>
   );
