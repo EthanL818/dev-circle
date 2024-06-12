@@ -20,7 +20,10 @@ export default function Navbar() {
       <ul>
         <li>
           <Link href="/">
-            <button className="btn-logo">devCircle</button>
+            <button className="btn-logo">
+              {" "}
+              <span className="curly-braces">devCircle</span>
+            </button>
           </Link>
         </li>
 
