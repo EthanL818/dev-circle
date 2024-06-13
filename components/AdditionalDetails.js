@@ -11,6 +11,7 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
   // State variables to store the user's additional details
   const [school, setSchool] = useState(user?.school);
   const [location, setLocation] = useState(user?.location);
+  const [work, setWork] = useState(user?.work);
   const [workingOn, setWorkingOn] = useState(user?.workingOn);
   const [learning, setLearning] = useState(user?.learning);
 
@@ -18,6 +19,7 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
     // Update states when user prop changes
     setSchool(user?.school);
     setLocation(user?.location);
+    setWork(user?.work);
     setWorkingOn(user?.workingOn);
     setLearning(user?.learning);
   }, [user]);
@@ -31,6 +33,7 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
       // Only update fields if they are not undefined
       if (school !== undefined) updates.school = school;
       if (location !== undefined) updates.location = location;
+      if (work !== undefined) updates.work = work;
       if (workingOn !== undefined) updates.workingOn = workingOn;
       if (learning !== undefined) updates.learning = learning;
 
@@ -57,6 +60,13 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
               type="text"
               value={school || ""}
               onChange={(e) => setSchool(e.target.value)}
+            ></input>
+            {work ? <h2>Edit Work</h2> : <h2>Add Work</h2>}
+            <input
+              className="messageBox description-input"
+              type="text"
+              value={work || ""}
+              onChange={(e) => setWork(e.target.value)}
             ></input>
             {location ? <h2>Edit Location</h2> : <h2>Add location</h2>}
             <input
@@ -98,7 +108,7 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
           </div>
         ) : (
           <div className="additional-details">
-            {!school && !location && !workingOn && !learning ? (
+            {!school && !location && !workingOn && !learning && !work ? (
               <>
                 <h2>Add Additional Details</h2>
                 <p className="comment">
@@ -150,6 +160,26 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
                       Education
                     </h3>
                     <p>{user.school}</p>
+                  </div>
+                )}
+                {user.work && (
+                  <div className="additional-detail card">
+                    <h3>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-briefcase"
+                        viewBox="0 0 16 16"
+                        style={{ marginRight: "5px" }}
+                      >
+                        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                      </svg>
+                      Work
+                    </h3>
+
+                    <p>{user.work}</p>
                   </div>
                 )}
                 {user.location && (

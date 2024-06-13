@@ -4,7 +4,5 @@
   "/_document": "pages/_document.js",
   "/[username]": "pages/[username].js",
   "/popular": "pages/popular.js",
-  "/": "pages/index.js",
-  "/enter": "pages/enter.js",
-  "/admin": "pages/admin.js"
+  "/[username]/[slug]": "pages/[username]/[slug].js"
 }
