@@ -53,9 +53,15 @@ function PostList() {
   const posts = querySnapshot?.docs.map((doc) => doc.data());
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <PostFeed posts={posts} admin />
-    </>
+    </div>
   );
 }
 

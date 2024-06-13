@@ -1,6 +1,8 @@
 import UserProfile from "../../components/UserProfile";
 import PostFeed from "../../components/PostFeed";
 import { getUserWithUsername, postToJSON } from "../../lib/firebase";
+import AdditionalUserDetails from "../../components/AdditionalDetails";
+
 import { collection, where, orderBy, getDocs, query } from "firebase/firestore";
 import { UserContext } from "../../lib/context";
 import { useContext, useState, useEffect } from "react";
@@ -60,15 +62,13 @@ export default function UserProfilePage({ initialUser, posts }) {
     >
       {" "}
       <UserProfile user={user} admin={admin} setUser={setUser} />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "3rem",
-        }}
-      >
-        <PostFeed posts={posts} filterBar={false} />
+      <div className="box-center" style={{ textAlign: "left" }}>
+        <div className="profile-container">
+          <AdditionalUserDetails user={user} setUser={setUser} admin={admin} />
+          <div style={{ width: "100%" }}>
+            <PostFeed posts={posts} filterBar={false} />
+          </div>
+        </div>
       </div>
     </div>
   );

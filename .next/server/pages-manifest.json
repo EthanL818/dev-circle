@@ -3,8 +3,8 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/[username]": "pages/[username].js",
-  "/": "pages/index.js",
   "/popular": "pages/popular.js",
-  "/[username]/[slug]": "pages/[username]/[slug].js",
+  "/": "pages/index.js",
+  "/enter": "pages/enter.js",
   "/admin": "pages/admin.js"
 }

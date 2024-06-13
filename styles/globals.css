@@ -697,6 +697,22 @@ input[type="file"] {
   margin: 2rem 0 2rem 0;
 }
 
+.profile-card {
+  background-color: #282828;
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+  width: 80rem;
+  padding: 2rem 5rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.profile-container {
+  display: flex;
+  width: 80rem;
+  justify-content: center;
+}
+
 .name-inputs {
   display: flex;
   justify-content: center;
@@ -771,6 +787,23 @@ input[type="file"] {
   border: 1px solid var(--color-gray);
 }
 
+/* Additional User Details Styles */
+
+.additional-details {
+  width: 350px;
+  text-align: center;
+  margin-right: 5rem;
+}
+
+.additional-detail {
+  padding: 5px 10px;
+  border: var(--color-gray) 1px solid;
+  width: 100%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 /* Adjust layout for smaller screens */
 @media (max-width: 768px) {
 
@@ -779,6 +812,10 @@ input[type="file"] {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+  }
+
+  .profile-card {
+    width: 100%;
   }
 
   .card-tags {
