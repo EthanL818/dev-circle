@@ -14,6 +14,7 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
   const [work, setWork] = useState(user?.work);
   const [workingOn, setWorkingOn] = useState(user?.workingOn);
   const [learning, setLearning] = useState(user?.learning);
+  const [interests, setInterests] = useState(user?.interests);
 
   useEffect(() => {
     // Update states when user prop changes
@@ -22,6 +23,7 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
     setWork(user?.work);
     setWorkingOn(user?.workingOn);
     setLearning(user?.learning);
+    setInterests(user?.interests);
   }, [user]);
 
   // async function to edit user information
@@ -36,6 +38,7 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
       if (work !== undefined) updates.work = work;
       if (workingOn !== undefined) updates.workingOn = workingOn;
       if (learning !== undefined) updates.learning = learning;
+      if (interests !== undefined) updates.interests = interests;
 
       await updateDoc(userRef, updates);
       setIsEditing(false);
@@ -75,8 +78,15 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
               value={location || ""}
               onChange={(e) => setLocation(e.target.value)}
             ></input>
+            {interests ? <h2>Edit Interests</h2> : <h2>Add Interests</h2>}
+            <input
+              className="messageBox description-input"
+              type="text"
+              value={interests || ""}
+              onChange={(e) => setInterests(e.target.value)}
+            ></input>
             {workingOn ? (
-              <h2>Edit Currently Project</h2>
+              <h2>Edit Current Project</h2>
             ) : (
               <h2>Add Current Project</h2>
             )}
@@ -162,6 +172,29 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
                     <p>{user.school}</p>
                   </div>
                 )}
+
+                {user.location && (
+                  <div className="additional-detail card">
+                    <h3>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-geo-alt"
+                        viewBox="0 0 16 16"
+                        style={{ marginRight: "5px" }}
+                      >
+                        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
+                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                      </svg>
+                      Location
+                    </h3>
+
+                    <p>{user.location}</p>
+                  </div>
+                )}
+
                 {user.work && (
                   <div className="additional-detail card">
                     <h3>
@@ -182,7 +215,8 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
                     <p>{user.work}</p>
                   </div>
                 )}
-                {user.location && (
+
+                {user.interests && (
                   <div className="additional-detail card">
                     <h3>
                       <svg
@@ -190,17 +224,16 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
                         width="16"
                         height="16"
                         fill="currentColor"
-                        class="bi bi-geo-alt"
+                        class="bi bi-person"
                         viewBox="0 0 16 16"
                         style={{ marginRight: "5px" }}
                       >
-                        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
-                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
                       </svg>
-                      Location
+                      Interests
                     </h3>
 
-                    <p>{user.location}</p>
+                    <p>{user.interests}</p>
                   </div>
                 )}
                 {user.workingOn && (
@@ -271,7 +304,12 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
         )
       ) : (
         <div>
-          {(school || location || workingOn || learning) && (
+          {(school ||
+            location ||
+            workingOn ||
+            learning ||
+            work ||
+            interests) && (
             <div className="additional-details">
               {user.school && (
                 <div className="additional-detail card">
@@ -313,6 +351,46 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
                   </h3>
 
                   <p>{user.location}</p>
+                </div>
+              )}
+              {user.work && (
+                <div className="additional-detail card">
+                  <h3>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-briefcase"
+                      viewBox="0 0 16 16"
+                      style={{ marginRight: "5px" }}
+                    >
+                      <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
+                    </svg>
+                    Work
+                  </h3>
+
+                  <p>{user.work}</p>
+                </div>
+              )}
+              {user.interests && (
+                <div className="additional-detail card">
+                  <h3>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-person"
+                      viewBox="0 0 16 16"
+                      style={{ marginRight: "5px" }}
+                    >
+                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+                    </svg>
+                    Interests
+                  </h3>
+
+                  <p>{user.interests}</p>
                 </div>
               )}
               {user.workingOn && (

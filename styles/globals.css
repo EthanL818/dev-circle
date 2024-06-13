@@ -765,7 +765,9 @@ input[type="file"] {
 
 .user-card-description {
   text-justify: inter-word;
+  line-height: 1.5rem;
   margin: 1.5rem 0 1.5rem 0;
+  text-align: center;
 }
 
 .user-card-content {
@@ -785,6 +787,24 @@ input[type="file"] {
   width: 75px;
   height: 75px;
   border: 1px solid var(--color-gray);
+}
+
+.user-card-details {
+  border-top: 1px solid var(--color-gray);
+  width: 100%;
+}
+
+.user-card-detail {
+  margin: 1rem 0;
+}
+
+.user-card-detail h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-card-detail p{
+  margin: 0;
 }
 
 /* Additional User Details Styles */
@@ -814,6 +834,22 @@ input[type="file"] {
     text-align: center;
   }
 
+  .additional-details {
+    margin-right: 1rem;
+    width: 100%;
+  }
+
+  .profile-container {
+    display: inline-block;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .box-center {
+    padding: 1rem;
+
+  }
+
   .profile-card {
     width: 100%;
   }
@@ -835,7 +871,6 @@ input[type="file"] {
   }
 
   .card {
-    border-radius: 0;
     width: 100%;
   }
 
