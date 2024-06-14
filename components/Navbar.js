@@ -5,9 +5,9 @@ import { UserContext } from "../lib/context";
 import { auth } from "../lib/firebase";
 
 export default function Navbar() {
-  // real time state, will update
   const { user, username } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
 
   const router = useRouter();
 
@@ -20,6 +20,10 @@ export default function Navbar() {
     setMenuOpen(!menuOpen);
   };
 
+  const toggleAvatarMenu = () => {
+    setAvatarMenuOpen(!avatarMenuOpen);
+  };
+
   return (
     <nav className="navbar">
       <ul>
@@ -29,33 +33,47 @@ export default function Navbar() {
           </Link>
         </li>
 
-        {/* Hamburger icon */}
         <li className="hamburger" onClick={toggleMenu}>
           ☰
         </li>
 
-        {/* user is signed in and has a username */}
+        {/* If user is signed in */}
         {username && (
           <>
-            <li className="push-left desktop-only">
-              <button onClick={signOut}>Sign Out</button>
-            </li>
-
-            <li className="desktop-only">
+            <li className=" push-left desktop-only">
               <Link href="/admin">
                 <button className="btn-blue">Write Posts</button>
               </Link>
             </li>
 
             <li className="desktop-only">
-              <Link href={`/${username}`}>
-                <img src={user?.photoURL || "avatar.jpg"} />
-              </Link>
+              <img
+                src={user?.photoURL || "avatar.jpg"}
+                onClick={toggleAvatarMenu}
+                className="avatar"
+                alt="User Avatar"
+              />
+              <div
+                className={`avatar-dropdown ${avatarMenuOpen ? "show" : ""}`}
+              >
+                <div style={{ width: "100%" }}>
+                  <Link href={`/${username}`}>
+                    <button onClick={toggleAvatarMenu}>Profile</button>
+                  </Link>
+                  <Link href={`/admin`}>
+                    <button onClick={toggleAvatarMenu}>My Posts</button>
+                  </Link>
+                  <Link href={`/${username}/suggestions`}>
+                    <button onClick={toggleAvatarMenu}>My Suggestions</button>
+                  </Link>
+                  <button onClick={signOut}>Sign Out</button>
+                </div>
+              </div>
             </li>
           </>
         )}
 
-        {/* user is signed in and has a username */}
+        {/* If user is not signed in */}
         {!username && (
           <li className="desktop-only">
             <Link href="/enter">
@@ -65,7 +83,7 @@ export default function Navbar() {
         )}
       </ul>
 
-      {/* Collapsible menu */}
+      {/* Mobile Collapsible menu */}
       <div className={`dropdown-menu ${menuOpen ? "show" : ""}`}>
         {username ? (
           <div className="dropdown-content">
