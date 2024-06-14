@@ -34,8 +34,12 @@ export default function Heart({ postRef }) {
   };
 
   return likeDoc?.exists() ? (
-    <button onClick={removeLike}>👎 Remove Like</button>
+    <button className="like-btn" onClick={removeLike}>
+      👎 Remove Like
+    </button>
   ) : (
-    <button onClick={addLike}>👍 Like</button>
+    <button className="like-btn" onClick={addLike}>
+      👍 Like
+    </button>
   );
 }
