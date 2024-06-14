@@ -113,21 +113,59 @@ code {
 .dropdown-menu {
   position: absolute;
   top: 60px;
-  right: 10vw;
+  width: 75vw;
+  height: 100vh;
+  right: 0;
   background: #181818;
-  border: 1px solid #ccc;
+  border-left: 2px solid var(--color-gray);
   padding: 10px;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.dropdown-menu.show {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-menu h3 {
+  margin: 0.5rem 0 0 0.0;
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-comment {
+  line-height: 1.5rem;
+  justify-content: center;
+  color: gray;
+  font-weight: normal;
 }
 
 .dropdown-menu button,
-.dropdown-menu img,
+.dropdown-menu p
+.dropdown-menu img, 
 .dropdown-menu a {
   margin: 10px 0;
 }
+
+.dropdown-menu img {
+  width: 75px;
+  height: 75px;
+} 
+
 
 @media (max-width: 768px) {
   .desktop-only {
@@ -138,6 +176,7 @@ code {
     display: block;
   }
 }
+
 
 /* Filter Bar Styles */
 

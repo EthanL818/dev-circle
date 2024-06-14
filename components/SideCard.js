@@ -6,26 +6,6 @@ import { UserContext } from "../lib/context";
 export default function SideCard() {
   const { user, username } = useContext(UserContext);
 
-  function CommunityMessage() {
-    return (
-      <div>
-        <p className="comment">
-          devCircle is an inclusive community of developers from all around the
-          world.
-        </p>
-
-        <p className="comment">
-          Please be respectful and professional when interacting with others.
-          For more information, please check our{" "}
-          <a style={{ color: "blue" }} href="/guidelines">
-            community guidelines
-          </a>
-          .
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="card-container left-side">
       <div className="card-side">
@@ -65,6 +45,26 @@ export default function SideCard() {
         )}
       </div>
       <CommunityMessage />
+    </div>
+  );
+}
+
+export function CommunityMessage() {
+  return (
+    <div>
+      <p className="comment">
+        devCircle is an inclusive community of developers from all around the
+        world.
+      </p>
+
+      <p className="comment">
+        Please be respectful and professional when interacting with others. For
+        more information, please check our{" "}
+        <a style={{ color: "blue" }} href="/guidelines">
+          community guidelines
+        </a>
+        .
+      </p>
     </div>
   );
 }

@@ -22,11 +22,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/[username].js"
     ],
-    "/[username]/[slug]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/[username]/[slug].js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -37,15 +32,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/oldest": [
+    "/admin": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/oldest.js"
+      "static/chunks/pages/admin.js"
     ],
-    "/popular": [
+    "/enter": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/popular.js"
+      "static/chunks/pages/enter.js"
     ]
   },
   "ampFirstPages": []

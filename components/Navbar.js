@@ -25,9 +25,7 @@ export default function Navbar() {
       <ul>
         <li>
           <Link href="/">
-            <button className="btn-logo">
-              <span className="curly-braces">devCircle</span>
-            </button>
+            <button className="btn-logo">devCircle</button>
           </Link>
         </li>
 
@@ -68,25 +66,62 @@ export default function Navbar() {
       </ul>
 
       {/* Collapsible menu */}
-      {menuOpen && (
-        <div className="dropdown-menu">
-          {username ? (
-            <>
-              <button onClick={signOut}>Sign Out</button>
-              <Link href="/admin">
-                <button className="btn-blue">Write Posts</button>
+      <div className={`dropdown-menu ${menuOpen ? "show" : ""}`}>
+        {username ? (
+          <div className="dropdown-content">
+            <div className="card">
+              <div className="user-card-content">
+                <Link href={`/${username}`}>
+                  <img
+                    onClick={toggleMenu}
+                    src={user?.photoURL || "avatar.jpg"}
+                  />
+                </Link>
+                <h3>{user?.displayName}</h3>
+                <Link href={`/${username}`}>
+                  <p onClick={toggleMenu} className="user-card-username">
+                    <i>@{username}</i>
+                  </p>
+                </Link>
+              </div>
+            </div>
+
+            <div style={{ width: "100%" }}>
+              <Link href="/admin" style={{ width: "100%" }}>
+                <button
+                  onClick={toggleMenu}
+                  className="btn-blue"
+                  style={{ width: "100%" }}
+                >
+                  Write Posts
+                </button>
               </Link>
-              <Link href={`/${username}`}>
-                <img src={user?.photoURL || "avatar.jpg"} />
-              </Link>
-            </>
-          ) : (
-            <Link href="/enter">
-              <button className="btn-blue">Log in</button>
-            </Link>
-          )}
-        </div>
-      )}
+              <button onClick={signOut} style={{ width: "100%" }}>
+                Sign Out
+              </button>
+            </div>
+
+            <div className="dropdown-comment">
+              <p>
+                devCircle is an inclusive community of developers from all
+                around the world.
+              </p>
+              <p>
+                Please be respectful and professional when interacting with
+                others. For more information, please check our{" "}
+                <a style={{ color: "blue" }} href="/guidelines">
+                  community guidelines
+                </a>
+                .
+              </p>{" "}
+            </div>
+          </div>
+        ) : (
+          <Link href="/enter">
+            <button className="btn-blue">Log in</button>
+          </Link>
+        )}
+      </div>
     </nav>
   );
 }
