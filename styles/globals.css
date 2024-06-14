@@ -104,6 +104,43 @@ code {
   border-radius: 50%;
 }
 
+.hamburger {
+  display: none;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 10vw;
+  background: #181818;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dropdown-menu button,
+.dropdown-menu img,
+.dropdown-menu a {
+  margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+/* Filter Bar Styles */
+
 .filter-bar {
   font-weight: bold;
   margin-bottom: 1.5rem;
