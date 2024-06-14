@@ -14,6 +14,18 @@ import {
   collectionGroup,
   getDocs,
 } from "firebase/firestore";
+
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+  RedditShareButton,
+  RedditIcon,
+  FacebookIcon,
+  XIcon,
+  LinkedinIcon,
+} from "react-share";
+
 import { getUserWithUsername, postToJSON, firestore } from "../../lib/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useEffect, useState } from "react";
@@ -251,6 +263,7 @@ export default function Post(props) {
   const [realtimePost] = useDocumentData(postRef);
 
   const post = realtimePost || props.post;
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 
   return (
     <main className={styles.container}>
@@ -281,7 +294,7 @@ export default function Post(props) {
         <UserCard username={post.username} />
         {post.tech && post.tech.length > 0 && <TechStack post={post} />}
         <aside className="user-card" style={{ width: "100%" }}>
-          <div className="card-content">
+          <div className="user-card-content">
             <p>
               <strong>{post.likeCount || 0} 👍</strong>
             </p>
@@ -294,6 +307,28 @@ export default function Post(props) {
             >
               <LikeButton postRef={postRef} />
             </AuthCheck>
+
+            <div className="share-component">
+              <h3>Share</h3>
+              <div className="share-buttons">
+                <FacebookShareButton url={shareUrl} quote={post.title}>
+                  <FacebookIcon size={32} round />
+                </FacebookShareButton>
+                <TwitterShareButton url={shareUrl} title={post.title}>
+                  <XIcon size={32} round />
+                </TwitterShareButton>
+                <RedditShareButton url={shareUrl} title={post.title}>
+                  <RedditIcon size={32} round />
+                </RedditShareButton>
+                <LinkedinShareButton
+                  url={shareUrl}
+                  title={post.title}
+                  source="devCircle"
+                >
+                  <LinkedinIcon size={32} round />
+                </LinkedinShareButton>
+              </div>
+            </div>
           </div>
         </aside>
       </div>

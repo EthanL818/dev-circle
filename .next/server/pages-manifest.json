@@ -3,7 +3,5 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/[username]": "pages/[username].js",
-  "/admin": "pages/admin.js",
-  "/enter": "pages/enter.js"
+  "/[username]/[slug]": "pages/[username]/[slug].js"
 }

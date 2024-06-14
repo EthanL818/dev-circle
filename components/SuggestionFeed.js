@@ -96,7 +96,7 @@ function SuggestionItem({ suggestion, removeSuggestion }) {
                   "Are you sure you wish to delete this suggestion? This action cannot be undone."
                 )
               )
-                deleteSuggestion;
+                deleteSuggestion(suggestion);
             }}
           >
             Delete

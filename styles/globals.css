@@ -214,7 +214,7 @@ code {
   font-weight: bold;
   border-radius: 0.25rem;
   cursor: pointer;
-  margin: 0.5rem 1rem 0.5rem 0;
+  margin: 0.5rem 1rem;
 }
 
 button:hover {
@@ -289,6 +289,12 @@ button.btn-edit {
 
 .icon {
   margin-right: 10px;
+}
+
+.share-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Post Styles */
@@ -881,6 +887,13 @@ input[type="file"] {
 
 .user-card-detail p{
   margin: 0;
+}
+
+.share-component {
+  margin-top: 1rem;
+  border-top: var(--color-gray) 1px solid;
+  display: inline-block;
+  width: 100%;
 }
 
 /* Additional User Details Styles */
