@@ -2,9 +2,9 @@ import Link from "next/link";
 import FilterBar from "../components/FilterBar";
 import { tagList } from "../lib/tags";
 import { techList } from "../lib/tech";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { firestore, auth } from "../lib/firebase";
-import { deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, doc, writeBatch } from "firebase/firestore";
 import toast from "react-hot-toast";
 
 export default function PostFeed({ posts, admin, filterBar = true }) {
@@ -18,8 +18,30 @@ export default function PostFeed({ posts, admin, filterBar = true }) {
       "posts",
       postToDelete.slug
     );
-    await deleteDoc(postRef);
-    toast.success("Post has been successfully deleted!");
+
+    const batch = writeBatch(firestore);
+
+    // Delete likes
+    const likesCollectionRef = collection(postRef, "likes");
+    const likesSnapshot = await getDocs(likesCollectionRef);
+    likesSnapshot.docs.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+
+    // Delete suggestions
+    const suggestionsCollectionRef = collection(postRef, "suggestions");
+    const suggestionsSnapshot = await getDocs(suggestionsCollectionRef);
+    suggestionsSnapshot.docs.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+
+    // Delete the post
+    batch.delete(postRef);
+
+    await batch.commit();
+    toast.success(
+      "Post and its associated data have been successfully deleted!"
+    );
 
     // Remove the deleted post from the state variable
     const newPosts = posts.filter((post) => post.slug !== postToDelete.slug);
