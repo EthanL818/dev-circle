@@ -100,6 +100,40 @@ code {
   cursor: pointer;
 }
 
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.avatar-menu-btn {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.display-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.user-card-username {
+  font-size: 0.9em;
+  color: gray;
+  margin: 0;
+}
+
 .hamburger {
   display: none;
   cursor: pointer;
@@ -116,7 +150,6 @@ code {
   right: 6.5vw;
   background: #181818;
   border: 1px solid #333;
-  border-top: none;
   border-radius: 4px;
   padding: 10px;
   display: flex;
@@ -125,6 +158,7 @@ code {
   transform: translateY(-20px);
   opacity: 0;
   visibility: hidden;
+  width: 15vw;
   transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
 }
 
@@ -138,7 +172,7 @@ code {
   background: #282828;
   border: none;
   color: var(--color-text);
-  padding: 10px 20px;
+  padding: 15px 25px;
   text-align: left;
   width: 100%;
   cursor: pointer;

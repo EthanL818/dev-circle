@@ -58,12 +58,31 @@ export default function Navbar() {
               >
                 <div style={{ width: "100%" }}>
                   <Link href={`/${username}`}>
-                    <button onClick={toggleAvatarMenu}>Profile</button>
+                    <button
+                      className="avatar-menu-btn"
+                      onClick={toggleAvatarMenu}
+                    >
+                      {" "}
+                      <img
+                        src={user?.photoURL || "avatar.jpg"}
+                        onClick={toggleAvatarMenu}
+                        className="avatar"
+                        alt="User Avatar"
+                      />
+                      <div className="user-info">
+                        <p className="display-name">
+                          {user?.displayName || "User"}
+                        </p>
+                        <p className="user-card-username">
+                          <i>@{username}</i>
+                        </p>
+                      </div>
+                    </button>
                   </Link>
                   <Link href={`/admin`}>
                     <button onClick={toggleAvatarMenu}>My Posts</button>
                   </Link>
-                  <Link href={`/${username}/suggestions`}>
+                  <Link href={`/admin/suggestions`}>
                     <button onClick={toggleAvatarMenu}>My Suggestions</button>
                   </Link>
                   <button onClick={signOut}>Sign Out</button>
