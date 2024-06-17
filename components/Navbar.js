@@ -73,7 +73,7 @@ export default function Navbar() {
                         <p className="display-name">
                           {user?.displayName || "User"}
                         </p>
-                        <p className="user-card-username">
+                        <p className="avatar-menu-username">
                           <i>@{username}</i>
                         </p>
                       </div>

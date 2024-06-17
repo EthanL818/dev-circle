@@ -78,7 +78,7 @@ function PostManager() {
           <aside className="card">
             <div className="card-content card-center">
               <h3>Tools</h3>
-              <ImageUploader onUpload={updateCoverImage} />
+              <ImageUploader onUpload={updateCoverImage} type="cover" />
               <button
                 style={{ marginTop: "2rem" }}
                 className="btn-full-width"

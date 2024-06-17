@@ -128,12 +128,6 @@ code {
   margin: 0;
 }
 
-.user-card-username {
-  font-size: 0.9em;
-  color: gray;
-  margin: 0;
-}
-
 .hamburger {
   display: none;
   cursor: pointer;
@@ -142,6 +136,12 @@ code {
 
 .avatar-menu {
   position: relative;
+}
+
+.avatar-menu-username {
+  font-size: 0.9em;
+  color: var(--color-blue);
+  margin: 0;
 }
 
 .avatar-dropdown {
@@ -592,39 +592,56 @@ button.btn-edit {
   display: flex;
 }
 
+.image-label {
+  position: relative;
+  display: inline-flex;
+  width: 150px; /* Set to match the image size */
+  height: 150px; /* Set to match the image size */
+}
+
 .card-img-center {
   display: block;
-  margin: auto;
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: 100%;
   border: 1px solid var(--color-gray);
+  transition: filter 0.3s ease;
 }
 
 .card-img-center:hover {
   cursor: pointer;
-  opacity: 0.7;
+  filter: brightness(0.7);
 }
 
-.card-img-center:active {
-  opacity: 0.9;
-}
-
-.card-img-center:before {
-  content: "Click to upload new picture";
+.overlay {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 16px;
-  display: none;
-  text-align: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.card-img-center:hover:before {
-  display: block;
+.upload-icon {
+  color: white;
+  font-size: 2em;
 }
+
+.image-label:hover .overlay {
+  opacity: 1;
+}
+
+.image-label input[type="file"] {
+  display: none; /* Hide the file input */
+}
+
+
 
 .card-info {
   color: white;
@@ -746,6 +763,7 @@ input[type="file"] {
 .box {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .box-center {

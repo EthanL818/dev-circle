@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { firestore, auth } from "../lib/firebase";
+import ImageUploader from "./ImageUploader";
 import { updateDoc, doc } from "firebase/firestore";
+import { updateProfile } from "firebase/auth";
 import toast from "react-hot-toast";
 
 // UI component for user profile
@@ -27,6 +29,27 @@ export default function UserProfile({ user, setUser, admin }) {
     setFirstName(displayName[0]);
     setLastName(displayName[1]);
   }, [user]);
+
+  const updateProfileImage = async (url) => {
+    // create a reference to the user document
+    const userRef = doc(firestore, "users", auth.currentUser.uid);
+
+    // update the user document
+    await updateDoc(userRef, {
+      photoURL: url,
+    });
+
+    // update the auth user profile
+    await updateProfile(auth.currentUser, { photoURL: url });
+
+    // Update local state
+    setUser((prevUser) => ({
+      ...prevUser,
+      photoURL: url,
+    }));
+
+    console.log("Profile image updated successfully!");
+  };
 
   // async function to edit user information
   const editInfo = async () => {
@@ -98,9 +121,10 @@ export default function UserProfile({ user, setUser, admin }) {
   return (
     <div className="box-center" style={{ marginTop: "20px" }}>
       <div className="card-content profile-card">
-        <img
-          src={user?.photoURL || "/avatar.jpg"}
-          className="card-img-center"
+        <ImageUploader
+          onUpload={updateProfileImage}
+          type="profile"
+          user={user}
         />
 
         {admin ? (
