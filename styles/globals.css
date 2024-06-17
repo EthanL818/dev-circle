@@ -625,6 +625,7 @@ button.btn-edit {
   justify-content: center;
   align-items: center;
   opacity: 0;
+  cursor: pointer;
   transition: opacity 0.3s ease;
 }
 
