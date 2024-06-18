@@ -105,11 +105,7 @@ function UserCard({ username }) {
         <ContactInfo user={user} />
         <p className="user-card-description">{user?.description}</p>
 
-        {(user?.school ||
-          user?.location ||
-          user?.workingOn ||
-          user?.learning ||
-          user?.work) && (
+        {(user?.school || user?.location || user?.interests || user?.work) && (
           <div className="user-card-details">
             {user?.school && (
               <div className="user-card-detail">

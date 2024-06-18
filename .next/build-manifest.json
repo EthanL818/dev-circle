@@ -42,10 +42,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/admin.js"
     ],
-    "/admin/[slug]": [
+    "/tags": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/[slug].js"
+      "static/chunks/pages/tags.js"
     ]
   },
   "ampFirstPages": []

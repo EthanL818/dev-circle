@@ -66,7 +66,7 @@ export default function Navbar() {
                       <img
                         src={user?.photoURL || "avatar.jpg"}
                         onClick={toggleAvatarMenu}
-                        className="avatar"
+                        className="dropdown-avatar"
                         alt="User Avatar"
                       />
                       <div className="user-info">
@@ -112,6 +112,7 @@ export default function Navbar() {
                   <img
                     onClick={toggleMenu}
                     src={user?.photoURL || "avatar.jpg"}
+                    className="card-img-center"
                   />
                 </Link>
                 <h3>{user?.displayName}</h3>

@@ -2,7 +2,9 @@
 import SideCard from "../components/SideCard";
 import PopularTagsCard from "../components/PopularTagsCard";
 import PostFeed from "../components/PostFeed";
+import SearchBar from "../components/SearchBar";
 import Loader from "../components/Loader";
+
 import { useState } from "react";
 import {
   getFirestore,
@@ -93,7 +95,11 @@ export default function Home(props) {
         <Loader show={loading} />
         {postsEnd && "You have reached the end!"}
       </div>
-      <PopularTagsCard />
+
+      <div className="right-container">
+        <SearchBar />
+        <PopularTagsCard />
+      </div>
     </main>
   );
 }
