@@ -97,7 +97,9 @@ export default function Home(props) {
       </div>
 
       <div className="right-container">
-        <SearchBar />
+        <div className="desktop-search">
+          <SearchBar />
+        </div>
         <PopularTagsCard />
       </div>
     </main>

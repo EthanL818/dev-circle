@@ -718,6 +718,10 @@ input[type="file"] {
   margin-left: auto;
 }
 
+.desktop-search {
+  width: 100%;
+}
+
 .left-side {
   width: 250px;
 }
@@ -857,7 +861,7 @@ input[type="file"] {
   border: 1px solid white;
   border-top: none;
   z-index: 10;
-  max-height: 300px;
+  max-height: 500px;
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 0 0 8px 8px; /* Match the input border radius */
@@ -865,6 +869,7 @@ input[type="file"] {
   list-style: none;
   margin: 0;
   list-style-type: none;
+  width: 100%;
 }
 
 .suggestions ul {
@@ -881,6 +886,7 @@ input[type="file"] {
   border-bottom: 1px solid #444;
   transition: background-color 0.2s;
   cursor: pointer;
+  width: 100%;
 }
 
 .hit:hover {
@@ -1202,9 +1208,13 @@ input[type="file"] {
     text-align: center;
   }
 
-  .additional-details {
-    margin-right: 1rem;
-    width: 100%;
+  .search-component .suggestions {
+    flex-direction: column; /* Ensure search results display in a column */
+    width: 100%; /* Adjust width to fill the container */
+  }
+
+  .hit {
+    width: 100%; /* Ensure hits take full width */
   }
 
   .profile-container {
@@ -1267,6 +1277,10 @@ input[type="file"] {
   }
 
   .comment {
+    display: none;
+  }
+
+  .desktop-search {
     display: none;
   }
 

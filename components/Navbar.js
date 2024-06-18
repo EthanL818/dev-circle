@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { UserContext } from "../lib/context";
 import { auth } from "../lib/firebase";
+import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   const { user, username } = useContext(UserContext);
@@ -104,6 +105,7 @@ export default function Navbar() {
 
       {/* Mobile Collapsible menu */}
       <div className={`dropdown-menu ${menuOpen ? "show" : ""}`}>
+        <SearchBar />
         {username ? (
           <div className="dropdown-content">
             <div className="card">
