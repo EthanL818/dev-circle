@@ -1,4 +1,4 @@
-import { doc, writeBatch, serverTimestamp } from "firebase/firestore";
+import { doc, writeBatch, serverTimestamp, getDoc } from "firebase/firestore";
 import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
@@ -31,6 +31,19 @@ export default function SuggestionBar({ postRef }) {
       firestore,
       `users/${uid}/suggestions/${postRef.id}`
     );
+
+    const userSuggestionSnapshot = await getDoc(userSuggestionRef);
+
+    if (userSuggestionSnapshot.exists()) {
+      // Alert the user that their previous suggestion will be overwritten
+      if (
+        !window.confirm(
+          "Your previous suggestion will be overwritten. Do you want to continue?"
+        )
+      ) {
+        return;
+      }
+    }
 
     batch.set(userSuggestionRef, {
       postRef,
