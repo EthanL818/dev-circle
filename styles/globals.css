@@ -1181,6 +1181,76 @@ input[type="file"] {
   width: 100%;
 }
 
+/* Suggestions Page Styles */
+.suggestions-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+
+.suggestion-card {
+  border: 1px solid var(--color-gray);
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #282828;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-text {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.suggestion-date {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.suggestion-actions {
+  display: flex;
+  margin-top: 10px;
+}
+
+.suggestion-actions button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.suggestion-actions button:hover {
+  opacity: 0.8;
+}
+
+.suggestions-page {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.tabs {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 2rem 2rem 2rem;
+  margin-top: 0;
+  margin-right: 2rem;
+}
+
+.tabs button {
+  padding: 12px 15px;
+  margin: 1rem 1rem;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
 /* Additional User Details Styles */
 
 .additional-details {

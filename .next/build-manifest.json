@@ -42,10 +42,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/admin.js"
     ],
-    "/popular": [
+    "/admin/suggestions": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/popular.js"
+      "static/chunks/pages/admin/suggestions.js"
     ]
   },
   "ampFirstPages": []

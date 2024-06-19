@@ -86,9 +86,8 @@ export default function SearchComponent() {
             onBlur={() => setTimeout(() => setIsSearchActive(false), 200)}
             onChange={(e) => setQuery(e.target.value)}
             translations={{
-              placeholder: "Search",
+              placeholder: "Search posts...",
             }}
-            autoFocus
           >
             {" "}
           </SearchBox>
