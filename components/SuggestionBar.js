@@ -41,7 +41,7 @@ export default function SuggestionBar({ postRef }) {
           "Your previous suggestion will be overwritten. Do you want to continue?"
         )
       ) {
-        return;
+        return false;
       }
     }
 
@@ -54,6 +54,7 @@ export default function SuggestionBar({ postRef }) {
 
     // Commit the batch
     await batch.commit();
+    return true;
   };
 
   const [suggestion, setSuggestion] = useState("");
@@ -75,9 +76,12 @@ export default function SuggestionBar({ postRef }) {
       return;
     }
 
-    await addSuggestion(suggestion);
-    setSuggestion("");
-    toast.success("Suggestion has been sent!");
+    const success = await addSuggestion(suggestion);
+
+    if (success) {
+      setSuggestion("");
+      toast.success("Suggestion has been sent!");
+    }
   };
 
   return (
