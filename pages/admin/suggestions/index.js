@@ -7,9 +7,11 @@ import {
   orderBy,
   getDocs,
   updateDoc,
+  writeBatch,
 } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 function TabContent({ suggestions }) {
   if (suggestions.length === 0) {
@@ -70,6 +72,40 @@ function TabContent({ suggestions }) {
     );
     await updateDoc(suggestionRef, { status: status });
   };
+
+  const deleteSuggestion = async (suggestion) => {
+    const uid = auth.currentUser.uid;
+    const batch = writeBatch(firestore);
+
+    // Delete the suggestion from the post
+    const suggestionRef = doc(
+      firestore,
+      `users/${uid}/posts/${suggestion.slug}/suggestions/${suggestion.uid}`
+    );
+
+    console.log(`posts/${suggestion.slug}/suggestions/${suggestion.uid}`);
+    batch.delete(suggestionRef);
+
+    // Delete the suggestion from the user's collection
+    const userSuggestionRef = doc(
+      firestore,
+      `users/${suggestion.uid}/suggestions/${suggestion.slug}`
+    );
+
+    console.log(`users/${suggestion.uid}/suggestions/${suggestion.slug}`);
+
+    batch.delete(userSuggestionRef);
+
+    try {
+      await batch.commit();
+    } catch (error) {
+      console.error("Error deleting suggestion:", error);
+    }
+
+    // Display confirmation message
+    toast.success("Suggestion deleted successfully.");
+  };
+
   return (
     <div className="suggestions-container">
       {suggestions.map((suggestion, index) => (
@@ -113,12 +149,21 @@ function TabContent({ suggestions }) {
             )}
 
             {suggestion.status == "dismissed" ? (
-              <button
-                style={{ backgroundColor: "#d3494e" }}
-                onClick={() => dismiss(suggestion)}
-              >
-                Remove from Dismissed
-              </button>
+              <>
+                <button
+                  style={{ backgroundColor: "#3bdf72" }}
+                  onClick={() => dismiss(suggestion)}
+                >
+                  Recover
+                </button>
+
+                <button
+                  style={{ backgroundColor: "#d3494e" }}
+                  onClick={() => deleteSuggestion(suggestion)}
+                >
+                  Delete
+                </button>
+              </>
             ) : (
               <button
                 style={{ backgroundColor: "#d3494e" }}

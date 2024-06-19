@@ -133,7 +133,12 @@ export default function Navbar() {
                   className="btn-blue"
                   style={{ width: "100%" }}
                 >
-                  Write Posts
+                  My Posts
+                </button>
+              </Link>
+              <Link href={`/admin/suggestions`}>
+                <button onClick={toggleMenu} style={{ width: "100%" }}>
+                  My Suggestions
                 </button>
               </Link>
               <button onClick={signOut} style={{ width: "100%" }}>

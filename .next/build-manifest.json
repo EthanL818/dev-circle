@@ -46,6 +46,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/admin/suggestions.js"
+    ],
+    "/oldest": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/oldest.js"
+    ],
+    "/popular": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/popular.js"
     ]
   },
   "ampFirstPages": []
