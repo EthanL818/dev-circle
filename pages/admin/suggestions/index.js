@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 function TabContent({ suggestions }) {
   if (suggestions.length === 0) {
     return (
-      <p>
+      <p style={{ textAlign: "center" }}>
         No suggestions found. Share your posts with others to receive
         constructive feedback!
       </p>
