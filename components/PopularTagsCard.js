@@ -69,9 +69,7 @@ export default function PopularTagsCard() {
             <Link href={tag.link}>
               <button className="tag-button">{tag.name}</button>
             </Link>
-            <p
-              className={"frequency"}
-            >{`${tag.count} posts in the last 30 days`}</p>
+            <p className="frequency">{`${tag.count} posts in the last 30 days`}</p>
           </li>
         ))}
       </ul>

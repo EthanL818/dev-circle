@@ -522,7 +522,74 @@ button.btn-edit {
   flex-direction: column;
   height: 470px;
   top: 20px;
+  margin-bottom: 1rem;
   flex: 0 0 250px;
+}
+
+.card-tech {
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  top: 20px;
+  flex: 0 0 300px;
+  width: 100%;
+
+}
+
+.card-tech ul {
+  list-style-type: none;
+  padding: 0;
+  overflow-y: hidden; 
+  margin: 0;
+}
+
+.card-tech ul:hover {
+  overflow-y: scroll; /* Show scrollbar on hover */
+}
+
+.card-tech ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+.card-tech ul::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.card-tech ul::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.card-tech ul:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.card-tech p {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  color: #B3B3B3;
+}
+
+.tech-button {
+  background: var(--color-bg);
+  margin: 0.5rem 0;
+  font-size: 16px;
+  width: 100%;
+  text-align: left !important;
+  padding-left: 0px; 
+  padding-right: 5px;
+  padding-bottom: 0px;
+  border: none; 
+  color: white; 
+  align-items:  left;
+  text-align: left;
+  justify-content: space-between;
+}
+
+.card-tech h2 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .card-tags {
@@ -535,6 +602,7 @@ button.btn-edit {
   height: 530px;
   top: 20px;
   flex: 0 0 300px;
+  width: 100%;
 }
 
 .card-tags ul {
@@ -640,8 +708,6 @@ button.btn-edit {
 .image-label input[type="file"] {
   display: none; /* Hide the file input */
 }
-
-
 
 .card-info {
   color: white;
@@ -1308,6 +1374,10 @@ input[type="file"] {
   }
 
   .card-tags {
+    display: none;
+  }
+
+  .card-tech {
     display: none;
   }
 

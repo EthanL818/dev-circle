@@ -4,6 +4,7 @@ import PopularTagsCard from "../components/PopularTagsCard";
 import PostFeed from "../components/PostFeed";
 import SearchBar from "../components/SearchBar";
 import Loader from "../components/Loader";
+import { CommunityMessage } from "../components/SideCard";
 
 import { useState } from "react";
 import {
@@ -18,6 +19,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { postToJSON } from "../lib/firebase";
+import PopularTechCard from "../components/PopularTechCard";
 
 const firestore = getFirestore();
 const LIMIT = 10;
@@ -101,6 +103,7 @@ export default function Home(props) {
           <SearchBar />
         </div>
         <PopularTagsCard />
+        <PopularTechCard />
       </div>
     </main>
   );

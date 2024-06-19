@@ -3,6 +3,8 @@ import SideCard from "../components/SideCard";
 import PostFeed from "../components/PostFeed";
 import Loader from "../components/Loader";
 import SearchBar from "../components/SearchBar";
+import PopularTechCard from "../components/PopularTechCard";
+
 import { useState } from "react";
 import {
   getFirestore,
@@ -98,6 +100,7 @@ export default function Home(props) {
           <SearchBar />
         </div>
         <PopularTagsCard />
+        <PopularTechCard />
       </div>{" "}
     </main>
   );
