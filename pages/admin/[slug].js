@@ -157,10 +157,11 @@ function PostForm({
   }, [post, setSelectedTech]);
 
   // Callback function that handles updating the Firestore database once form is submitted
-  const updatePost = async ({ content, published }) => {
+  const updatePost = async ({ content, published, githubRepo }) => {
     await updateDoc(postRef, {
       content,
       published,
+      githubRepo,
       tags: selectedTags.map((tag) => tag.value),
       tech: selectedTech.map((tag) => tag.value),
       updatedAt: serverTimestamp(),
@@ -210,6 +211,11 @@ function PostForm({
         {errors.content && (
           <p className="text-danger">{errors.content.message}</p>
         )}
+
+        <fieldset>
+          <label>GitHub Repository URL</label>
+          <input {...register("githubRepo")} />
+        </fieldset>
 
         <fieldset>
           <input

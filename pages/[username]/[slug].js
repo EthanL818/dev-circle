@@ -197,58 +197,95 @@ function UserCard({ username }) {
 }
 
 function TechStack({ post }) {
-  // Check if post.tech is defined and is an array before mapping
+  const [repoData, setRepoData] = useState(null);
+
+  const fetchRepoData = async (repoUrl) => {
+    try {
+      const response = await fetch(`/api/github?repoUrl=${repoUrl}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setRepoData(data);
+    } catch (error) {
+      console.error("Error fetching repository data:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (post.githubRepo && !repoData) {
+      const url = new URL(post.githubRepo);
+      const repoUrl = url.pathname.substring(1);
+      fetchRepoData(repoUrl);
+    }
+  }, [post.githubRepo, repoData]);
+
   const techToUpdate = Array.isArray(post.tech)
     ? post.tech.map((techValue) => {
-        // Find the tech object in tagList by value
         const techObj = techList.find((tech) => tech.name === techValue);
-        // Ensure techObj is not undefined before accessing its properties
-        if (techObj) {
-          return {
-            value: techObj.name,
-            label: techObj.name,
-            color: techObj.color,
-            icon: techObj.icon,
-          };
-        } else {
-          // Return a default or placeholder object if techObj is undefined
-          return {
-            value: tagValue,
-            label: tagValue,
-            color: "#333",
-            icon: null,
-          }; // Example placeholder
-        }
+        return techObj
+          ? {
+              value: techObj.name,
+              label: techObj.name,
+              color: techObj.color,
+              icon: techObj.icon,
+            }
+          : {
+              value: techValue,
+              label: techValue,
+              color: "#333",
+              icon: null,
+            };
       })
-    : []; // If post.tech is not an array, default to an empty array
+    : [];
 
   return (
     <div className="user-card">
       <div className="user-card-content">
         <h1>Tech Stack</h1>
-        <div
-          className="tag-container"
-          style={{ marginTop: "15px", marginBottom: "20px" }}
-        >
+        <div className="tag-container" style={{ marginTop: "15px" }}>
           {techToUpdate.map((tech) => (
             <span
               key={tech.value}
               className="full-tag"
-              style={{
-                borderColor: tech.color,
-              }}
+              style={{ borderColor: tech.color }}
             >
               <span
                 className="icon-tag"
                 style={{ marginRight: "5px", border: "none" }}
               >
-                {" "}
                 {tech.icon}
               </span>
               {tech.label}
             </span>
           ))}
         </div>
+        {repoData && (
+          <div className="repo-card">
+            <a
+              href={repoData.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="repo-link"
+            >
+              <div className="repo-content">
+                <img
+                  src={repoData.owner.avatar_url}
+                  alt={`${repoData.owner.login}'s avatar`}
+                  className="repo-avatar"
+                />
+                <div className="repo-details">
+                  <h3>{repoData.full_name}</h3>
+                  <p>{repoData.description}</p>
+                  <div className="repo-stats">
+                    <span>⭐ {repoData.stargazers_count}</span>
+                    <span>🍴 {repoData.forks_count}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

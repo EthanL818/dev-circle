@@ -2,47 +2,72 @@ import { firestore, auth } from "../../../lib/firebase";
 import { useRouter } from "next/router";
 import {
   collection,
-  doc,
+  where,
   query as firestoreQuery,
   orderBy,
 } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
+import { useEffect, useState } from "react";
 
 import AuthCheck from "../../../components/AuthCheck";
 import SuggestionFeed from "../../../components/SuggestionFeed";
 
-// need the post reference to pull the suggestions
-// need to pull all suggestions and display them on this page
-// need to be able to approve or reject suggestions
-
 function SuggestionsList() {
-  // utilize the useRouter hook to retrieve the slug directly from the url
   const router = useRouter();
   const { slug } = router.query;
-  const uid = auth.currentUser.uid;
+  const [uid, setUid] = useState(null);
 
-  // Create a reference to the current post
-  const postRef = doc(collection(firestore, "users", uid, "posts"), slug);
+  useEffect(() => {
+    if (auth.currentUser) {
+      setUid(auth.currentUser.uid);
+    }
+  }, [auth.currentUser]);
 
-  // Create a reference to the suggestions collection of the current post
-  const suggestionsCollectionRef = collection(postRef, "suggestions");
+  useEffect(() => {
+    console.log("Current slug:", slug); // Debug log for slug
+  }, [slug]);
 
-  // Create a query to order posts by date created
-  const suggestionQuery = firestoreQuery(
-    suggestionsCollectionRef,
-    orderBy("createdAt")
-  );
+  const userSuggestionsRef = uid
+    ? collection(firestore, "users", uid, "suggestions")
+    : null;
+  const suggestionQuery =
+    slug && userSuggestionsRef
+      ? firestoreQuery(
+          userSuggestionsRef,
+          where("slug", "==", slug),
+          orderBy("createdAt")
+        )
+      : null;
 
-  // Use the query with useCollection hook
-  const [suggestionSnapshot] = useCollection(suggestionQuery);
+  const [suggestionSnapshot, loading, error] = useCollection(suggestionQuery);
 
-  // Map the suggestionSnapshot to extract post data
-  const suggestions = suggestionSnapshot?.docs.map((doc) => doc.data());
+  useEffect(() => {
+    if (suggestionSnapshot) {
+      console.log(
+        "Suggestions fetched:",
+        suggestionSnapshot.docs.map((doc) => doc.data())
+      ); // Debug log for fetched suggestions
+    }
+  }, [suggestionSnapshot]);
+
+  if (!slug || !uid || loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    console.error("Error fetching suggestions:", error); // Debug log for errors
+    return <div>Error fetching suggestions.</div>;
+  }
+
+  const suggestions = suggestionSnapshot?.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
   return suggestions?.length > 0 ? (
     <div>
       <h1>Manage Suggestions</h1>
-      <SuggestionFeed suggestions={suggestions}></SuggestionFeed>
+      <SuggestionFeed suggestions={suggestions} />
     </div>
   ) : (
     <div>
@@ -51,7 +76,7 @@ function SuggestionsList() {
   );
 }
 
-export default function AdminSuggestionsPage({}) {
+export default function AdminSuggestionsPage() {
   return (
     <div className="list-content">
       <AuthCheck>

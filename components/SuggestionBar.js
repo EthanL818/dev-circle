@@ -1,4 +1,10 @@
-import { doc, writeBatch, serverTimestamp, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  collection,
+  serverTimestamp,
+  getDoc,
+} from "firebase/firestore";
 import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
@@ -14,46 +20,28 @@ export default function SuggestionBar({ postRef }) {
 
   const addSuggestion = async (content) => {
     const uid = auth.currentUser.uid;
-    const batch = writeBatch(firestore);
+    const postDoc = await getDoc(postRef);
+    const postData = postDoc.data();
+    // Create a reference to the suggestions collection under the author of the post
+    const userSuggestionsCollectionRef = collection(
+      firestore,
+      `users/${postData.uid}/suggestions`
+    );
+    // Generate a new document reference with an automatically generated ID
+    const newDocRef = doc(userSuggestionsCollectionRef);
+    const docId = newDocRef.id;
 
-    // Add the suggestion to the post
-    const suggestionRef = doc(firestore, `${postRef.path}/suggestions/${uid}`);
-    batch.set(suggestionRef, {
+    // Add the suggestion to the collection with the generated ID included in the initial document creation
+    await setDoc(newDocRef, {
+      id: docId,
       slug,
       uid,
-      content,
-      username,
-      createdAt: serverTimestamp(),
-    });
-
-    // Add the suggestion to a new collection under the user
-    const userSuggestionRef = doc(
-      firestore,
-      `users/${uid}/suggestions/${postRef.id}`
-    );
-
-    const userSuggestionSnapshot = await getDoc(userSuggestionRef);
-
-    if (userSuggestionSnapshot.exists()) {
-      // Alert the user that their previous suggestion will be overwritten
-      if (
-        !window.confirm(
-          "Your previous suggestion will be overwritten. Do you want to continue?"
-        )
-      ) {
-        return false;
-      }
-    }
-
-    batch.set(userSuggestionRef, {
       postRef,
       content,
       username,
       createdAt: serverTimestamp(),
     });
 
-    // Commit the batch
-    await batch.commit();
     return true;
   };
 
@@ -95,7 +83,7 @@ export default function SuggestionBar({ postRef }) {
             height="24"
             fill="currentColor"
             viewBox="0 0 16 16"
-            class="icon"
+            className="icon"
           >
             <path d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4zM8.5 4h6l.5.667V5H1v-.333L1.5 4h6V1h1zM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132" />
           </svg>
@@ -118,7 +106,7 @@ export default function SuggestionBar({ postRef }) {
           be shy!
         </p>
 
-        <form onSubmit={handleSubmit} autocomplete="off">
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className="messageBox suggestion">
             <textarea
               required=""

@@ -5,7 +5,6 @@ import {
   doc,
   query as firestoreQuery,
   orderBy,
-  getDocs,
   updateDoc,
   writeBatch,
 } from "firebase/firestore";
@@ -13,7 +12,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
-function TabContent({ suggestions }) {
+function TabContent({ suggestions, onUpdateStatus }) {
   if (suggestions.length === 0) {
     return (
       <p style={{ textAlign: "center" }}>
@@ -24,86 +23,44 @@ function TabContent({ suggestions }) {
   }
 
   const uid = auth.currentUser.uid;
-
-  const markAsToDo = async (suggestion) => {
-    let status = suggestion.status === "to-do" ? "" : "to-do";
-    const suggestionRef = doc(
-      collection(
-        firestore,
-        "users",
-        uid,
-        "posts",
-        suggestion.slug,
-        "suggestions"
-      ),
-      suggestion.id
-    );
-    await updateDoc(suggestionRef, { status: status });
-  };
+  const userSuggestionsRef = collection(firestore, "users", uid, "suggestions");
 
   const markAsImplemented = async (suggestion) => {
     let status = suggestion.status === "implemented" ? "" : "implemented";
-    const suggestionRef = doc(
-      collection(
-        firestore,
-        "users",
-        uid,
-        "posts",
-        suggestion.slug,
-        "suggestions"
-      ),
-      suggestion.id
-    );
+    const suggestionRef = doc(userSuggestionsRef, suggestion.id);
     await updateDoc(suggestionRef, { status: status });
+    onUpdateStatus(suggestion.id, status);
+  };
+
+  const markAsToDo = async (suggestion) => {
+    let status = suggestion.status === "to-do" ? "" : "to-do";
+    const suggestionRef = doc(userSuggestionsRef, suggestion.id);
+    await updateDoc(suggestionRef, { status: status });
+    onUpdateStatus(suggestion.id, status);
   };
 
   const dismiss = async (suggestion) => {
     let status = suggestion.status === "dismissed" ? "" : "dismissed";
-    const suggestionRef = doc(
-      collection(
-        firestore,
-        "users",
-        uid,
-        "posts",
-        suggestion.slug,
-        "suggestions"
-      ),
-      suggestion.id
-    );
+    const suggestionRef = doc(userSuggestionsRef, suggestion.id);
     await updateDoc(suggestionRef, { status: status });
+    onUpdateStatus(suggestion.id, status);
   };
 
   const deleteSuggestion = async (suggestion) => {
     const uid = auth.currentUser.uid;
     const batch = writeBatch(firestore);
-
-    // Delete the suggestion from the post
     const suggestionRef = doc(
       firestore,
-      `users/${uid}/posts/${suggestion.slug}/suggestions/${suggestion.uid}`
+      `users/${uid}/suggestions/${suggestion.id}`
     );
-
-    console.log(`posts/${suggestion.slug}/suggestions/${suggestion.uid}`);
     batch.delete(suggestionRef);
-
-    // Delete the suggestion from the user's collection
-    const userSuggestionRef = doc(
-      firestore,
-      `users/${suggestion.uid}/suggestions/${suggestion.slug}`
-    );
-
-    console.log(`users/${suggestion.uid}/suggestions/${suggestion.slug}`);
-
-    batch.delete(userSuggestionRef);
-
     try {
       await batch.commit();
+      onUpdateStatus(suggestion.id, null, true);
+      toast.success("Suggestion deleted successfully.");
     } catch (error) {
       console.error("Error deleting suggestion:", error);
     }
-
-    // Display confirmation message
-    toast.success("Suggestion deleted successfully.");
   };
 
   return (
@@ -186,52 +143,31 @@ export default function Suggestions() {
     return <div>Please sign in to view suggestions.</div>;
   }
 
-  // Create a reference to the user's posts collection
-  const userPostsRef = collection(firestore, "users", uid, "posts");
+  const userSuggestionsRef = collection(firestore, "users", uid, "suggestions");
+  const suggestionQuery = firestoreQuery(
+    userSuggestionsRef,
+    orderBy("createdAt")
+  );
 
-  // Create a query to order posts by date created
-  const postQuery = firestoreQuery(userPostsRef, orderBy("createdAt"));
-
-  // Use the query with useCollection hook
-  const [postSnapshot, loading, error] = useCollection(postQuery);
-
-  // State to store all suggestions
+  const [suggestionSnapshot, loading, error] = useCollection(suggestionQuery);
   const [allSuggestions, setAllSuggestions] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
   const [suggestionsLoading, setSuggestionsLoading] = useState(true);
 
-  // Fetch suggestions whenever postSnapshot changes
   useEffect(() => {
-    const fetchSuggestions = async () => {
-      if (postSnapshot && !postSnapshot.empty) {
-        let suggestions = [];
-        for (const postDoc of postSnapshot.docs) {
-          const postRef = doc(userPostsRef, postDoc.id);
-          const suggestionsCollectionRef = collection(postRef, "suggestions");
-          const suggestionQuery = firestoreQuery(
-            suggestionsCollectionRef,
-            orderBy("createdAt")
-          );
-          const suggestionSnapshot = await getDocs(suggestionQuery);
-          const postSuggestions = suggestionSnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          suggestions = [...suggestions, ...postSuggestions];
-        }
-        setAllSuggestions(suggestions);
-        setSuggestionsLoading(false);
-      } else {
-        setSuggestionsLoading(false);
-      }
-    };
-    fetchSuggestions();
-  }, [postSnapshot, userPostsRef]);
+    if (suggestionSnapshot) {
+      const allSuggestions = suggestionSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setAllSuggestions(allSuggestions);
+      setSuggestionsLoading(false);
+    }
+  }, [suggestionSnapshot]);
 
   if (loading || suggestionsLoading) {
     return <div>Loading...</div>;
   }
-
   if (error) {
     console.error("Error loading suggestions:", error);
     return <div>Error loading suggestions.</div>;
@@ -255,6 +191,16 @@ export default function Suggestions() {
     }
   };
 
+  const updateSuggestionStatus = (id, status, isDelete = false) => {
+    setAllSuggestions((prevSuggestions) =>
+      isDelete
+        ? prevSuggestions.filter((suggestion) => suggestion.id !== id)
+        : prevSuggestions.map((suggestion) =>
+            suggestion.id === id ? { ...suggestion, status } : suggestion
+          )
+    );
+  };
+
   return (
     <>
       <div className="box-center">
@@ -272,7 +218,10 @@ export default function Suggestions() {
             </button>
           ))}
         </div>
-        <TabContent suggestions={filterSuggestions(activeTab)} />
+        <TabContent
+          suggestions={filterSuggestions(activeTab)}
+          onUpdateStatus={updateSuggestionStatus}
+        />
       </main>
     </>
   );

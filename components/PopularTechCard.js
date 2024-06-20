@@ -60,7 +60,7 @@ export default function PopularTechCard() {
   return (
     <div className="card-tech">
       <h2>Top Tech</h2>
-      <p>What your peers are building with.</p>
+      <p style={{ marginBottom: "1rem" }}>What your peers are building with.</p>
       <ul>
         {popularTech.map((tech) => (
           <li key={tech.name}>

@@ -41,23 +41,15 @@ function SuggestionItem({ suggestion, removeSuggestion }) {
     const uid = auth.currentUser.uid;
     const batch = writeBatch(firestore);
 
-    // Delete the suggestion from the post
-    const suggestionRef = doc(
-      firestore,
-      `users/${uid}/posts/${suggestion.slug}/suggestions/${suggestion.uid}`
-    );
-
-    console.log(`posts/${suggestion.slug}/suggestions/${suggestion.uid}`);
-    batch.delete(suggestionRef);
+    // Delete the suggestion from the root-level 'suggestions' collection
+    const rootSuggestionRef = doc(firestore, `suggestions/${suggestion.id}`);
+    batch.delete(rootSuggestionRef);
 
     // Delete the suggestion from the user's collection
     const userSuggestionRef = doc(
       firestore,
-      `users/${suggestion.uid}/suggestions/${suggestion.slug}`
+      `users/${uid}/suggestions/${suggestion.id}`
     );
-
-    console.log(`users/${suggestion.uid}/suggestions/${suggestion.slug}`);
-
     batch.delete(userSuggestionRef);
 
     try {
