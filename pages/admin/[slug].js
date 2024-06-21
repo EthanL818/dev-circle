@@ -111,7 +111,15 @@ function PostForm({
   setSelectedTech,
 }) {
   // Populating React form with default values from Firestore
-  const { register, handleSubmit, reset, watch, formState } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState,
+    setError,
+    clearErrors,
+  } = useForm({
     defaultValues,
     mode: "onChange",
   }); // Anytime input values are changed, re-render and re-validate form
@@ -123,10 +131,31 @@ function PostForm({
   // isValid is true if the form doesn't have any errors, and isDirty is true when the user modifies the form
   const { isValid, isDirty, errors } = formState;
 
+  const validateGithubUrl = (url) => {
+    const pattern = new RegExp(
+      "^(https?:\\/\\/)?(www\\.)?github\\.com\\/[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\/[-a-zA-Z0-9@:%._\\+~#=]{1,256}$",
+      "i"
+    );
+    return !!pattern.test(url);
+  };
+
+  useEffect(() => {
+    const githubRepoUrl = watch("githubRepo");
+
+    if (githubRepoUrl && !validateGithubUrl(githubRepoUrl)) {
+      setError("githubRepo", {
+        type: "manual",
+        message: "Please enter a valid GitHub repository URL.",
+      });
+    } else {
+      clearErrors("githubRepo");
+    }
+  }, [watch, setError, clearErrors]);
+
   // Assuming useDocumentData is already being used to fetch post data
   const [post] = useDocumentData(postRef);
 
-  // Effect hook to update selectedTags when post data changes
+  // Effect hook to update tags when post data changes
   useEffect(() => {
     if (post && post.tags) {
       // Assuming post.tags is an array of tag values
@@ -137,10 +166,7 @@ function PostForm({
       });
       setSelectedTags(tagsToUpdate);
     }
-  }, [post, setSelectedTags]);
 
-  // Effect hook to update selectedTech when post data changes
-  useEffect(() => {
     if (post && post.tech) {
       // Assuming post.tags is an array of tag values
       const techToUpdate = post.tech.map((techValue) => {
@@ -154,7 +180,7 @@ function PostForm({
       });
       setSelectedTech(techToUpdate);
     }
-  }, [post, setSelectedTech]);
+  }, [post, setSelectedTags, setSelectedTech]);
 
   // Callback function that handles updating the Firestore database once form is submitted
   const updatePost = async ({ content, published, githubRepo }) => {
@@ -213,8 +239,11 @@ function PostForm({
         )}
 
         <fieldset>
-          <label>GitHub Repository URL</label>
-          <input {...register("githubRepo")} />
+          <h1>GitHub Repository URL</h1>
+          <input className="messageBox" {...register("githubRepo")} />
+          {errors.githubRepo && (
+            <p className="text-danger">{errors.githubRepo.message}</p>
+          )}
         </fieldset>
 
         <fieldset>
