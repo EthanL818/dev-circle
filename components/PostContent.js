@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { tagList } from "../lib/tags";
+import kebabCase from "lodash.kebabcase";
 
 export default function PostContent({ post }) {
   const createdAt =
@@ -46,15 +47,17 @@ export default function PostContent({ post }) {
         {post.tags && post.tags.length > 0 && (
           <div style={{ marginBottom: "20px" }}>
             {tagsToUpdate.map((tag) => (
-              <span
-                key={tag.value}
-                className="tag"
-                style={{
-                  borderColor: tag.color,
-                }}
-              >
-                {tag.label}
-              </span>
+              <Link href={`/tags/${kebabCase(tag.label)}`}>
+                <span
+                  key={tag.value}
+                  className="tag"
+                  style={{
+                    borderColor: tag.color,
+                  }}
+                >
+                  {tag.label}
+                </span>
+              </Link>
             ))}
           </div>
         )}

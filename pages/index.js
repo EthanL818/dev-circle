@@ -1,14 +1,11 @@
-// pages/index.js
 import SideCard from "../components/SideCard";
 import PopularTagsCard from "../components/PopularTagsCard";
 import PostFeed from "../components/PostFeed";
 import SearchBar from "../components/SearchBar";
 import Loader from "../components/Loader";
-import { CommunityMessage } from "../components/SideCard";
 
 import { useState } from "react";
 import {
-  getFirestore,
   collectionGroup,
   query,
   where,
@@ -18,10 +15,9 @@ import {
   startAfter,
   Timestamp,
 } from "firebase/firestore";
-import { postToJSON } from "../lib/firebase";
+import { postToJSON, firestore } from "../lib/firebase";
 import PopularTechCard from "../components/PopularTechCard";
 
-const firestore = getFirestore();
 const LIMIT = 10;
 
 export async function getServerSideProps(context) {

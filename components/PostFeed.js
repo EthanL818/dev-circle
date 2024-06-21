@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { firestore, auth } from "../lib/firebase";
 import { collection, getDocs, doc, writeBatch } from "firebase/firestore";
 import toast from "react-hot-toast";
+import kebabCase from "lodash.kebabcase";
 
 export default function PostFeed({ posts, admin, filterBar = true }) {
   const [activePosts, setActivePosts] = useState(posts);
@@ -134,15 +135,17 @@ function PostItem({ post, admin = false, deletePost }) {
         {post.tags && post.tags.length > 0 && (
           <div style={{ marginTop: "15px", marginBottom: "20px" }}>
             {tagsToUpdate.map((tag) => (
-              <span
-                key={tag.value}
-                className="tag"
-                style={{
-                  borderColor: tag.color,
-                }}
-              >
-                {tag.label}
-              </span>
+              <Link href={`/tags/${kebabCase(tag.label)}`}>
+                <span
+                  key={tag.value}
+                  className="tag"
+                  style={{
+                    borderColor: tag.color,
+                  }}
+                >
+                  {tag.label}
+                </span>
+              </Link>
             ))}
           </div>
         )}

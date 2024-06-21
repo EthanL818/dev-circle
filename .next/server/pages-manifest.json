@@ -2,8 +2,10 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+  "/tags": "pages/tags.js",
   "/[username]": "pages/[username].js",
-  "/": "pages/index.js",
-  "/admin/[slug]": "pages/admin/[slug].js",
-  "/admin": "pages/admin.js"
+  "/tags/cloud-computing": "pages/tags/cloud-computing.js",
+  "/tags/dev-ops": "pages/tags/dev-ops.js",
+  "/tags/mobile-development": "pages/tags/mobile-development.js",
+  "/": "pages/index.js"
 }

@@ -32,15 +32,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin": [
+    "/tags": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin.js"
+      "static/chunks/pages/tags.js"
     ],
-    "/admin/[slug]": [
+    "/tags/cloud-computing": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/[slug].js"
+      "static/chunks/pages/tags/cloud-computing.js"
+    ],
+    "/tags/mobile-development": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/tags/mobile-development.js"
     ]
   },
   "ampFirstPages": []

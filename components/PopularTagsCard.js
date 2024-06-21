@@ -73,7 +73,7 @@ export default function PopularTagsCard() {
           </li>
         ))}
       </ul>
-      <Link href={"tags"}>
+      <Link href={"/tags"}>
         <button className={"btn-blue"} style={{ marginTop: "2rem" }}>
           Show More
         </button>
