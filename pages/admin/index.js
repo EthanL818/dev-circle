@@ -1,22 +1,13 @@
-import styles from "../../styles/Admin.module.css";
 import AuthCheck from "../../components/AuthCheck";
 import PostFeed from "../../components/PostFeed";
-import { UserContext } from "../../lib/context";
-import { firestore, auth, serverTimestamp } from "../../lib/firebase"; // Import services from Firebase
-
-import { useContext, useState } from "react";
-import { useRouter } from "next/router";
+import { firestore, auth } from "../../lib/firebase";
 
 import { useCollection } from "react-firebase-hooks/firestore";
-import kebabCase from "lodash.kebabcase";
-import toast from "react-hot-toast";
 
 import {
   collection,
-  doc,
   query as firestoreQuery,
   orderBy,
-  setDoc,
 } from "firebase/firestore";
 
 export default function AdminPostsPage(props) {
@@ -29,9 +20,16 @@ export default function AdminPostsPage(props) {
             width: "100%",
           }}
         >
-          <h1>Manage your Posts</h1>
-          <CreateNewPost />
-          <PostList />
+          <div className="box-center">
+            <h1>Manage Posts</h1>
+            <p className="frequency">
+              Edit, delete, or view your project suggestions
+            </p>
+          </div>
+
+          <div className="card-container">
+            <PostList />
+          </div>
         </div>
       </AuthCheck>
     </main>
@@ -53,79 +51,8 @@ function PostList() {
   const posts = querySnapshot?.docs.map((doc) => doc.data());
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="card-div">
       <PostFeed posts={posts} admin />
     </div>
-  );
-}
-
-// Contains the form to create a new post
-function CreateNewPost() {
-  // Create a router to push user to post edit page once post is created
-  const router = useRouter();
-
-  // Grab user's username from global context
-  const { username } = useContext(UserContext);
-
-  // State for title of post
-  const [title, setTitle] = useState("");
-
-  // Ensure slug is URL safe
-  const slug = encodeURI(kebabCase(title));
-
-  // Validate length
-  const isValid = title.length > 3 && title.length < 100;
-
-  // Create a new post in Firestore
-  const createPost = async (e) => {
-    e.preventDefault();
-    const uid = auth.currentUser.uid;
-
-    // Reference to the new post document
-    const ref = doc(collection(firestore, "users", uid, "posts"), slug);
-
-    // Data to be set in the new post
-    const data = {
-      title,
-      slug,
-      uid,
-      username,
-      published: false,
-      content: "# hello world!",
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-      likeCount: 0,
-    };
-
-    // Set the document with the data
-    await setDoc(ref, data);
-
-    toast.success("Post created!");
-
-    // Imperative navigation after doc is set
-    router.push(`/admin/${slug}`);
-  };
-
-  return (
-    <form onSubmit={createPost}>
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Article title..."
-        className={styles.input}
-      />
-      <p>
-        <strong>Slug:</strong> {slug}
-      </p>
-      <button type="submit" disabled={!isValid} className="btn-green">
-        Create New Post
-      </button>
-    </form>
   );
 }

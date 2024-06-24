@@ -38,7 +38,7 @@ export default function SideCard() {
               <br />
               Ready to contribute? Start by writing a post.
             </p>
-            <Link href="/admin">
+            <Link href="/admin/create">
               <button className="btn-blue">Write Posts</button>
             </Link>
           </>

@@ -240,7 +240,11 @@ function PostForm({
 
         <fieldset>
           <h1>GitHub Repository URL</h1>
-          <input className="messageBox" {...register("githubRepo")} />
+          <input
+            className="messageBox"
+            placeholder="Valid GitHub repository URL..."
+            {...register("githubRepo")}
+          />
           {errors.githubRepo && (
             <p className="text-danger">{errors.githubRepo.message}</p>
           )}

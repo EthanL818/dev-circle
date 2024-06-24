@@ -168,9 +168,15 @@ function PostItem({ post, admin = false, deletePost }) {
 
         <footer>
           <span>
-            {wordCount} words. {minutesToRead} min read
+            {`${wordCount} ${
+              wordCount === 1 ? "word" : "words"
+            }, about ${minutesToRead} ${
+              minutesToRead === 1 ? "minute" : "minutes"
+            } to read`}
           </span>
-          <span className="push-left">👍 {post.likeCount || 0} Likes</span>
+          <span className="push-left">
+            👍 {post.likeCount || 0} {post.likeCount === 1 ? "Like" : "Likes"}
+          </span>
         </footer>
 
         {/* If admin view, show extra controls for user */}

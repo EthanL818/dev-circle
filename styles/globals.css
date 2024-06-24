@@ -873,8 +873,6 @@ input[type="file"] {
   display: none;
 }
 
-/* Search Bar */
-/* Hide submit and reset buttons */
 .ais-SearchBox-submit {
   display: none;
 }
@@ -883,7 +881,6 @@ input[type="file"] {
   display: none;
 }
 
-/* Search Bar */
 .search-component {
   position: relative;
   width: 100%;
@@ -1392,6 +1389,24 @@ input[type="file"] {
   word-break: break-word;
 }
 
+/* New Post Page */
+
+.new-post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;  
+  margin-bottom: 5rem;
+  margin-right: 10rem;
+  margin-left: 10rem;
+}
+
+.new-post-container form {
+  width: 100%;
+}
+
 /* Adjust layout for smaller screens */
 @media (max-width: 768px) {
 
@@ -1400,6 +1415,15 @@ input[type="file"] {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+  }
+  
+  .new-post-container {
+    text-align: center;
+    margin: 0.5rem;
+  }
+
+  .new-post-container button{
+    margin: 0;
   }
 
   .additional-details {
@@ -1424,7 +1448,6 @@ input[type="file"] {
 
   .box-center {
     padding: 1rem;
-
   }
 
   .profile-card {

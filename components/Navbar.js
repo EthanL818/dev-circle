@@ -42,7 +42,7 @@ export default function Navbar() {
         {username && (
           <>
             <li className=" push-left desktop-only">
-              <Link href="/admin">
+              <Link href="/admin/create">
                 <button className="btn-blue">Write Posts</button>
               </Link>
             </li>
@@ -127,15 +127,21 @@ export default function Navbar() {
             </div>
 
             <div style={{ width: "100%" }}>
-              <Link href="/admin" style={{ width: "100%" }}>
+              <Link href="/admin/create" style={{ width: "100%" }}>
                 <button
                   onClick={toggleMenu}
                   className="btn-blue"
                   style={{ width: "100%" }}
                 >
+                  Write Posts
+                </button>
+              </Link>
+              <Link href="/admin" style={{ width: "100%" }}>
+                <button onClick={toggleMenu} style={{ width: "100%" }}>
                   My Posts
                 </button>
               </Link>
+
               <Link href={`/admin/suggestions`}>
                 <button onClick={toggleMenu} style={{ width: "100%" }}>
                   My Suggestions
