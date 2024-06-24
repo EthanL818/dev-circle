@@ -12,16 +12,6 @@
   ],
   "rootMainFiles": [],
   "pages": {
-    "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
-    ],
-    "/[username]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/[username].js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -32,20 +22,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/tags": [
+    "/enter": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/tags.js"
+      "static/chunks/pages/enter.js"
     ],
-    "/tags/cloud-computing": [
+    "/oldest": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/tags/cloud-computing.js"
+      "static/chunks/pages/oldest.js"
     ],
-    "/tags/mobile-development": [
+    "/popular": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/tags/mobile-development.js"
+      "static/chunks/pages/popular.js"
     ]
   },
   "ampFirstPages": []

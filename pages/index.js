@@ -3,7 +3,6 @@ import PopularTagsCard from "../components/PopularTagsCard";
 import PostFeed from "../components/PostFeed";
 import SearchBar from "../components/SearchBar";
 import Loader from "../components/Loader";
-
 import { useState } from "react";
 import {
   collectionGroup,
