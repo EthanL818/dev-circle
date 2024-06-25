@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { firestore, auth } from "../lib/firebase";
 import { updateDoc, doc } from "firebase/firestore";
+import UserTechStack from "./UserTechStack";
 import toast from "react-hot-toast";
 
 // UI component to display additional user details
@@ -54,6 +55,7 @@ export default function AdditionalUserDetails({ user, setUser, admin }) {
 
   return (
     <div>
+      <UserTechStack user={user} setUser={setUser} admin={admin} />
       {admin ? (
         isEditing ? (
           <div className="card additional-details" style={{ padding: "2rem" }}>

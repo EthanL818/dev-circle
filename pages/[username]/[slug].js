@@ -223,6 +223,7 @@ function TechStack({ post }) {
   const techToUpdate = Array.isArray(post.tech)
     ? post.tech.map((techValue) => {
         const techObj = techList.find((tech) => tech.name === techValue);
+        console.log(techObj);
         return techObj
           ? {
               value: techObj.name,

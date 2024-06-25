@@ -1389,6 +1389,23 @@ input[type="file"] {
   word-break: break-word;
 }
 
+/* User Tech Stack Component */
+
+.user-tech-card {
+  width: 350px;
+  text-align: center;
+  margin-right: 5rem;
+}
+
+.user-tech-card button {
+  margin-right: 0;
+}
+
+.user-tech-card h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
 /* New Post Page */
 
 .new-post-container {

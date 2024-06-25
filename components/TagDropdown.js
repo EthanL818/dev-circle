@@ -10,6 +10,7 @@ export default function TagDropdown({
   setSelectedTags,
   setTagsChanged,
   tech,
+  profile,
 }) {
   const handleChange = (selectedOptions) => {
     setSelectedTags(selectedOptions);
@@ -77,7 +78,7 @@ export default function TagDropdown({
 
   return (
     <div>
-      {tech ? <h1>Tech Stack</h1> : <h1>Tags</h1>}
+      {!profile && <>{tech ? <h1>Tech Stack</h1> : <h1>Tags</h1>}</>}
       <Select
         closeMenuOnSelect={false}
         value={selectedTags}
