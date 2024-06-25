@@ -1,6 +1,7 @@
 // components/PopularTechCard.js
 import Link from "next/link";
 import { usePopularTech } from "../lib/context";
+import { techLabelToKebabCase } from "../lib/tech";
 
 export default function PopularTechCard() {
   const { popularTech } = usePopularTech();
@@ -12,7 +13,7 @@ export default function PopularTechCard() {
       <ul>
         {popularTech.map((tech) => (
           <li key={tech.name}>
-            <Link href={tech.link}>
+            <Link href={`/tech?name=${techLabelToKebabCase(tech.name)}`}>
               {tech.icon}
               <button className="tech-button">
                 {tech.name}{" "}

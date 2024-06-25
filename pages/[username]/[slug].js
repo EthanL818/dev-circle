@@ -3,7 +3,7 @@ import PostContent from "../../components/PostContent";
 import LikeButton from "../../components/LikeButton";
 import SuggestionBar from "../../components/SuggestionBar";
 import AuthCheck from "../../components/AuthCheck";
-import { techList } from "../../lib/tech";
+import { techList, techLabelToKebabCase } from "../../lib/tech";
 import { ContactInfo } from "../../components/UserProfile";
 
 import Link from "next/link";
@@ -245,19 +245,24 @@ function TechStack({ post }) {
         <h1>Tech Stack</h1>
         <div className="tag-container" style={{ marginTop: "15px" }}>
           {techToUpdate.map((tech) => (
-            <span
+            <Link
+              href={`/tech?name=${techLabelToKebabCase(tech.label)}`}
               key={tech.value}
-              className="full-tag"
-              style={{ borderColor: tech.color }}
             >
               <span
-                className="icon-tag"
-                style={{ marginRight: "5px", border: "none" }}
+                key={tech.value}
+                className="full-tag"
+                style={{ borderColor: tech.color }}
               >
-                {tech.icon}
+                <span
+                  className="icon-tag"
+                  style={{ marginRight: "5px", border: "none" }}
+                >
+                  {tech.icon}
+                </span>
+                {tech.label}
               </span>
-              {tech.label}
-            </span>
+            </Link>
           ))}
         </div>
         {repoData && (

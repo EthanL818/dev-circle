@@ -1,7 +1,7 @@
 import Link from "next/link";
 import FilterBar from "../components/FilterBar";
 import { tagList } from "../lib/tags";
-import { techList } from "../lib/tech";
+import { techList, techLabelToKebabCase } from "../lib/tech";
 import React, { useState } from "react";
 import { firestore, auth } from "../lib/firebase";
 import { collection, getDocs, doc, writeBatch } from "firebase/firestore";
@@ -153,15 +153,20 @@ function PostItem({ post, admin = false, deletePost }) {
         {post.tech && post.tech.length > 0 && (
           <div style={{ marginTop: "15px", marginBottom: "20px" }}>
             {techToUpdate.map((tech) => (
-              <span
+              <Link
+                href={`/tech?name=${techLabelToKebabCase(tech.label)}`}
                 key={tech.value}
-                className="icon-tag"
-                style={{
-                  borderColor: tech.color,
-                }}
               >
-                {tech.icon}
-              </span>
+                <span
+                  key={tech.value}
+                  className="icon-tag"
+                  style={{
+                    borderColor: tech.color,
+                  }}
+                >
+                  {tech.icon}
+                </span>
+              </Link>
             ))}
           </div>
         )}

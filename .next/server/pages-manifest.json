@@ -2,11 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+  "/[username]": "pages/[username].js",
   "/": "pages/index.js",
-  "/admin/create": "pages/admin/create.js",
-  "/admin/suggestions": "pages/admin/suggestions.js",
-  "/popular": "pages/popular.js",
-  "/oldest": "pages/oldest.js",
-  "/admin": "pages/admin.js",
-  "/[username]": "pages/[username].js"
+  "/tech": "pages/tech.js",
+  "/[username]/[slug]": "pages/[username]/[slug].js",
+  "/popular": "pages/popular.js"
 }
