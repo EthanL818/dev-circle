@@ -205,6 +205,9 @@ function PostForm({
     <form onSubmit={handleSubmit(updatePost)}>
       {preview && (
         <div className="card">
+          {post.coverImage && (
+            <img src={post.coverImage} className="card-img-top" />
+          )}
           <div className="post-content">
             <ReactMarkdown>{content}</ReactMarkdown>
           </div>
