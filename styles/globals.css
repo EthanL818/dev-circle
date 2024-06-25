@@ -860,6 +860,15 @@ input[type="file"] {
   padding: 2rem;
 }
 
+.center {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
 .hidden {
   display: none;
 }

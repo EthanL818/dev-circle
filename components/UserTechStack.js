@@ -60,50 +60,89 @@ export default function UserTechStack({ user, setUser, admin }) {
     setTagsChanged(true);
   };
 
-  return (
-    <div className="user-tech-card card">
-      <div className="user-card-content">
-        <h2>Tech Stack</h2>
-        {isEditing ? (
-          <div>
-            {/* Use TagDropdown for selecting tech */}
-            <TagDropdown
-              selectedTags={selectedTech}
-              setSelectedTags={handleSelectedTagsChange}
-              setTagsChanged={setTagsChanged}
-              tech={true}
-              profile={true}
-            />
-            <div className="box-center">
-              <button className="btn-green" onClick={editTechStack}>
-                Save Changes
-              </button>
-              <button className="btn-red" onClick={() => setIsEditing(false)}>
-                Cancel
-              </button>{" "}
+  if (techStack.length > 0 || isEditing) {
+    return (
+      <div className="user-tech-card card">
+        <div className="user-card-content">
+          <h2>Tech Stack</h2>
+          {isEditing ? (
+            <div>
+              {/* Use TagDropdown for selecting tech */}
+              <TagDropdown
+                selectedTags={selectedTech}
+                setSelectedTags={handleSelectedTagsChange}
+                setTagsChanged={setTagsChanged}
+                tech={true}
+                profile={true}
+              />
+              <div className="box-center">
+                <button className="btn-green" onClick={editTechStack}>
+                  Save Changes
+                </button>
+                <button className="btn-red" onClick={() => setIsEditing(false)}>
+                  Cancel
+                </button>
+              </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <div style={{ marginTop: "10px" }}>
-              {selectedTech.map((tech) => (
-                <Link
-                  href={`/tech?name=${techLabelToKebabCase(tech.label)}`}
-                  key={tech.value}
-                >
-                  <span
+          ) : (
+            <>
+              <div style={{ marginTop: "10px" }}>
+                {selectedTech.map((tech) => (
+                  <Link
+                    href={`/tech?name=${techLabelToKebabCase(tech.label)}`}
                     key={tech.value}
-                    className="icon-tag"
-                    style={{
-                      borderColor: tech.color,
-                    }}
                   >
-                    {tech.icon}
-                  </span>
-                </Link>
-              ))}
-            </div>
-            {admin && (
+                    <span
+                      key={tech.value}
+                      className="icon-tag"
+                      style={{
+                        borderColor: tech.color,
+                      }}
+                    >
+                      {tech.icon}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+              {admin && (
+                <button
+                  onClick={() => setIsEditing(!isEditing)}
+                  style={{ marginTop: "20px" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-pencil-square"
+                    viewBox="0 0 16 16"
+                    style={{ marginRight: "5px" }}
+                  >
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                    <path
+                      fillRule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                    />
+                  </svg>
+                  Edit Tech Stack
+                </button>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      admin && (
+        <div className="user-tech-card card">
+          <div className="card-content">
+            <h2>Add Tech Stack</h2>
+            <p className="comment">
+              Where your tech stack goes. Add your favorite technologies to your
+              profile.
+            </p>
+            <div className="center">
               <button
                 onClick={() => setIsEditing(!isEditing)}
                 style={{ marginTop: "20px" }}
@@ -120,15 +159,15 @@ export default function UserTechStack({ user, setUser, admin }) {
                   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                   <path
                     fillRule="evenodd"
-                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
                   />
                 </svg>
                 Edit Tech Stack
               </button>
-            )}
-          </>
-        )}
-      </div>
-    </div>
-  );
+            </div>
+          </div>
+        </div>
+      )
+    );
+  }
 }
