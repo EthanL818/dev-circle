@@ -3,6 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/popular": "pages/popular.js",
-  "/[username]": "pages/[username].js"
+  "/[username]": "pages/[username].js",
+  "/popular": "pages/popular.js"
 }
