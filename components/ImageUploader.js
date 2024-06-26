@@ -14,7 +14,6 @@ export default function ImageUploader({ onUpload, type, user }) {
       // Get the file
       const file = Array.from(e.target.files)[0];
       if (!file) {
-        console.error("No file selected");
         return;
       }
 
@@ -121,6 +120,9 @@ export default function ImageUploader({ onUpload, type, user }) {
               📸 Upload Image
               <input type="file" onChange={uploadFile} accept="image/*" />
             </label>
+          )}
+          {downloadURL && (
+            <code className="upload-snippet">{`![alt](${downloadURL})`}</code>
           )}
         </>
       )}

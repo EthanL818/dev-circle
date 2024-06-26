@@ -121,11 +121,22 @@ export default function UserProfile({ user, setUser, admin }) {
   return (
     <div className="box-center" style={{ marginTop: "20px" }}>
       <div className="card-content profile-card">
-        <ImageUploader
-          onUpload={updateProfileImage}
-          type="profile"
-          user={user}
-        />
+        {admin ? (
+          <ImageUploader
+            onUpload={updateProfileImage}
+            type="profile"
+            user={user}
+          />
+        ) : (
+          <div style={{ width: "100%" }}>
+            <label className="image-label">
+              <img
+                src={user?.photoURL || "/avatar.jpg"}
+                className="card-img-center"
+              />
+            </label>
+          </div>
+        )}
 
         {admin ? (
           isEditing ? (
