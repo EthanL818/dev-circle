@@ -78,7 +78,7 @@ export default function SearchComponent() {
   return (
     <div className={`search-component ${isSearchActive ? "active" : ""}`}>
       <InstantSearch searchClient={searchClient} indexName="posts">
-        <Configure hitsPerPage={5} />
+        <Configure hitsPerPage={5} filters="published=1" />
         <div className="search-box-container">
           <SearchBox
             className="search-box"

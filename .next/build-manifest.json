@@ -46,6 +46,26 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/admin/[slug].js"
+    ],
+    "/admin/create": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin/create.js"
+    ],
+    "/admin/suggestions/[slug]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin/suggestions/[slug].js"
+    ],
+    "/popular": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/popular.js"
+    ],
+    "/tags/web-development": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/tags/web-development.js"
     ]
   },
   "ampFirstPages": []
