@@ -27,12 +27,14 @@ import {
 } from "react-share";
 
 import { getUserWithUsername, postToJSON, firestore } from "../../lib/firebase";
+import { UserContext } from "../../lib/context";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 export async function getStaticProps({ params }) {
   // Grab the username and slug from the URL parameters
   const { username, slug } = params;
+  let initialUser = null;
 
   // Retrieve the user from the username
   const userDoc = await getUserWithUsername(username);
@@ -45,6 +47,8 @@ export async function getStaticProps({ params }) {
     // Create a reference to the post using the slug as its ID
     const postRef = doc(collection(userDoc.ref, "posts"), slug);
 
+    initialUser = userDoc.data(); // Get the user's data
+
     // Get the post from the reference and convert the post to JSON format
     post = postToJSON(await getDoc(postRef));
 
@@ -53,7 +57,7 @@ export async function getStaticProps({ params }) {
   }
 
   return {
-    props: { post, path },
+    props: { post, path, initialUser },
     revalidate: 5000, // Regenerates this page on the server every 5000ms
   };
 }
@@ -297,6 +301,16 @@ function TechStack({ post }) {
 }
 
 export default function Post(props) {
+  const { username } = useContext(UserContext);
+  const [user, setUser] = useState(props.initialUser);
+  const [admin, setAdmin] = useState(false);
+
+  // Check if the current user is the same as the user being viewed
+  useEffect(() => {
+    setUser(props.initialUser);
+    setAdmin(props.initialUser?.username === username);
+  }, [props.initialUser, username]);
+
   const postRef = doc(firestore, props.path);
   const [realtimePost] = useDocumentData(postRef);
 
@@ -306,7 +320,7 @@ export default function Post(props) {
   return (
     <main className={styles.container}>
       <section>
-        <PostContent post={post} />
+        <PostContent post={post} admin={admin} />
         <AuthCheck
           fallback={
             <p

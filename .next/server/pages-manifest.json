@@ -3,9 +3,9 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/[username]/[slug]": "pages/[username]/[slug].js",
-  "/": "pages/index.js",
   "/[username]": "pages/[username].js",
-  "/popular": "pages/popular.js",
-  "/tags/web-development": "pages/tags/web-development.js",
-  "/api/github": "pages/api/github.js"
+  "/admin/create": "pages/admin/create.js",
+  "/admin/suggestions/[slug]": "pages/admin/suggestions/[slug].js",
+  "/": "pages/index.js",
+  "/admin/[slug]": "pages/admin/[slug].js"
 }

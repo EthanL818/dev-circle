@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { tagList } from "../lib/tags";
 import kebabCase from "lodash.kebabcase";
 
-export default function PostContent({ post }) {
+export default function PostContent({ post, admin }) {
   const createdAt =
     typeof post?.createdAt === "number"
       ? new Date(post.createdAt)
@@ -77,6 +77,12 @@ export default function PostContent({ post }) {
             )}
           </span>
         </div>
+
+        {admin && (
+          <Link href={`/admin/${post.slug}`}>
+            <button className="btn-blue">Edit</button>
+          </Link>
+        )}
         <ReactMarkdown>{post?.content}</ReactMarkdown>
       </div>
     </div>
