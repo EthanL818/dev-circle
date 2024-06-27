@@ -447,6 +447,7 @@ button.btn-edit {
   line-height: 2;
   font-size: 20px;
   max-width: 1000px; 
+  overflow-wrap: break-word;
 }
 
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {

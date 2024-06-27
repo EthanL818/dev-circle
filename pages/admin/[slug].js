@@ -124,13 +124,17 @@ function PostForm({
     mode: "onChange",
   }); // Anytime input values are changed, re-render and re-validate form
 
-  // Add a new state for tracking tag changes
+  // State for tracking tag changes
   const [tagsChanged, setTagsChanged] = useState(false);
+
+  // State for tracking if draft is loaded
+  const [isDraftLoaded, setIsDraftLoaded] = useState(false);
 
   // from the formState, we can pull the isValid and isDirty booleans.
   // isValid is true if the form doesn't have any errors, and isDirty is true when the user modifies the form
   const { isValid, isDirty, errors } = formState;
 
+  // Async function to validate GitHub URL
   const validateGithubUrl = (url) => {
     const pattern = new RegExp(
       "^(https?:\\/\\/)?(www\\.)?github\\.com\\/[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\/[-a-zA-Z0-9@:%._\\+~#=]{1,256}$",
@@ -139,6 +143,7 @@ function PostForm({
     return !!pattern.test(url);
   };
 
+  // Effect hook to validate GitHub URL
   useEffect(() => {
     const githubRepoUrl = watch("githubRepo");
 
@@ -182,6 +187,27 @@ function PostForm({
     }
   }, [post, setSelectedTags, setSelectedTech]);
 
+  // Function to save form data to localStorage
+  const saveDraft = (data) => {
+    localStorage.setItem("postDraft", JSON.stringify(data));
+  };
+
+  // Load draft from localStorage
+  useEffect(() => {
+    const draft = localStorage.getItem("postDraft");
+    if (draft) {
+      toast.success("Draft loaded successfully!");
+      reset(JSON.parse(draft));
+      setIsDraftLoaded(true);
+    }
+  }, [reset]);
+
+  // Watch for changes in form and save draft
+  useEffect(() => {
+    const subscription = watch((value) => saveDraft(value));
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   // Callback function that handles updating the Firestore database once form is submitted
   const updatePost = async ({ content, published, githubRepo }) => {
     await updateDoc(postRef, {
@@ -195,6 +221,7 @@ function PostForm({
 
     reset({ content, published });
 
+    localStorage.removeItem("postDraft"); // Clear draft after successful update
     toast.success("Post updated successfully!");
   };
 
@@ -265,7 +292,7 @@ function PostForm({
         <button
           type="submit"
           className="btn-green"
-          disabled={(!isDirty && !tagsChanged) || !isValid}
+          disabled={!isValid || (!isDraftLoaded && !isDirty && !tagsChanged)}
         >
           Save Changes
         </button>
