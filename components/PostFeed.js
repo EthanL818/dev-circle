@@ -3,8 +3,14 @@ import FilterBar from "../components/FilterBar";
 import { tagList } from "../lib/tags";
 import { techList, techLabelToKebabCase } from "../lib/tech";
 import React, { useState } from "react";
-import { firestore, auth } from "../lib/firebase";
+import {
+  firestore,
+  auth,
+  storage,
+  extractImageUrlsFromContent,
+} from "../lib/firebase";
 import { collection, getDocs, doc, writeBatch } from "firebase/firestore";
+import { ref, deleteObject } from "firebase/storage";
 import toast from "react-hot-toast";
 import kebabCase from "lodash.kebabcase";
 
@@ -35,6 +41,18 @@ export default function PostFeed({ posts, admin, filterBar = true }) {
     suggestionsSnapshot.docs.forEach((doc) => {
       batch.delete(doc.ref);
     });
+
+    // Extract and delete images from Firebase Storage
+    const imageUrls = extractImageUrlsFromContent(postToDelete.content);
+    if (postToDelete.coverImage) {
+      imageUrls.push(postToDelete.coverImage);
+    }
+    await Promise.all(
+      imageUrls.map(async (url) => {
+        const imageRef = ref(storage, url); // Convert URL to a storage reference
+        await deleteObject(imageRef); // Delete the image
+      })
+    );
 
     // Delete the post
     batch.delete(postRef);

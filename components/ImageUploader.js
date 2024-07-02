@@ -63,7 +63,6 @@ export default function ImageUploader({ onUpload, type, user }) {
         async () => {
           try {
             const url = await getDownloadURL(fileRef);
-            console.log("File available at:", url);
             setDownloadURL(url);
             if (onUpload) {
               onUpload(url);
@@ -89,7 +88,9 @@ export default function ImageUploader({ onUpload, type, user }) {
         <>
           {onUpload && type === "cover" ? (
             <label className="imageUploader">
-              🖼️ Upload Cover Image
+              {user?.coverPhoto
+                ? "🖼️ Upload Cover Image"
+                : "🖼️ Update Cover Image"}
               <input type="file" onChange={uploadFile} accept="image/*" />
             </label>
           ) : onUpload && type === "profile" ? (
@@ -121,9 +122,12 @@ export default function ImageUploader({ onUpload, type, user }) {
               <input type="file" onChange={uploadFile} accept="image/*" />
             </label>
           )}
-          {downloadURL && (
-            <code className="upload-snippet">{`![alt](${downloadURL})`}</code>
-          )}
+          {downloadURL &&
+            type != "cover" &&
+            type !=
+              "profile"(
+                <code className="upload-snippet">{`![alt](${downloadURL})`}</code>
+              )}
         </>
       )}
     </div>
