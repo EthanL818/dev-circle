@@ -66,6 +66,9 @@ export default function UserProfilePage({ initialUser, posts }) {
         <div className="profile-container">
           <AdditionalUserDetails user={user} setUser={setUser} admin={admin} />
           <div style={{ width: "100%" }}>
+            {posts.length === 0 && user?.username && (
+              <h3>@{user?.username} has no posts yet!</h3>
+            )}
             <PostFeed posts={posts} filterBar={false} />
           </div>
         </div>

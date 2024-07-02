@@ -12,10 +12,15 @@
   ],
   "rootMainFiles": [],
   "pages": {
-    "/[username]/[slug]": [
+    "/": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/[username]/[slug].js"
+      "static/chunks/pages/index.js"
+    ],
+    "/[username]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/[username].js"
     ],
     "/_app": [
       "static/chunks/webpack.js",
@@ -27,10 +32,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/popular": [
+    "/guidelines": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/popular.js"
+      "static/chunks/pages/guidelines.js"
     ]
   },
   "ampFirstPages": []

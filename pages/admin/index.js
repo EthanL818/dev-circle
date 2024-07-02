@@ -1,6 +1,7 @@
 import AuthCheck from "../../components/AuthCheck";
 import PostFeed from "../../components/PostFeed";
 import { firestore, auth } from "../../lib/firebase";
+import Link from "next/link";
 
 import { useCollection } from "react-firebase-hooks/firestore";
 
@@ -51,8 +52,25 @@ function PostList() {
   const posts = querySnapshot?.docs.map((doc) => doc.data());
 
   return (
-    <div className="card-div">
-      <PostFeed posts={posts} admin />
-    </div>
+    <>
+      <div className="card-div">
+        <PostFeed posts={posts} admin />
+      </div>
+
+      {posts?.length === 0 && (
+        <div className="box-center card">
+          <h3>No posts to display!</h3>
+          <p className="frequency">
+            Write a post and join the devCircle community today!
+          </p>
+          <Link href="/admin/create">
+            <button className="btn-blue" style={{ marginLeft: "1rem" }}>
+              {" "}
+              Write Posts
+            </button>
+          </Link>
+        </div>
+      )}
+    </>
   );
 }
