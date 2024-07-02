@@ -322,9 +322,8 @@ export default function Post(props) {
     <main className={styles.container}>
       <MetaTags
         title={post.title}
-        description={`Check out "${post.title}" by ${post.username} on devCircle, the leading student project sharing platform!`}
         image={post?.coverImage}
-        content={post.content}
+        content={`Check out "${post.title}" by ${post.username} on devCircle, the leading student project sharing platform!`}
       />
       <section>
         <PostContent post={post} admin={admin} />

@@ -2,7 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/[username]/[slug]": "pages/[username]/[slug].js",
   "/": "pages/index.js",
-  "/popular": "pages/popular.js"
+  "/popular": "pages/popular.js",
+  "/[username]/[slug]": "pages/[username]/[slug].js",
+  "/api/github": "pages/api/github.js",
+  "/[username]": "pages/[username].js"
 }
