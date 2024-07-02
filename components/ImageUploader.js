@@ -1,4 +1,9 @@
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { useState } from "react";
 import { auth, storage, STATE_CHANGED } from "../lib/firebase"; // Ensure these are correctly initialized
 import Loader from "./Loader";
@@ -33,14 +38,24 @@ export default function ImageUploader({ onUpload, type, user }) {
 
       const extension = file.type.split("/")[1];
 
+      // If uploading a profile image and the user already has one, delete the old image first
+      if (type === "profile" && user?.photoURL) {
+        const oldImageRef = ref(storage, user.photoURL);
+        try {
+          await deleteObject(oldImageRef);
+        } catch (error) {
+          console.error("Failed to delete old profile image:", error);
+          toast.error("Failed to delete old profile image.");
+          return; // Stop the upload process if the old image deletion fails
+        }
+      }
+
       // Make reference to the storage bucket location
       const fileRef = ref(
         storage,
         `uploads/${auth.currentUser.uid}/${Date.now()}.${extension}`
       );
       setUploading(true);
-
-      console.log("Starting upload to:", fileRef.fullPath);
 
       // Start the upload
       const task = uploadBytesResumable(fileRef, file);
@@ -53,7 +68,6 @@ export default function ImageUploader({ onUpload, type, user }) {
             (snapshot.bytesTransferred / snapshot.totalBytes) *
             100
           ).toFixed(0);
-          console.log(`Upload is ${pct}% done`);
           setProgress(pct);
         },
         (error) => {
@@ -122,12 +136,9 @@ export default function ImageUploader({ onUpload, type, user }) {
               <input type="file" onChange={uploadFile} accept="image/*" />
             </label>
           )}
-          {downloadURL &&
-            type != "cover" &&
-            type !=
-              "profile"(
-                <code className="upload-snippet">{`![alt](${downloadURL})`}</code>
-              )}
+          {downloadURL && type != "cover" && type != "profile" && (
+            <code className="upload-snippet">{`![alt](${downloadURL})`}</code>
+          )}
         </>
       )}
     </div>
