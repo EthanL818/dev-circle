@@ -323,6 +323,7 @@ export default function Post(props) {
       <MetaTags
         title={post.title}
         image={post?.coverImage}
+        description={`Check out "${post.title}" by ${post.username} on devCircle, the leading student project sharing platform!`}
         content={`Check out "${post.title}" by ${post.username} on devCircle, the leading student project sharing platform!`}
       />
       <section>
