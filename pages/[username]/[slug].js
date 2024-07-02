@@ -3,6 +3,7 @@ import PostContent from "../../components/PostContent";
 import LikeButton from "../../components/LikeButton";
 import SuggestionBar from "../../components/SuggestionBar";
 import AuthCheck from "../../components/AuthCheck";
+import MetaTags from "../../components/Metatags";
 import { techList, techLabelToKebabCase } from "../../lib/tech";
 import { ContactInfo } from "../../components/UserProfile";
 
@@ -319,6 +320,12 @@ export default function Post(props) {
 
   return (
     <main className={styles.container}>
+      <MetaTags
+        title={post.title}
+        description={post.content}
+        image={post?.coverImage}
+        content={post.content}
+      />
       <section>
         <PostContent post={post} admin={admin} />
         <AuthCheck

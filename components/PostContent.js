@@ -34,6 +34,19 @@ export default function PostContent({ post, admin }) {
       })
     : []; // If post.tags is not an array, default to an empty array
 
+  // Specify the locale and options for consistent formatting
+  const formatDate = (date) => {
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true,
+    });
+  };
+
   return (
     <div className="card">
       {post.coverImage && (
@@ -71,9 +84,9 @@ export default function PostContent({ post, admin }) {
             <Link href={`/${post.username}`} className="text-info">
               @{post.username}
             </Link>{" "}
-            on {createdAt.toISOString()}
+            on {formatDate(createdAt)}
             {updatedAt != createdAt && (
-              <span>, Last updated on {updatedAt.toISOString()} </span>
+              <span>, Last updated on {formatDate(updatedAt)} </span>
             )}
           </span>
         </div>
