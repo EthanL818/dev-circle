@@ -1,6 +1,6 @@
 ![devCircle](https://github.com/EthanL818/dev-circle/blob/main/public/dev-circle-logo.png)
 
-Welcome to devCircle, a platform designed by students, for students, where you can share your side projects, receive valuable feedback from peers, and find inspiration from others in similar situations.
+Welcome to devCircle, an open-source platform designed by students, for students, where you can share your side projects, receive valuable feedback from peers, and find inspiration from others in similar situations.
 
 ## Table of Contents
 
