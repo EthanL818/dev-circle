@@ -2,6 +2,7 @@ import UserProfile from "../../components/UserProfile";
 import PostFeed from "../../components/PostFeed";
 import { getUserWithUsername, postToJSON } from "../../lib/firebase";
 import AdditionalUserDetails from "../../components/AdditionalDetails";
+import MetaTags from "../../components/Metatags";
 
 import { collection, where, orderBy, getDocs, query } from "firebase/firestore";
 import { UserContext } from "../../lib/context";
@@ -60,7 +61,11 @@ export default function UserProfilePage({ initialUser, posts }) {
         width: "100%",
       }}
     >
-      {" "}
+      <MetaTags
+        title={`${user?.username}'s Profile | devCircle`}
+        description="The platform for students, by students."
+        image={user?.photoURL || "avatar.jpg"}
+      />{" "}
       <UserProfile user={user} admin={admin} setUser={setUser} />
       <div className="box-center" style={{ textAlign: "left" }}>
         <div className="profile-container">

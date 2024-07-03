@@ -4,6 +4,7 @@ import PostFeed from "../components/PostFeed";
 import Loader from "../components/Loader";
 import SearchBar from "../components/SearchBar";
 import PopularTechCard from "../components/PopularTechCard";
+import MetaTags from "../components/Metatags";
 
 import { useState } from "react";
 import {
@@ -86,6 +87,11 @@ export default function Home(props) {
 
   return (
     <main>
+      <MetaTags
+        title="devCircle | Oldest"
+        description="The platform for students, by students."
+        image="/dev-circle-logo.png"
+      />
       <SideCard />
       <div className="card-div">
         <PostFeed posts={posts} />

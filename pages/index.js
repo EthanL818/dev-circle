@@ -3,6 +3,7 @@ import PopularTagsCard from "../components/PopularTagsCard";
 import PostFeed from "../components/PostFeed";
 import SearchBar from "../components/SearchBar";
 import Loader from "../components/Loader";
+import MetaTags from "../components/Metatags";
 import { useState } from "react";
 import {
   collectionGroup,
@@ -83,6 +84,11 @@ export default function Home(props) {
 
   return (
     <main>
+      <MetaTags
+        title="devCircle | Home"
+        description="The platform for students, by students."
+        image="/dev-circle-logo.png"
+      />
       <SideCard />
       <div className="card-div">
         <PostFeed posts={posts} />
