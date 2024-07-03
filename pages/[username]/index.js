@@ -63,7 +63,9 @@ export default function UserProfilePage({ initialUser, posts }) {
     >
       <MetaTags
         title={`${user?.username}'s Profile | devCircle`}
-        description="The platform for students, by students."
+        description={
+          user?.description || "The platform for students, by students."
+        }
         image={user?.photoURL || "avatar.jpg"}
       />{" "}
       <UserProfile user={user} admin={admin} setUser={setUser} />
