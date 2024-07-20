@@ -7,12 +7,14 @@ import {
   PopularTechProvider,
 } from "../lib/context";
 import { useUserData } from "../lib/hooks";
+import { Analytics } from "@vercel/analytics/react";
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
 
   return (
     <>
+      <Analytics />
       <PopularTechProvider>
         <PopularTagsProvider>
           <UserContext.Provider value={userData}>
