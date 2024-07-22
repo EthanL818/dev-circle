@@ -1,7 +1,7 @@
 // Import necessary hooks and Firebase auth functions
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../lib/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleAuthProvider } from "../lib/firebase";
 import styles from "../styles/EnterPage.module.css";
 
 export default function LoginForm({ setSignUp }) {
