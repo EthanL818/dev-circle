@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 60px);
+  padding: 0;
+}
+
+.flexContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.graphic {
+  flex: 1.5;
+  height: calc(100vh - 60px);
+  width: 100%;
+  background-color: #181818;
+  display: flex;
+  justify-content: flex-start; /* Align content to the left */
+  align-items: center; /* Keep vertical center alignment */
+}
+
+.graphicContent {
+  margin-left: 3rem;
+  margin-right: 1rem;
+  color: whitesmoke;
+}
+
+.formContainer {
+  flex: 1;
+  width: 20px;
+}
+
+.formContent {
+  padding: 10rem; /* Default padding for larger screens */
+  box-sizing: border-box;
+  color: whitesmoke;
+}
+
+.input {
+  background-color: #404040;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  color: white;
+}
+
+.input:focus {
+  animation: rotateShadow 2s infinite linear;
+}
+
+button.btnGoogle {
+  background-color: #212121;
+  width: 100%;
+  color: var(--color-text);
+}
+
+.btnGoogle img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+button.btnSignup {
+  width: 100%;
+  color: var(--color-text);
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .formContent {
+    padding: 8rem; /* Reduce padding for medium-sized screens */
+  }
+}
+
+@media (max-width: 992px) {
+  .formContent {
+    padding: 6rem; /* Further reduce padding for smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .formContent {
+    padding: 4rem; /* Smaller padding for tablet screens */
+  }
+
+  .graphic {
+    display: none; /* Hide the graphic section on smaller screens for better focus on the form */
+  }
+}

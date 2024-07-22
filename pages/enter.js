@@ -1,62 +1,156 @@
-import { signInWithPopup } from "firebase/auth";
-import { writeBatch, doc, getDoc } from "firebase/firestore";
-import { useEffect, useState, useCallback, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import { UserContext } from "../lib/context";
+import { doc, writeBatch, getDoc } from "firebase/firestore";
+import { TypeAnimation } from "react-type-animation";
+import { auth, firestore } from "../lib/firebase";
+import SignupForm from "../components/SignupForm";
+import { sendEmailVerification } from "firebase/auth";
 import debounce from "lodash.debounce";
-import { auth, firestore, googleAuthProvider } from "../lib/firebase";
+import styles from "../styles/EnterPage.module.css";
+import LoginForm from "../components/LoginForm";
 
 export default function EnterPage(props) {
   const { user, username } = useContext(UserContext);
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [verificationSent, setVerificationSent] = useState(false);
+  const [SignUp, setSignUp] = useState(false);
+  const [isCooldownActive, setIsCooldownActive] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
 
-  // 1. user signed out <SignInButton />
-  // 2. user signed in, but missing username <UsernameForm />
-  // 3. user signed in, has username <SignOutButton />
+  useEffect(() => {
+    if (user) {
+      user.reload().then(() => {
+        setEmailVerified(user.emailVerified);
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    let interval = null;
+    if (cooldown > 0) {
+      interval = setInterval(() => {
+        setCooldown((cooldown) => cooldown - 1);
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [cooldown]);
+
+  const handleVerificationSent = () => {
+    setVerificationSent(true);
+  };
+
+  // Function to resend verification email
+  const resendVerificationEmail = async () => {
+    if (!isCooldownActive && cooldown === 0) {
+      setIsCooldownActive(true);
+      setCooldown(60); // Start cooldown for 60 seconds
+      try {
+        sendEmailVerification(auth.currentUser);
+      } catch (error) {
+        console.error("Error resending verification email: ", error);
+        // Check if the error is due to too many requests
+        if (error.code === "auth/too-many-requests") {
+          alert(
+            "You have reached the limit for sending verification emails. Please wait a while before trying again."
+          );
+          // Extend the cooldown period or handle as needed
+        } else {
+          // Handle other errors
+          alert(
+            "An error occurred while trying to resend the verification email. Please try again later."
+          );
+        }
+      }
+      setTimeout(() => {
+        setIsCooldownActive(false);
+      }, 60000); // Consider adjusting this based on Firebase's feedback or error messages
+    }
+  };
 
   return (
-    <main>
-      {
-        // if user exists,
-        // activates username form if user does not have a username
-        // activates sign out button if user does have a username
-        // if user does not exist,
-        // activates sign in button
-      }
+    <main className={styles.container}>
       {user ? (
-        !username ? (
-          <UsernameForm />
+        emailVerified ? (
+          !username ? (
+            <UsernameForm />
+          ) : (
+            <SignOutButton />
+          )
         ) : (
-          <SignOutButton />
+          <div className="card">
+            <div className="card-content">
+              <h3 style={{ fontWeight: "bold", color: "whitesmoke" }}>
+                Verification email sent. Please check your inbox and spam <br />
+                folders, and reload once verification is completed.
+              </h3>
+              <button
+                onClick={resendVerificationEmail}
+                disabled={cooldown > 0}
+                style={{ marginTop: "1rem" }}
+              >
+                Resend Email
+              </button>
+              {cooldown > 0 && (
+                <p>Please wait {cooldown} seconds before resending.</p>
+              )}
+            </div>
+          </div>
         )
       ) : (
-        <SignInButton />
+        <div className={styles.flexContainer}>
+          <div className={styles.graphic}>
+            <div className={styles.graphicContent}>
+              <TypeAnimation
+                sequence={[
+                  "Showcase your innovative projects to a global audience.",
+                  2500, // Waits 2.5s
+                  "Receive detailed and valuable feedback from peers.",
+                  2500, // Waits 2.5s
+                  "Inspire your peers with your unique ideas and creativity.",
+                  2500, // Waits 2.5s
+                  "Easily share and showcase your projects with the world.",
+                  2500, // Waits 2.5s
+                  "Grow your userbase and connect with like-minded individuals.",
+                  2500, // Waits 2.5s
+                  "Gain global exposure and recognition for your projects.",
+                  2500, // Waits 2.5s
+                ]}
+                wrapper="span"
+                cursor={true}
+                repeat={Infinity}
+                style={{
+                  fontSize: "3em",
+                  display: "inline-block",
+                  fontWeight: "bold",
+                  whiteSpace: "pre-line",
+                }}
+              />
+            </div>
+          </div>
+          <div className={styles.formContainer}>
+            {SignUp ? (
+              <SignupForm
+                onVerificationSent={handleVerificationSent}
+                setSignUp={setSignUp}
+              />
+            ) : (
+              <>
+                <LoginForm setSignUp={setSignUp} />
+              </>
+            )}
+          </div>
+        </div>
       )}
     </main>
   );
 }
 
-// Sign in with Google button component
-function SignInButton() {
-  const signInWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleAuthProvider);
-    } catch (error) {
-      console.error("Error signing in with Google: ", error);
-    }
-  };
-
-  return (
-    <button className="btn-google" onClick={signInWithGoogle}>
-      <img src={"/google.png"} alt="Google Sign-In" /> Sign in with Google
-    </button>
-  );
-}
-
-// Sign out button
 function SignOutButton() {
   return <button onClick={() => auth.signOut()}>Sign Out</button>;
 }
 
-// Username form
 function UsernameForm() {
   const [formValue, setFormValue] = useState("");
   const [isValid, setIsValid] = useState(false);
@@ -69,14 +163,11 @@ function UsernameForm() {
   }, [formValue]);
 
   const onSubmit = async (e) => {
-    // Stops page from refreshing once form is submitted
     e.preventDefault();
 
-    // Create refs for both documents
     const userDoc = doc(firestore, `users/${user.uid}`);
     const usernameDoc = doc(firestore, `usernames/${formValue}`);
 
-    // Commit both docs together as a batch write
     const batch = writeBatch(firestore);
     batch.set(userDoc, {
       username: formValue,
@@ -89,11 +180,9 @@ function UsernameForm() {
   };
 
   const onChange = (e) => {
-    // Force form value typed in uniform format
     const val = e.target.value.toLowerCase();
     const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
 
-    // Only set form value if length is > 3 OR it passes regex
     if (val.length < 3) {
       setFormValue(val);
       setLoading(false);
@@ -107,21 +196,11 @@ function UsernameForm() {
     }
   };
 
-  // Checks if username exists in database after each debounced change
-  // Debouncing this function makes it such that the function is only called 500ms after the user stops typing
-  // useCallback required for function to work
   const checkUsername = useCallback(
     debounce(async (username) => {
       if (username.length >= 3) {
-        // make a reference to the username in the Firebase database
         const ref = doc(firestore, `usernames/${username}`);
-
-        // take a snapshot of the reference
         const docSnapshot = await getDoc(ref);
-        console.log("Firestore read executed!");
-
-        // if the snapshot exists, that means the username already exists in the database
-        // therefore, set the state of isValid to the opposite of the docSnapshot.exists() function.
         setIsValid(!docSnapshot.exists());
         setLoading(false);
       }
@@ -160,15 +239,6 @@ function UsernameForm() {
           <button type="submit" className="btn-green" disabled={!isValid}>
             Choose
           </button>
-
-          <h3>Debug State</h3>
-          <div>
-            Username: {formValue}
-            <br />
-            Loading: {loading.toString()}
-            <br />
-            Username Valid: {isValid.toString()}
-          </div>
         </form>
       </section>
     )

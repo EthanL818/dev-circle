@@ -2,11 +2,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { UserContext } from "../lib/context";
-import { auth } from "../lib/firebase";
+import { auth, getUserWithUsername } from "../lib/firebase";
 import SearchBar from "./SearchBar";
 
 export default function Navbar() {
-  const { user, username } = useContext(UserContext);
+  const { username, user } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
 

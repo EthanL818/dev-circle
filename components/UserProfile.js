@@ -24,7 +24,7 @@ export default function UserProfile({ user, setUser, admin }) {
     setGithub(user?.github);
     setLinkedin(user?.linkedin);
     setWebsite(user?.website);
-    const displayName = user?.displayName.split(" ");
+    const displayName = user?.displayName ? user.displayName.split(" ") : [];
     if (!displayName) return;
     setFirstName(displayName[0]);
     setLastName(displayName[1]);
@@ -96,8 +96,8 @@ export default function UserProfile({ user, setUser, admin }) {
       }
 
       const updates = {
-        description: description,
-        displayName: `${firstName} ${lastName}`,
+        description: description ?? null,
+        displayName: `${firstName} ${lastName}` ?? null,
       };
 
       // Only update fields if they are not undefined
@@ -107,6 +107,9 @@ export default function UserProfile({ user, setUser, admin }) {
       if (website !== undefined) updates.website = website;
 
       await updateDoc(userRef, updates);
+      await updateProfile(auth.currentUser, {
+        displayName: `${firstName} ${lastName}` ?? null,
+      });
       setIsEditing(false);
 
       // Update local state
